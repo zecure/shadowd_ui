@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shadow Daemon - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+      <!-- Bootstrap -->
+      {% if not app.user or not app.user.getSetting.getTheme %}
+      <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen" />
+      {% else %}
+      <link href="{{ asset('css/themes/bootswatch/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      {% endif %}
+      <link href="{{ asset('css/bootstrap_form_2.css') }}" rel="stylesheet" media="screen" />
+      <!-- Bootstrap Slider -->
+      <link href="{{ asset('css/bootstrap-slider.css') }}" rel="stylesheet" media="screen" />
+      <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+      {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+      <!-- SwdAnalyzer -->
+      <link href="{{ asset('bundles/swdanalyzer/css/main.css') }}" rel="stylesheet" />
+    {% endblock %}
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          {{ knp_menu_render('SwdAnalyzerBundle:Builder:mainMenu', { 'style': 'navbar' }) }}
+          <div id="logo-container" class="navbar-right hidden-xs">
+            <a href="https://zecure.org/" class="brand"><img id="logo" src="{{ asset('bundles/swdanalyzer/images/logo.png') }}" title="Zecure Information Technologies" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <noscript>
+        <div class="alert alert-warning">
+          <h4>Warning!</h4>
+          You do not have Javascript enabled and thus some functionality won't work.
+        </div>
+      </noscript>
+      {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+      {% block body %}{% endblock %}
+    </div>
+    <div class="footer">
+      <div class="container">
+        <span class="footer-title">Shadow Daemon -- High-Interaction Web Honeypot</span>
+        <span class="footer-copyright">&#169; 2014 by Hendrik Buchwald</span>
+      </div>
+    </div>
+    {% block javascripts %}
+      <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+      <script src="{{ asset('js/jquery.js') }}"></script>
+      <!-- Bootstrap -->
+      <script src="{{ asset('js/bootstrap.js') }}"></script>
+      <!-- Bootstrap Slider -->
+      <script src="{{ asset('js/bootstrap-slider.js') }}"></script>
+      <!-- SwdAnalyzer -->
+      <script src="{{ asset('bundles/swdanalyzer/js/main.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>

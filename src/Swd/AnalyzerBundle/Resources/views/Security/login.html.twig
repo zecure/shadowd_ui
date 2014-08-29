@@ -1,0 +1,34 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Login{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Login</h1>
+</div>
+{% if error %}
+  <div class="alert alert-danger">{{ error.message }}</div>
+{% endif %}
+<form action="{{ path('login_check') }}" method="post" class="form-signin" role="form">
+  <div class="form-group"><label class="control-label required" for="user_username">Username</label><input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" ></div>
+  <div class="form-group"><label class="control-label required" for="user_password">Password</label><input type="password" id="password" name="_password" required="required" class="form-control" ></div>
+  <div class="checkbox">
+    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+    <label for="remember_me">Keep me logged in (1 day)</label>
+  </div>
+  <input type="hidden" name="_target_path" value="/" />
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+

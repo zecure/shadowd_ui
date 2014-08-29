@@ -1,0 +1,62 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Profiles{% endblock %}
+
+
+{% block body %}
+{% include 'SwdAnalyzerBundle:Form:profile_filter.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}{{ form_start(embeddedForm, {'style': 'inline'}) }}{% endif %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
+        <th>{{ knp_pagination_sortable(profiles, 'Profile ID', 'v.id') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Modified', 'v.date') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Server IP', 'v.serverIP') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
+        {% if is_granted('ROLE_ADMIN') %}<th>{{ knp_pagination_sortable(profiles, 'Key', 'v.key') }}</th>{% endif %}
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Status', 'v.learning') }}</th>
+        <th># Learning Requests</th>
+        <th># Productive Requests</th>
+        {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for profile in profiles %}
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ profile.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
+        <td><a href="{{ mergePath({'profile_filter': {'profileId': profile.getId}}) }}">{{ profile.getId }}</a></td>
+        <td>{{ profile.getDate|date('Y-m-d H:i') }}</td>
+        <td><a href="{{ mergePath({'profile_filter': {'searchServerIPs': [profile.getServerIP]}}) }}">{{ profile.getServerIP }}</a></td>
+        <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
+        {% if is_granted('ROLE_ADMIN') %}<td>{{ profile.getKey }}</td>{% endif %}
+        <td>{{ profile.getThreshold }}</td>
+        <td>
+          {% if profile.getLearning == 0 %} {{ label_success('Productive') }}
+          {% elseif profile.getLearning == 1 %} {{ label_danger('Learning') }}
+          {% endif %}
+        </td>
+        <td>{{ profile.getLearningRequests }}</td>
+        <td>{{ profile.getProductiveRequests }}</td>
+        {% if is_granted('ROLE_ADMIN') %}<td class="icons"><a href="{{ path('swd_analyzer_profile_edit', {'id': profile.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit profile" /></a></td>{% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="clearfix">
+    {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
+    <div class="page">
+      {{ knp_pagination_render(profiles, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+    </div>
+  </div>
+{% if is_granted('ROLE_ADMIN') %}
+  <div id="embedded-form-control">
+    {{ form_row(embeddedForm.subaction) }}
+    {{ form_row(embeddedForm.actions) }}
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_profile_add') }}">Add Profile</a>
+  </div>
+{{ form_end(embeddedForm) }}
+{% endif %}
+{% endblock %}

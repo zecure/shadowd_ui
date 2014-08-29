@@ -1,0 +1,45 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Home{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Welcome to the “Shadow Daemon“ Administration Interface</h1>
+</div>
+<div class="col-md-7">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Status</th>
+        <th>Last Request</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for profile in profiles %}
+      <tr>
+        <td>{{ profile.getName }}</td>
+        <td>
+          {% if profile.getLearning == 0 %} {{ label_success('Productive') }}
+          {% elseif profile.getLearning == 1 %} {{ label_danger('Learning') }}
+          {% endif %}
+        </td>
+        {% set foo = profile.getRequests|last %}
+        <td>{% if foo %}{{ foo.getDate|date('Y-m-d H:i') }}{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="col-md-1"></div>
+<div class="col-md-4">
+  <img style="margin-left: 5%" width="50%" src="{{ asset('bundles/swdanalyzer/images/icons/bug.svg') }}" />
+</div>
+<div class="col-md-12 jumbotron">
+  <h2>Did you know ... ?</h2>
+  <p>{{ tooltip }}</p>
+  <p><a class="btn btn-primary btn-lg" role="button" href="https://shadowd.zecure.org/docs/0.1.0/">Learn more &raquo;</a></p>
+</div>
+{% endblock %}

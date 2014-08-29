@@ -1,0 +1,19 @@
+{% macro genEntry(limit, size) %}
+  {% if limit == size %}
+      <li class="active"><span>{{ size }}</span></li>
+  {% else %}
+      <li><a href="{{ mergePath({'limit': size}) }}">{{ size }}</a></li>
+  {% endif %}
+{% endmacro %}
+
+<div class="limit">
+  <ul class="pagination">
+    <li class="limit-description disabled"><span>Limit</span></li>
+    {{ _self.genEntry(limit, 10) }}
+    {{ _self.genEntry(limit, 25) }}
+    {{ _self.genEntry(limit, 50) }}
+    {{ _self.genEntry(limit, 100) }}
+    {{ _self.genEntry(limit, 250) }}
+    {{ _self.genEntry(limit, 1000) }}
+  </ul>
+</div>

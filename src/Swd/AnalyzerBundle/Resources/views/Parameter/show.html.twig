@@ -1,0 +1,124 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Parameter{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Parameter</h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Parameter ID</th>
+      <th>Profile ID</th>
+      <th>Request ID</th>
+      <th>Date</th>
+      <th>Caller</th>
+      <th>Client IP</th>
+      <th>Path</th>
+      <th>Value</th>
+      <th class="icons"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ parameter.getId }}</td>
+      <td>{{ parameter.getRequest.getProfile.getId }} ({{ parameter.getRequest.getProfile.getName }})</td>
+      <td>{{ parameter.getRequest.getId }}</td>
+      <td>{{ parameter.getRequest.getDate|date('Y-m-d H:i') }}</td>
+      <td>{{ parameter.getRequest.getCaller }}</td>
+      <td>{{ parameter.getRequest.getClientIP }}</td>
+      <td>
+        {{ parameter.getPath }}
+        {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown') }} {% endif %}
+      </td>
+      <td>
+        {{ parameter.getValue }}
+        {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact') }} {% endif %}
+        {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule') }} {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="col-md-6">
+  {% if not parameter.getBrokenRules.empty %}
+    <h2>Whitelist: Broken Rules</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Rule ID</th>
+          <th>Min. Length</th>
+          <th>Max. Length</th>
+          <th>Filter</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for rule in parameter.getBrokenRules %}
+        <tr>
+          <td>{{ rule.getId }}</td>
+          <td>
+            {% if rule.getMinLength < 0 %}
+              {{ label_warning('No limitation') }}
+            {% else %}
+              {{ rule.getMinLength }}
+              {% if parameter.getValue|length < rule.getMinLength %}
+                {{ label_danger('Too short') }}
+              {% else %}
+                {{ label_success('Adhered to') }}
+              {% endif %}
+            {% endif %}
+          </td>
+          <td>
+            {% if rule.getMaxLength < 0 %}
+              {{ label_warning('No limitation') }}
+            {% else %}
+              {{ rule.getMaxLength }}
+              {% if parameter.getValue|length > rule.getMaxLength %}
+                {{ label_danger('Too long') }}
+              {% else %}
+                {{ label_success('Adhered to') }}
+              {% endif %}
+            {% endif %}
+          </td>
+          <td>
+            {{ rule.getFilter.getDescription }}
+            {% if (parameter.getValue matches '{' ~ rule.getFilter.getRule ~ '}') %} {{ label_success('Match') }} {% else %} {{ label_danger('No match') }} {% endif %}          
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+<div class="col-md-6">
+  {% if not parameter.getMatchingFilters.empty %}
+    <h2>Blacklist: Matching Filters</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Filter ID</th>
+          <th>Impact</th>
+          <th>Classification</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for filter in parameter.getMatchingFilters %}
+          <tr>
+            <td>{{ filter.getId }}</td>
+            <td>{{ filter.getImpact }}</td>
+            <td>
+              {% for tag in filter.getTags %}
+                {{ label(tag.getTag) }}
+              {% endfor %}
+            </td>
+            <td>{{ filter.getDescription }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+{% endblock %}

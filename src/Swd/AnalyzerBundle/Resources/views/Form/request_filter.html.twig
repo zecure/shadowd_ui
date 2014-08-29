@@ -1,0 +1,19 @@
+{% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
+
+{% block search %}
+  {{ form_row(form.requestId) }}
+  {{ form_row(form.profileId) }}
+  {{ form_row(form.learning) }}
+  {{ form_row(form.searchCallers) }}
+  {{ form_row(form.searchClientIPs) }}
+  {{ form_row(form.dateStart) }}
+  {{ form_row(form.dateEnd) }}
+{% endblock %}
+
+
+{% block ignore %}
+  {{ form_row(form.ignoreCallers) }}
+  {{ form_row(form.ignoreClientIPs) }}
+{% endblock %}
+
+

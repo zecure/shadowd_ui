@@ -1,0 +1,22 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Profile{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Profile</h1>
+</div>
+<div>
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.serverIP) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.key) }}
+    {{ form_row(form.learning) }}
+    {{ form_row(form.threshold) }}
+  {{ form_end(form) }}
+</div>
+{% endblock %}

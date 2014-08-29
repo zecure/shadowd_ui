@@ -1,0 +1,17 @@
+{% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
+
+{% block search %}
+  {{ form_row(form.profileId) }}
+  {{ form_row(form.searchServerIPs) }}
+  {{ form_row(form.searchNames) }}
+  {{ form_row(form.dateStart) }}
+  {{ form_row(form.dateEnd) }}
+{% endblock %}
+
+
+{% block ignore %}
+  {{ form_row(form.ignoreServerIPs) }}
+  {{ form_row(form.ignoreNames) }}
+{% endblock %}
+
+

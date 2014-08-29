@@ -1,0 +1,32 @@
+security:
+    encoders:
+        Swd\AnalyzerBundle\Entity\User:
+            algorithm: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
+    providers:
+        administrators:
+            entity: { class: SwdAnalyzerBundle:User, property: username }
+
+    firewalls:
+        login_firewall:
+            pattern:   ^/login$
+            anonymous: ~
+        secured:
+            pattern:   ^/
+            form_login:
+                csrf_provider: form.csrf_provider
+            logout: ~
+            remember_me:
+                key:      "%secret%"
+                lifetime: 86400
+                path:     /
+                domain:   ~
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user, roles: ROLE_ADMIN }
+        - { path: ^/, roles: ROLE_USER }

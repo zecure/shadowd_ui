@@ -1,0 +1,62 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Parameters{% endblock %}
+
+
+{% block body %}
+{% include 'SwdAnalyzerBundle:Form:parameter_filter.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}{{ form_start(embeddedForm, {'style': 'inline'}) }}{% endif %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
+        <th>{{ knp_pagination_sortable(parameters, 'Parameter ID', 'p.id') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Profile ID', 'v.id') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Request ID', 'r.id') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Date', 'r.date') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Caller', 'r.caller') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Client IP', 'r.clientIP') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Path', 'p.path') }}</th>
+        <th>{{ knp_pagination_sortable(parameters, 'Value', 'p.value') }}</th>
+        <th class="icons"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for parameter in parameters %}
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ parameter.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
+        <td><a href="{{ mergePath({'parameter_filter': {'parameterId': parameter.getId}}) }}">{{ parameter.getId }}</a></td>
+        <td><a href="{{ mergePath({'parameter_filter': {'profileId': parameter.getRequest.getProfile.getId}}) }}">{{ parameter.getRequest.getProfile.getId }} ({{ parameter.getRequest.getProfile.getName }})</a></td>
+        <td><a href="{{ mergePath({'parameter_filter': {'requestId': parameter.getRequest.getId}}) }}">{{ parameter.getRequest.getId }}</a></td>
+        <td>{{ parameter.getRequest.getDate|date('Y-m-d H:i') }}</td>
+        <td title="{{ parameter.getRequest.getCaller }}"><a href="{{ mergePath({'parameter_filter': {'searchCallers': [parameter.getRequest.getCaller]}}) }}">{{ parameter.getRequest.getCaller|truncate(50) }}</a></td>
+        <td><a href="{{ mergePath({'parameter_filter': {'searchClientIPs': [parameter.getRequest.getClientIP]}}) }}">{{ parameter.getRequest.getClientIP }}</a></td>
+        <td title="{{ parameter.getPath|truncate(250) }}">
+          <a href="{{ mergePath({'parameter_filter': {'searchPaths': [parameter.getPath]}}) }}">{{ parameter.getPath|truncate(50) }}</a>
+          {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown') }} {% endif %}
+        </td>
+        <td title="{{ parameter.getValue|truncate(250) }}">
+          <a href="{{ mergePath({'parameter_filter': {'searchValues': [parameter.getValue]}}) }}">{{ parameter.getValue|truncate(50) }}</a>
+          {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact') }} {% endif %}
+          {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule') }} {% endif %}
+        </td>
+        <td class="icons"><a href="{{ path('swd_analyzer_parameter_show', {'id': parameter.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/magnifying-glass.svg') }}" title="Show details" /></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="clearfix">
+    {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
+    <div class="page">
+      {{ knp_pagination_render(parameters, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+    </div>
+  </div>
+{% if is_granted('ROLE_ADMIN') %}
+  <div id="embedded-form-control">
+    {{ form_row(embeddedForm.subaction) }}
+    {{ form_row(embeddedForm.actions) }}
+  </div>
+{{ form_end(embeddedForm) }}
+{% endif %}
+{% endblock %}

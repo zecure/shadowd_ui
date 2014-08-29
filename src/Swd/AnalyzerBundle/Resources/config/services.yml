@@ -1,0 +1,15 @@
+services:
+    swd.twig.merge_path_extension:
+        class: Swd\AnalyzerBundle\Twig\MergePathExtension
+        tags:
+            - { name: twig.extension }
+        arguments: [ @service_container ]
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    generator_manager:
+        class:     Swd\AnalyzerBundle\Generator\GeneratorManager
+        arguments: [ @doctrine.orm.entity_manager ]

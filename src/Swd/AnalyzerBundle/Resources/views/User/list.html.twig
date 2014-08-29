@@ -1,0 +1,54 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Users{% endblock %}
+
+
+{% block body %}
+{% include 'SwdAnalyzerBundle:Form:user_filter.html.twig' %}
+{{ form_start(embeddedForm, {'style': 'inline'}) }}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><input id="select-all" type="checkbox" /></th>
+        <th>{{ knp_pagination_sortable(users, 'User ID', 'u.id') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'Modified', 'u.date') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'Username', 'u.username') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'Role', 'u.role') }}</th>
+        <th class="icons"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td><input name="selected[]" value="{{ user.getId }}" class="select-item" type="checkbox" /></td>
+        <td><a href="{{ mergePath({'user_filter': {'userId': user.getId}}) }}">{{ user.getId }}</a></td>
+        <td>{{ user.getDate|date('Y-m-d H:i') }}</td>
+        <td><a href="{{ mergePath({'user_filter': {'searchUsernames': [user.getUsername]}}) }}">{{ user.getUsername }}</a></td>
+        <td><a href="{{ mergePath({'user_filter': {'searchEmails': [user.getEmail]}}) }}">{{ user.getEmail }}</a></td>
+        <td>
+          {% if user.getRole == 0 %}
+            User
+          {% elseif user.getRole == 1 %}
+            Admin
+          {% endif %}
+        </td>
+        <td class="icons"><a href="{{ path('swd_analyzer_user_edit', {'id': user.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit user" /></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="clearfix">
+    {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
+    <div class="page">
+      {{ knp_pagination_render(users, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+    </div>
+  </div>
+  <div id="embedded-form-control">
+    {{ form_row(embeddedForm.subaction) }}
+    {{ form_row(embeddedForm.actions) }}
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_user_add') }}">Add User</a>
+  </div>
+{{ form_end(embeddedForm) }}
+{% endblock %}

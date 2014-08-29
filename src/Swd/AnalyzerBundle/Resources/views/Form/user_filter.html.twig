@@ -1,0 +1,16 @@
+{% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
+
+{% block search %}
+  {{ form_row(form.searchUsernames) }}
+  {{ form_row(form.searchEmails) }}
+  {{ form_row(form.dateStart) }}
+  {{ form_row(form.dateEnd) }}
+{% endblock %}
+
+
+{% block ignore %}
+  {{ form_row(form.ignoreUsernames) }}
+  {{ form_row(form.ignoreEmails) }}
+{% endblock %}
+
+

@@ -1,0 +1,3 @@
+swd_analyzer:
+    resource: "@SwdAnalyzerBundle/Resources/config/routing.yml"
+    prefix:   /

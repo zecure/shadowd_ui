@@ -1,0 +1,98 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Whitelist Rules{% endblock %}
+
+
+{% block body %}
+{% include 'SwdAnalyzerBundle:Form:whitelist_rule_filter.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}{{ form_start(embeddedForm, {'style': 'inline'}) }}{% endif %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
+        <th>{{ knp_pagination_sortable(rules, 'Rule ID', 'wr.id') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Profile ID', 'v.id') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Status', 'wr.status') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Modified', 'wr.date') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Caller', 'wr.caller') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Path', 'wr.path') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Min. Length', 'wr.minLength') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Max. Length', 'wr.maxLength') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Filter', 'wf.impact') }}</th>
+        {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for rule in rules %}
+      <tr>
+        {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ rule.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
+        <td><a href="{{ mergePath({'whitelist_rule_filter': {'ruleId': rule.getId}}) }}">{{ rule.getId }}</a></td>
+        <td><a href="{{ mergePath({'whitelist_rule_filter': {'profileId': rule.getProfile.getId}}) }}">{{ rule.getProfile.getId }} ({{ rule.getProfile.getName }})</a></td>
+        <td>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'status': rule.getStatus}}) }}">
+          {% if rule.getStatus == 1 %} {{ label_success('Active') }}
+          {% elseif rule.getStatus == 2 %} {{ label_danger('Inactive') }}
+          {% elseif rule.getStatus == 3 %} {{ label_danger('Pending') }}
+          {% endif %}
+          </a>
+        </td>
+        <td>{{ rule.getDate|date('Y-m-d H:i') }}</td>
+        <td title="{{ rule.getCaller }}"><a href="{{ mergePath({'whitelist_rule_filter': {'searchCallers': [rule.getCaller]}}) }}">{{ rule.getCaller|truncate(50) }}</a></td>
+        <td title="{{ rule.getPath|truncate(250) }}"><a href="{{ mergePath({'whitelist_rule_filter': {'searchPaths': [rule.getPath]}}) }}">{{ rule.getPath|truncate(50) }}</a></td>
+        <td>
+          {% if rule.getMinLength < 0 %}
+            {{ label_warning('No limitation') }}
+          {% else %}
+            {{ rule.getMinLength }}
+          {% endif %}
+          {% if rule.hasMinLengthConflict %}
+            {{ label_danger('Conflict') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if rule.getMaxLength < 0 %}
+            {{ label_warning('No limitation') }}
+          {% else %}
+            {{ rule.getMaxLength }}
+          {% endif %}
+          {% if rule.hasMaxLengthConflict %}
+            {{ label_danger('Conflict') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if rule.getFilter.getImpact == 100 %}
+            {{ label_warning('No limitation') }}
+          {% else %}
+            {{ rule.getFilter.getDescription }}
+            {% if rule.getFilter.getImpact > 75 %}
+              {{ label_warning('Insecure') }}
+            {% elseif rule.getFilter.getImpact < 25 %}
+              {{ label_success('Secure') }}
+            {% endif %}
+          {% endif %}
+          {% if rule.hasFilterConflict %}
+            {{ label_danger('Conflict') }}
+          {% endif %}
+        </td>
+        {% if is_granted('ROLE_ADMIN') %}<td class="icons"><a href="{{ path('swd_analyzer_whitelist_edit_rule', {'id': rule.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit rule" /></a></td>{% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="clearfix">
+    {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
+    <div class="page">
+      {{ knp_pagination_render(rules, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+    </div>
+  </div>
+{% if is_granted('ROLE_ADMIN') %}
+  <div id="embedded-form-control">
+    {{ form_row(embeddedForm.subaction) }}
+    {{ form_row(embeddedForm.actions) }}
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_add_rule') }}">Add Rule</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_generator') }}">Generate Rules</a>
+  </div>
+{{ form_end(embeddedForm) }}
+{% endif %}
+{% endblock %}

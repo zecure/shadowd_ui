@@ -1,0 +1,28 @@
+{% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
+
+{% block search %}
+  {{ form_row(form.parameterId) }}
+  {{ form_row(form.profileId) }}
+  {{ form_row(form.requestId) }}
+  {{ form_row(form.learning) }}
+  {{ form_row(form.searchCallers) }}
+  {{ form_row(form.searchClientIPs) }}
+  {{ form_row(form.dateStart) }}
+  {{ form_row(form.dateEnd) }}
+  {{ form_row(form.searchPaths) }}
+  {{ form_row(form.searchValues) }}
+  <hr />
+  {{ form_row(form.threat) }}
+  {{ form_row(form.noRule) }}
+  {{ form_row(form.brokenRule) }}
+  {{ form_row(form.criticalImpact) }}
+{% endblock %}
+
+
+{% block ignore %}
+  {{ form_row(form.ignoreCallers) }}
+  {{ form_row(form.ignoreClientIPs) }}
+  {{ form_row(form.ignorePaths) }}
+{% endblock %}
+
+
