@@ -133,36 +133,12 @@ class RequestRepository extends EntityRepository
 		return $builder->getQuery();
 	}
 
-	public function countLearningByProfile($profile)
+	public function countByProfileAndLearning($profile, $learning)
 	{
 		$builder = $this->createQueryBuilder('r')
 			->select('count(r.id)')
-			->where('r.learning = 1')
-			->andWhere('r.profile = :profile')
-			->setParameter(':profile', $profile);
-
-		return $builder->getQuery();
-	}
-
-	public function countProductiveByProfile($profile)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->select('count(r.id)')
-			->where('r.learning = 0')
-			->andWhere('r.profile = :profile')
-			->setParameter(':profile', $profile);
-
-		return $builder->getQuery();
-	}
-
-	public function countProductiveByProfilePerDay($profile)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->select('SUBSTRING(r.date, 1, 10) AS day, COUNT(r.id) AS zahler')
-			->where('r.learning = 0')
-			->andWhere('r.profile = :profile')
-			->setParameter(':profile', $profile)
-			->groupBy('day');
+			->where('r.learning = :learning')->setParameter(':learning', $learning)
+			->andWhere('r.profile = :profile')->setParameter(':profile', $profile);
 
 		return $builder->getQuery();
 	}

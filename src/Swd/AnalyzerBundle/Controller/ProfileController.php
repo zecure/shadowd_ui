@@ -106,8 +106,8 @@ class ProfileController extends Controller
 		/* Add information about existing learning cache. */
 		foreach ($pagination as $profile)
 		{
-			$profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countLearningByProfile($profile)->getSingleScalarResult());
-			$profile->setProductiveRequests($em->getRepository('SwdAnalyzerBundle:Request')->countProductiveByProfile($profile)->getSingleScalarResult());
+			$profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 1)->getSingleScalarResult());
+			$profile->setProductiveRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 0)->getSingleScalarResult());
 		}
 
 		/* Render template. */
