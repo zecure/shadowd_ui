@@ -123,22 +123,12 @@ class RequestRepository extends EntityRepository
 		return $builder->getQuery();
 	}
 
-	public function findLearningByProfile($profile)
+	public function deleteByProfileAndLearning($profile, $learning)
 	{
 		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = 1')
-			->andWhere('r.profile = :profile')
-			->setParameter(':profile', $profile);
-
-		return $builder->getQuery();
-	}
-
-	public function findProductiveByProfile($profile)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = 0')
-			->andWhere('r.profile = :profile')
-			->setParameter(':profile', $profile);
+			->where('r.learning = :learning')->setParameter(':learning', $learning)
+			->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
+			->delete();
 
 		return $builder->getQuery();
 	}

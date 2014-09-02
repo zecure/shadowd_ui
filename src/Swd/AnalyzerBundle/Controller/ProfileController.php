@@ -71,33 +71,10 @@ class ProfileController extends Controller
 						$profile->setLearning(0);
 						break;
 					case 'deletelearning':
-						/* I am not happy with this, but CASCADE does not work here for some reason. */
-						$requests = $em->getRepository('SwdAnalyzerBundle:Request')->findLearningByProfile($profile)->getResult();
-
-						foreach ($requests as $request)
-						{
-							foreach ($request->getParameters() as $parameter)
-							{
-								$em->remove($parameter);
-							}
-
-							$em->remove($request);
-						}
-
+						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndLearning($profile, 1)->getResult();
 						break;
 					case 'deleteproductive':
-						$requests = $em->getRepository('SwdAnalyzerBundle:Request')->findProductiveByProfile($profile)->getResult();
-
-						foreach ($requests as $request)
-						{
-							foreach ($request->getParameters() as $parameter)
-							{
-								$em->remove($parameter);
-							}
-
-							$em->remove($request);
-						}
-
+						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndLearning($profile, 0)->getResult();
 						break;
 					case 'delete':
 						$em->remove($profile);
