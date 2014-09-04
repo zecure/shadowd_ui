@@ -171,6 +171,7 @@ class WhitelistRuleRepository extends EntityRepository
 	public function findAllByExport(\Swd\AnalyzerBundle\Entity\WhitelistExport $filter)
 	{
 		$builder = $this->createQueryBuilder('wr')
+			->orderBy('wr.path', 'ASC')
 			->where('wr.status = 1')
 			->andWhere('wr.profile = :profile')->setParameter('profile', $filter->getProfile());
 
