@@ -262,12 +262,13 @@ class WhitelistController extends Controller
 					$filterObj = $em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->find($rule['filter']);
 
 					$ruleObj = new WhitelistRule();
-					$ruleObj->setProfile($form->getProfile());
+					$ruleObj->setProfile($import->getProfile());
 					$ruleObj->setPath($rule['path']);
-					$ruleObj->setCaller(str_replace('{BASE}', $form->getBase(), $rule['caller']));
+					$ruleObj->setCaller(str_replace('{BASE}', $import->getBase(), $rule['caller']));
 					$ruleObj->setMinLength($rule['min_length']);
 					$ruleObj->setMaxLength($rule['max_length']);
 					$ruleObj->setFilter($filterObj);
+					$ruleObj->setStatus(3);
 
 					$em->persist($ruleObj);
 				}
