@@ -30,9 +30,6 @@ class Builder extends ContainerAware
 	{
 		$menu = $factory->createItem('root');
 
-		$request = Request::createFromGlobals();
-		$menu->setCurrentUri($request->getBaseUrl() . $request->getPathInfo());
-
 		if ($this->container->get('security.context')->isGranted('ROLE_USER'))
 		{
 			$menu->addChild('Home', array('route' => 'swd_analyzer_home'));
