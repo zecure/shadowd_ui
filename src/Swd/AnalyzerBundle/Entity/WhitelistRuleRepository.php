@@ -167,4 +167,38 @@ class WhitelistRuleRepository extends EntityRepository
 
 		return $builder->getQuery();
 	}
+
+	public function findAllByExport(\Swd\AnalyzerBundle\Entity\WhitelistExport $filter)
+	{
+		$builder = $this->createQueryBuilder('wr')
+			->where('wr.profile = :profile')->setParameter('profile', $filter->getProfile());
+
+		if (!$filter->getCallers()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getCallers() as $key => $value)
+			{
+				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
+				$orExpr->add($builder->expr()->like("wr.caller", $builder->expr()->literal($value)));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if (!$filter->getPaths()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getPaths() as $key => $value)
+			{
+				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
+				$orExpr->add($builder->expr()->like("wr.path", $builder->expr()->literal($value)));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		return $builder->getQuery();
+	}
 }

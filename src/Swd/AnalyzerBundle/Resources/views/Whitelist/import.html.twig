@@ -1,0 +1,24 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Whitelist Rules Import{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Whitelist Rules Import</h1>
+</div>
+
+<div class="col-md-8">
+  {{ form(form) }}
+</div>
+<div class="col-md-4">
+  <div class="alert alert-info">
+    On this page you can import rules collections. If the collection supports it you can use <em>base</em> to specify a base directory (f.i. <em>/var/www/blog/</em>).
+  </div>
+  <div class="alert alert-info">
+    You can use this for backups, but you can also use it to <a href="https://github.com/zecure/shadowd_rules">share good collections with others</a>. Sharing is caring and everybody saves time!
+  </div>
+</div>
+
+{% endblock %}

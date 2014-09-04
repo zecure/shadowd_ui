@@ -22,6 +22,8 @@ namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Swd\AnalyzerBundle\Form\Type\WhitelistRuleFilterType;
 use Swd\AnalyzerBundle\Entity\WhitelistRuleFilter;
 use Swd\AnalyzerBundle\Form\Type\WhitelistRuleType;
@@ -30,6 +32,10 @@ use Swd\AnalyzerBundle\Form\Type\WhitelistRuleSelectorType;
 use Swd\AnalyzerBundle\Entity\Selector;
 use Swd\AnalyzerBundle\Entity\GeneratorSettings;
 use Swd\AnalyzerBundle\Form\Type\GeneratorSettingsType;
+use Swd\AnalyzerBundle\Entity\WhitelistImport;
+use Swd\AnalyzerBundle\Form\Type\WhitelistImportType;
+use Swd\AnalyzerBundle\Entity\WhitelistExport;
+use Swd\AnalyzerBundle\Form\Type\WhitelistExportType;
 
 class WhitelistController extends Controller
 {
@@ -39,13 +45,13 @@ class WhitelistController extends Controller
 
 		/* Handle filter form. */
 		$filter = new WhitelistRuleFilter();
-			$form = $this->createForm(new WhitelistRuleFilterType(), $filter);
-			$form->handleRequest($this->get('request'));
+		$form = $this->createForm(new WhitelistRuleFilterType(), $filter);
+		$form->handleRequest($this->get('request'));
 
 		/* Handle the form that is embedded in the table. */
 		$ruleSelector = new Selector();
-			$embeddedForm = $this->createForm(new WhitelistRuleSelectorType(), $ruleSelector);
-			$embeddedForm->handleRequest($this->get('request'));
+		$embeddedForm = $this->createForm(new WhitelistRuleSelectorType(), $ruleSelector);
+		$embeddedForm->handleRequest($this->get('request'));
 
 		if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
 		{
@@ -126,8 +132,8 @@ class WhitelistController extends Controller
 	{
 		/* Handle form. */
 		$rule = new WhitelistRule();
-			$form = $this->createForm(new WhitelistRuleType(), $rule);
-			$form->handleRequest($this->get('request'));
+		$form = $this->createForm(new WhitelistRuleType(), $rule);
+		$form->handleRequest($this->get('request'));
 
 		/* Insert and redirect or show the form. */
 		if ($form->isValid())
@@ -224,6 +230,128 @@ class WhitelistController extends Controller
 			/* Render template. */
 			return $this->render(
 				'SwdAnalyzerBundle:Whitelist:generate.html.twig',
+				array(
+					'form' => $form->createView()
+				)
+			);
+		}
+	}
+
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function importAction()
+	{
+		/* Handle form. */
+		$import = new WhitelistImport();
+		$form = $this->createForm(new WhitelistImportType(), $import);
+		$form->handleRequest($this->get('request'));
+
+		/* Insert and redirect or show the form. */
+		if ($form->isValid())
+		{
+			$fileContent = file_get_contents($import->getFile()->getPathName());
+			$rules = json_decode($fileContent, true);
+
+			if ($rules)
+			{
+				$em = $this->getDoctrine()->getManager();
+
+				foreach ($rules as $rule)
+				{
+					$filterObj = $em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->find($rule['filter']);
+
+					$ruleObj = new WhitelistRule();
+					$ruleObj->setProfile($form->getProfile());
+					$ruleObj->setPath($rule['path']);
+					$ruleObj->setCaller(str_replace('{BASE}', $form->getBase(), $rule['caller']));
+					$ruleObj->setMinLength($rule['min_length']);
+					$ruleObj->setMaxLength($rule['max_length']);
+					$ruleObj->setFilter($filterObj);
+
+					$em->persist($ruleObj);
+				}
+
+				$em->flush();
+
+				$this->get('session')->getFlashBag()->add('info', 'The rules were imported.');
+			}
+			else
+			{
+				$this->get('session')->getFlashBag()->add('alert', 'Invalid file.');
+			}
+
+			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));
+		}
+		else
+		{
+			/* Render template. */
+			return $this->render(
+				'SwdAnalyzerBundle:Whitelist:import.html.twig',
+				array(
+					'form' => $form->createView()
+				)
+			);
+		}
+	}
+
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function exportAction()
+	{
+		/* Handle form. */
+		$export = new WhitelistExport();
+		$form = $this->createForm(new WhitelistExportType(), $export);
+		$form->handleRequest($this->get('request'));
+
+		/* Start download or show form. */
+		if ($form->isValid())
+		{
+			/* Gather rules in the export format. */
+			$em = $this->getDoctrine()->getManager();
+			$rules = $em->getRepository('SwdAnalyzerBundle:WhitelistRule')->findAllByExport($export)->getResult();
+
+			$rulesJson = array();
+
+			foreach ($rules as $rule)
+			{
+				$ruleJson['path'] = $rule->getPath();
+				$ruleJson['caller'] = $rule->getCaller();
+
+				if ($export->getBase())
+				{
+					$ruleJson['caller'] = str_replace($export->getBase(), '{BASE}', $ruleJson['caller']);
+				}
+
+				$ruleJson['min_length'] = $rule->getMinLength();
+				$ruleJson['max_length'] = $rule->getMaxLength();
+				$ruleJson['filter'] = $rule->getFilter()->getId();
+
+				$rulesJson[] = $ruleJson;
+			}
+
+			/* Create a download response. */
+			$response = new Response(
+				json_encode($rulesJson, JSON_PRETTY_PRINT),
+				Response::HTTP_OK,
+				array('content-type' => 'text/plain')
+			);
+
+			$disposition = $response->headers->makeDisposition(
+				ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+				date('Ymd_His') . '_shadowd_rules.txt'
+			);
+
+			$response->headers->set('Content-Disposition', $disposition);
+
+			return $response;
+		}
+		else
+		{
+			/* Render template. */
+			return $this->render(
+				'SwdAnalyzerBundle:Whitelist:export.html.twig',
 				array(
 					'form' => $form->createView()
 				)
