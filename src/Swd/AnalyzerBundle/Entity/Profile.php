@@ -54,7 +54,7 @@ class Profile
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="server_ip", type="text", unique=true)
+	 * @ORM\Column(name="server_ip", type="text")
 	 *
 	 * @Assert\NotBlank()
 	 */
