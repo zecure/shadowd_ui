@@ -30,8 +30,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="profiles")
  * @ORM\Entity(repositoryClass="Swd\AnalyzerBundle\Entity\ProfileRepository")
- *
- * @UniqueEntity("serverIP")
  */
 class Profile
 {
