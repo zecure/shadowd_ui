@@ -17,7 +17,9 @@
         <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
         {% if is_granted('ROLE_ADMIN') %}<th>{{ knp_pagination_sortable(profiles, 'Key', 'v.key') }}</th>{% endif %}
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Status', 'v.learning') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Learning', 'v.learningEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Whitelist', 'v.whitelistEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist', 'v.blacklistEnabled') }}</th>
         <th># Learning Requests</th>
         <th># Productive Requests</th>
         {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
@@ -34,8 +36,18 @@
         {% if is_granted('ROLE_ADMIN') %}<td>{{ profile.getKey }}</td>{% endif %}
         <td>{{ profile.getThreshold }}</td>
         <td>
-          {% if profile.getLearning == 0 %} {{ label_success('Productive') }}
-          {% elseif profile.getLearning == 1 %} {{ label_danger('Learning') }}
+          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
+          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled') }}
+          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled') }}
+          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled') }}
           {% endif %}
         </td>
         <td>{{ profile.getLearningRequests }}</td>

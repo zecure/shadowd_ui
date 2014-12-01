@@ -33,7 +33,9 @@ class ProfileType extends AbstractType
 			->add('serverIP', null, array('label' => 'Server IP'))
 			->add('name')
 			->add('key')
-			->add('learning', 'choice', array('choices' => array('1' => 'Activated', '0' => 'Deactivated')))
+			->add('learningEnabled', 'choice', array('label' => 'Learning', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
+			->add('whitelistEnabled', 'choice', array('label' => 'Whitelist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
+			->add('blacklistEnabled', 'choice', array('label' => 'Blacklist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('threshold', null, array('label' => 'Blacklist Threshold'))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}

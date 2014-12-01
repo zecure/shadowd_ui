@@ -64,11 +64,23 @@ class ProfileController extends Controller
 
 				switch ($profileSelector->getSubaction())
 				{
-					case 'activatelearning':
-						$profile->setLearning(1);
+					case 'enablelearning':
+						$profile->setLearningEnabled(1);
 						break;
-					case 'deactivatelearning':
-						$profile->setLearning(0);
+					case 'disablelearning':
+						$profile->setLearningEnabled(0);
+						break;
+					case 'enablewhitelist':
+						$profile->setWhitelistEnabled(1);
+						break;
+					case 'disablewhitelist':
+						$profile->setWhitelistEnabled(0);
+						break;
+					case 'enableblacklist':
+						$profile->setBlacklistEnabled(1);
+						break;
+					case 'disableblacklist':
+						$profile->setBlacklistEnabled(0);
 						break;
 					case 'deletelearning':
 						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndLearning($profile, 1)->getResult();

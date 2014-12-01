@@ -79,7 +79,7 @@ class Profile
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="learning", type="smallint")
+	 * @ORM\Column(name="learning_enabled", type="smallint")
 	 *
 	 * @Assert\Range(
 	 *	  min = 0,
@@ -87,7 +87,33 @@ class Profile
 	 * )
 	 * @Assert\NotBlank()
 	 */
-	private $learning;
+	private $learningEnabled;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="whitelist_enabled", type="smallint")
+	 *
+	 * @Assert\Range(
+	 *	  min = 0,
+	 *	  max = 1
+	 * )
+	 * @Assert\NotBlank()
+	 */
+	private $whitelistEnabled;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="blacklist_enabled", type="smallint")
+	 *
+	 * @Assert\Range(
+	 *	  min = 0,
+	 *	  max = 1
+	 * )
+	 * @Assert\NotBlank()
+	 */
+	private $blacklistEnabled;
 
 	/**
 	 * @var integer
@@ -129,6 +155,8 @@ class Profile
 		$this->requests = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
 		$this->date = new \DateTime();
+		$this->whitelistEnabled = 1;
+		$this->blacklistEnabled = 1;
 	}
 
 	public function getId()
@@ -189,16 +217,40 @@ class Profile
 		return $this->key;
 	}
 
-	public function setLearning($learning)
+	public function setLearningEnabled($learningEnabled)
 	{
-		$this->learning = $learning;
+		$this->learningEnabled = $learningEnabled;
 
 		return $this;
 	}
 
-	public function getLearning()
+	public function getLearningEnabled()
 	{
-		return $this->learning;
+		return $this->learningEnabled;
+	}
+
+	public function setWhitelistEnabled($whitelistEnabled)
+	{
+		$this->whitelistEnabled = $whitelistEnabled;
+
+		return $this;
+	}
+
+	public function getWhitelistEnabled()
+	{
+		return $this->whitelistEnabled;
+	}
+
+	public function setBlacklistEnabled($blacklistEnabled)
+	{
+		$this->blacklistEnabled = $blacklistEnabled;
+
+		return $this;
+	}
+
+	public function getBlacklistEnabled()
+	{
+		return $this->blacklistEnabled;
 	}
 
 	public function setThreshold($threshold)
