@@ -13,7 +13,9 @@
     <thead>
       <tr>
         <th>Profile</th>
-        <th>Status</th>
+        <th>Learning</th>
+        <th>Whitelist</th>
+        <th>Blacklist</th>
         <th>Last Request</th>
       </tr>
     </thead>
@@ -22,8 +24,18 @@
       <tr>
         <td>{{ profile.getName }}</td>
         <td>
-          {% if profile.getLearning == 0 %} {{ label_success('Productive') }}
-          {% elseif profile.getLearning == 1 %} {{ label_danger('Learning') }}
+          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
+          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled') }}
+          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled') }}
+          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled') }}
           {% endif %}
         </td>
         {% set foo = profile.getRequests|last %}
