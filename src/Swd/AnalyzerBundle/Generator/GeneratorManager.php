@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Shadow Daemon -- High-Interaction Web Honeypot
+/**
+ * Shadow Daemon -- Web Application Firewall
  *
  *   Copyright (C) 2014 Hendrik Buchwald <hb@zecure.org>
  *
@@ -119,7 +119,7 @@ class GeneratorManager
 				$rule->setStatus(3);
 				$rule->setDate(new \DateTime());
 
-				/*
+				/**
 				 * If the variance is near zero we can use the average length as min and max length.
 				 * If the variance is a bit higher but no really high we can calculate a max length.
 				 * If the variance is too high it is not possible to set a min or max length.
@@ -140,7 +140,7 @@ class GeneratorManager
 					$rule->setMaxLength(-1);
 				}
 
-				/*
+				/**
 				 * Next we determine the filter. If almost every request used the same filter we can take that filter.
 				 * If this is not the case and there is no clear "winner" we have to take the "everything" filter.
 				 */
