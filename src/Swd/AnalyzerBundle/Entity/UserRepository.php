@@ -97,4 +97,12 @@ class UserRepository extends EntityRepository
 
 		return $builder->getQuery();
 	}
+
+	public function findByEmail()
+	{
+		$builder = $this->createQueryBuilder('u')
+			->where('u.email IS NOT NULL');
+
+		return $builder->getQuery();
+	}
 }

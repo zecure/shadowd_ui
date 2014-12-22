@@ -48,6 +48,10 @@ assetic:
             apply_to: "\.less$"
         cssrewrite: ~
 
+# Swiftmailer Configuration
+swiftmailer:
+    transport:  mail
+
 # Doctrine Configuration
 doctrine:
     dbal:

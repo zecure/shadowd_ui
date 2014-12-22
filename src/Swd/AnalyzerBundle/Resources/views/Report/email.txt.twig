@@ -1,0 +1,7 @@
+There were {{ requests|length }} attack(s) in total.
+
+Summary:
+========
+{% for request in requests %}
+{{ request.getProfile.getName }} | {{ request.getDate|date('Y-m-d H:i') }} | {{ request.getCaller }} | {{ request.getClientIp }}
+{% endfor %}

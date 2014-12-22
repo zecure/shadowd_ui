@@ -123,6 +123,15 @@ class RequestRepository extends EntityRepository
 		return $builder->getQuery();
 	}
 
+	public function findByDate($date)
+	{
+		$builder = $this->createQueryBuilder('r')
+			->where('r.learning = 0')
+			->andWhere('r.date > :date')->setParameter(':date', $date);
+
+		return $builder->getQuery();
+	}
+
 	public function deleteByProfileAndLearning($profile, $learning)
 	{
 		$builder = $this->createQueryBuilder('r')
@@ -130,7 +139,7 @@ class RequestRepository extends EntityRepository
 			->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
 			->delete();
 
-		return $builder->getQuery();
+		return $builder->getQuery()->getResult();
 	}
 
 	public function countByProfileAndLearning($profile, $learning)
