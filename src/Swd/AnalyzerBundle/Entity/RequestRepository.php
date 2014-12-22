@@ -139,7 +139,7 @@ class RequestRepository extends EntityRepository
 			->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
 			->delete();
 
-		return $builder->getQuery()->getResult();
+		return $builder->getQuery();
 	}
 
 	public function countByProfileAndLearning($profile, $learning)
