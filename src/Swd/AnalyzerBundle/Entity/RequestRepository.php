@@ -132,6 +132,15 @@ class RequestRepository extends EntityRepository
 		return $builder->getQuery();
 	}
 
+	public function deleteByDate($date)
+	{
+		$builder = $this->createQueryBuilder('r')
+			->where('r.date < :date')->setParameter(':date', $date)
+			->delete();
+
+		return $builder->getQuery();
+	}
+
 	public function deleteByProfileAndLearning($profile, $learning)
 	{
 		$builder = $this->createQueryBuilder('r')
