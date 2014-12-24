@@ -14,6 +14,26 @@ swd_analyzer_parameter_show:
     path:     /parameter/{id}
     defaults: { _controller: SwdAnalyzerBundle:Parameter:show }
 
+swd_analyzer_blacklist_rules:
+    path:     /blacklist/rules
+    defaults: { _controller: SwdAnalyzerBundle:Blacklist:list }
+
+swd_analyzer_blacklist_add_rule:
+    path:     /blacklist/rule
+    defaults: { _controller: SwdAnalyzerBundle:Blacklist:add }
+
+swd_analyzer_blacklist_edit_rule:
+    path:     /blacklist/rule/{id}
+    defaults: { _controller: SwdAnalyzerBundle:Blacklist:edit }
+
+swd_analyzer_blacklist_import:
+    path:     /blacklist/import
+    defaults: { _controller: SwdAnalyzerBundle:Blacklist:import }
+
+swd_analyzer_blacklist_export:
+    path:     /blacklist/export
+    defaults: { _controller: SwdAnalyzerBundle:Blacklist:export }
+
 swd_analyzer_whitelist_rules:
     path:     /whitelist/rules
     defaults: { _controller: SwdAnalyzerBundle:Whitelist:list }

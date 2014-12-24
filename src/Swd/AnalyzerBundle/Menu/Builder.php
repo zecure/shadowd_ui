@@ -35,7 +35,8 @@ class Builder extends ContainerAware
 			$menu->addChild('Home', array('route' => 'swd_analyzer_home'));
 			$menu->addChild('Requests', array('route' => 'swd_analyzer_requests_list'));
 			$menu->addChild('Parameters', array('route' => 'swd_analyzer_parameters_list'));
-			$menu->addChild('Rules', array('route' => 'swd_analyzer_whitelist_rules'));
+			$menu->addChild('Blacklist', array('route' => 'swd_analyzer_blacklist_rules'));
+			$menu->addChild('Whitelist', array('route' => 'swd_analyzer_whitelist_rules'));
 			$menu->addChild('Profiles', array('route' => 'swd_analyzer_profiles_list'));
 
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))

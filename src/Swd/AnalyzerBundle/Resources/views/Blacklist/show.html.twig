@@ -1,0 +1,28 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}Blacklist Rule{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>Blacklist Rule</h1>
+</div>
+<div class="col-md-8">
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.profile) }}
+    {{ form_row(form.caller) }}
+    {{ form_row(form.path) }}
+    {{ form_row(form.threshold) }}
+    {{ form_row(form.status) }}
+    {{ form_row(form.actions) }}
+  {{ form_end(form) }}
+</div>
+<div class="col-md-4 blacklist-rule-information">
+  <div class="alert alert-info blacklist-rule-information">
+    If you do not wish to enable the blacklist set the threshold to -1.
+  </div>
+</div>
+{% endblock %}

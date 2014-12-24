@@ -135,6 +135,11 @@ class Profile
 	protected $requests;
 
 	/**
+	 * @ORM\OneToMany(targetEntity="BlacklistRule", mappedBy="profile")
+	 */
+	protected $blacklistRules;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="WhitelistRule", mappedBy="profile")
 	 */
 	protected $whitelistRules;
@@ -153,6 +158,7 @@ class Profile
 	public function __construct()
 	{
 		$this->requests = new ArrayCollection();
+		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
 		$this->date = new \DateTime();
 		$this->whitelistEnabled = 1;
@@ -280,6 +286,23 @@ class Profile
 	public function getRequests()
 	{
 		return $this->requests;
+	}
+
+	public function addBlacklistRules(\Swd\AnalyzerBundle\Entity\BlacklistRule $blacklistRule)
+	{
+		$this->blacklistRules[] = $blacklistRule;
+
+		return $this;
+	}
+
+	public function removeBlacklistRule(\Swd\AnalyzerBundle\Entity\BlacklistRule $blacklistRule)
+	{
+		$this->blacklistRules->removeElement($blacklistRule);
+	}
+
+	public function getBlacklistRules()
+	{
+		return $this->blacklistRules;
 	}
 
 	public function addWhitelistRules(\Swd\AnalyzerBundle\Entity\WhitelistRule $whitelistRule)
