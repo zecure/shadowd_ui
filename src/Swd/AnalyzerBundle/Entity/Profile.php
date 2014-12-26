@@ -157,6 +157,7 @@ class Profile
 
 	public function __construct()
 	{
+		$this->threshold = 20;
 		$this->requests = new ArrayCollection();
 		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
