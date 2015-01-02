@@ -2,7 +2,7 @@
   {% if limit == size %}
       <li class="active"><span>{{ size }}</span></li>
   {% else %}
-      <li><a href="{{ mergePath({'limit': size}) }}">{{ size }}</a></li>
+      <li><a href="{{ mergePath({'limit': size}, true) }}">{{ size }}</a></li>
   {% endif %}
 {% endmacro %}
 

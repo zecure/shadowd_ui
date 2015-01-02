@@ -54,7 +54,7 @@ class MergePathExtension extends \Twig_Extension
 		return array_filter($input);
 	}
 
-	public function mergePath($input)
+	public function mergePath($input, $disableFilter = false)
 	{
 		$router = $this->container->get('router');
 		$request = $this->container->get('request');
@@ -77,7 +77,7 @@ class MergePathExtension extends \Twig_Extension
 		$url = $router->generate($routeName, $result);
 
 		/* Check if the filter hashtag should be appended for the js. */
-		if ($this->getUser()->getSetting()->getOpenFilter())
+		if (!$disableFilter && $this->getUser()->getSetting()->getOpenFilter())
 		{
 			$url .= '#filters';
 		}
