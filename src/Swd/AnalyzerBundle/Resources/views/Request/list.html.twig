@@ -36,7 +36,7 @@
         <td title="{{ request.getCaller }}"><a href="{{ mergePath({'request_filter': {'searchCallers': [request.getCaller]}}) }}">{{ request.getCaller|truncate(50) }}</a></td>
         <td><a href="{{ mergePath({'request_filter': {'searchClientIPs': [request.getClientIP]}}) }}">{{ request.getClientIP }}</a></td>
         <td>{{ request.getParameters.count }}</td>
-        <td class="icons"><a href="{{ path('swd_analyzer_parameters_list', {'parameter_filter[requestId]': request.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/magnifying-glass.svg') }}" title="Show details" /></a>
+        <td class="icons"><a href="{{ path('swd_analyzer_parameters_list', {'parameter_filter[requestId]': request.getId}) }}{% if app.user.getSetting.getOpenFilter %}#filters{% endif %}"><img src="{{ asset('bundles/swdanalyzer/images/icons/magnifying-glass.svg') }}" title="Show details" /></a>
       </tr>
       {% endfor %}
     </tbody>
