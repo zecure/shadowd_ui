@@ -37,7 +37,7 @@ class ReportCommand extends ContainerAwareCommand
 			->setDescription('Send a report about recent attacks via email.')
 			->addOption(
 				'time_frame',
-				'T',
+				't',
 				InputOption::VALUE_OPTIONAL,
 				'Set the time frame of the report.',
 				'-24 hours'

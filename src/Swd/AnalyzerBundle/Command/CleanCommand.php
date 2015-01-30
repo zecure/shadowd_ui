@@ -37,7 +37,7 @@ class CleanCommand extends ContainerAwareCommand
 			->setDescription('Delete old requests from the database.')
 			->addOption(
 				'time_frame',
-				'T',
+				't',
 				InputOption::VALUE_OPTIONAL,
 				'Set the time frame.',
 				'-1 month'
