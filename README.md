@@ -19,6 +19,6 @@ Composer is an executable PHAR file which will download all dependencies and it 
 
 Now you are able to add a new admin user:
 
-    php app/console swd:register --admin <name> <email>
+    php app/console swd:register --env=prod --admin --name=arg (--email=arg)
 
 Make sure that *app/cache* and *app/logs* are writeable by the web server user.

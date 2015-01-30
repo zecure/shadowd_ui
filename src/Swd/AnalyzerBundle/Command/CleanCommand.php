@@ -34,10 +34,10 @@ class CleanCommand extends ContainerAwareCommand
 	{
 		$this
 			->setName('swd:clean')
-			->setDescription('Delete old requests from the database')
+			->setDescription('Delete old requests from the database.')
 			->addOption(
 				'time_frame',
-				't',
+				'T',
 				InputOption::VALUE_OPTIONAL,
 				'Set the time frame.',
 				'-1 month'

@@ -34,10 +34,10 @@ class ReportCommand extends ContainerAwareCommand
 	{
 		$this
 			->setName('swd:report')
-			->setDescription('Send a report about recent attacks via email')
+			->setDescription('Send a report about recent attacks via email.')
 			->addOption(
 				'time_frame',
-				't',
+				'T',
 				InputOption::VALUE_OPTIONAL,
 				'Set the time frame of the report.',
 				'-24 hours'

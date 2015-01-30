@@ -34,10 +34,25 @@ class RegisterCommand extends ContainerAwareCommand
 	{
 		$this
 			->setName('swd:register')
-			->setDescription('Register a new account')
-			->addArgument('name', InputArgument::REQUIRED, 'Login name')
-			->addArgument('email', InputArgument::OPTIONAL, 'E-mail address')
-			->addOption('admin', null, InputOption::VALUE_NONE, 'If set, the user will be an admin');
+			->setDescription('Register a new account.')
+			->addOption(
+				'name',
+				'N',
+				InputOption::VALUE_REQUIRED,
+				'Set the login name.'
+			)
+			->addOption(
+				'email',
+				'E',
+				InputOption::VALUE_OPTIONAL,
+				'Set the e-mail address.'
+			)
+			->addOption(
+				'admin',
+				'A',
+				InputOption::VALUE_NONE,
+				'If set the user will be an admin.'
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,8 +64,8 @@ class RegisterCommand extends ContainerAwareCommand
 		$setting = new Setting();
 		$setting->setUser($user);
 
-		$user->setUsername($input->getArgument('name'));
-		$user->setEmail($input->getArgument('email'));
+		$user->setUsername($input->getOption('name'));
+		$user->setEmail($input->getOption('email'));
 		$user->setPassword($password);
 		$user->setRole($input->getOption('admin') ? 1 : 0);
 
