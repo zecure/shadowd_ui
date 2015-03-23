@@ -17,6 +17,8 @@
         <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
         {% if is_granted('ROLE_ADMIN') %}<th>{{ knp_pagination_sortable(profiles, 'Key', 'v.key') }}</th>{% endif %}
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding Time (min.)', 'v.floodingTime') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding Threshold', 'v.floodingThreshold') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Learning', 'v.learningEnabled') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Whitelist', 'v.whitelistEnabled') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist', 'v.blacklistEnabled') }}</th>
@@ -35,6 +37,8 @@
         <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
         {% if is_granted('ROLE_ADMIN') %}<td>{{ profile.getKey }}</td>{% endif %}
         <td>{{ profile.getThreshold }}</td>
+        <td>{{ profile.getFloodingTime }}</td>
+        <td>{{ profile.getFloodingThreshold }}</td>
         <td>
           {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
           {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}

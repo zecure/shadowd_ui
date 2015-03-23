@@ -129,6 +129,24 @@ class Profile
 	private $threshold;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="flooding_time", type="integer")
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $floodingTime;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="flooding_threshold", type="integer")
+	 *
+	 * @Assert\NotBlank()
+	 */
+	private $floodingThreshold;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="Request", mappedBy="profile")
 	 * @ORM\OrderBy({"date" = "ASC"})
 	 */
@@ -158,6 +176,8 @@ class Profile
 	public function __construct()
 	{
 		$this->threshold = 20;
+		$this->floodingTime = 1;
+		$this->floodingThreshold = 5;
 		$this->requests = new ArrayCollection();
 		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
@@ -270,6 +290,30 @@ class Profile
 	public function getThreshold()
 	{
 		return $this->threshold;
+	}
+
+	public function setFloodingTime($floodingTime)
+	{
+		$this->floodingTime = $floodingTime;
+
+		return $this;
+	}
+
+	public function getFloodingTime()
+	{
+		return $this->floodingTime;
+	}
+
+	public function setFloodingThreshold($floodingThreshold)
+	{
+		$this->floodingThreshold = $floodingThreshold;
+
+		return $this;
+	}
+
+	public function getFloodingThreshold()
+	{
+		return $this->floodingThreshold;
 	}
 
 	public function addRequest(\Swd\AnalyzerBundle\Entity\Request $request)
