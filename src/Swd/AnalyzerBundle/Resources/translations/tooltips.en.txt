@@ -4,5 +4,5 @@ You can directly click on most table entries to add a new filter. This saves a l
 You can use asterisks as wildcards for most text based filters.
 Shadow Daemon is very flexible and works for most web applications. In many cases no source code changes are required, the connector plugin can be directly loaded at the execution of a script.
 You can change the default values like the number of entries per page or the sort order in the settings. Other users are not affected.
-The blacklist filters are very sensetive and have a high rate of false positives. That is the reason why the impacts of all matching filters are added together. Only if the sum is bigger than a threshold it is classified as attack. The threshold can differ from profile to profile.
+The blacklist filters are very sensitive and have a high rate of false positives. That is the reason why the impacts of all matching filters are added together. Only if the sum is bigger than a threshold it is classified as attack. The threshold can differ from profile to profile.
 Rules and filters are only checked when a request arrives. So if you add or edit a rule after the request is saved in the database it will not be marked as a threat.
