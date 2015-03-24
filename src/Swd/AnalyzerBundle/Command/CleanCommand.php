@@ -49,5 +49,6 @@ class CleanCommand extends ContainerAwareCommand
 		$em = $this->getContainer()->get('doctrine')->getManager();
 		$date = new \DateTime($input->getOption('time_frame'));
 		$requests = $em->getRepository('SwdAnalyzerBundle:Request')->deleteByDate($date)->getResult();
+		$em->flush();
 	}
 }
