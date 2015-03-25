@@ -37,8 +37,20 @@
         <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
         {% if is_granted('ROLE_ADMIN') %}<td>{{ profile.getKey }}</td>{% endif %}
         <td>{{ profile.getThreshold }}</td>
-        <td>{{ profile.getFloodingTime }}</td>
-        <td>{{ profile.getFloodingThreshold }}</td>
+        <td>
+          {% if profile.getFloodingTime <= 0 %}
+            {{ label_danger('Protection disabled') }}
+          {% else %}
+            {{ profile.getFloodingTime }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getFloodingThreshold <= 0 %}
+            {{ label_danger('Protection disabled') }}
+          {% else %}
+            {{ profile.getFloodingThreshold }}
+          {% endif %}
+        </td>
         <td>
           {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
           {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}

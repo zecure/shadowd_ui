@@ -121,7 +121,7 @@ class Profile
 	 * @ORM\Column(name="threshold", type="integer")
 	 *
 	 * @Assert\Range(
-	 *	  min = 1,
+	 *	  min = 0,
 	 *	  max = 100
 	 * )
 	 * @Assert\NotBlank()
@@ -133,6 +133,9 @@ class Profile
 	 *
 	 * @ORM\Column(name="flooding_time", type="integer")
 	 *
+	 * @Assert\Range(
+	 *	  min = 1
+	 * )
 	 * @Assert\NotBlank()
 	 */
 	private $floodingTime;
