@@ -63,10 +63,16 @@ class GeneratorSettings
 	 */
 	private $searchPaths;
 
+	/**
+	 * @var boolean
+	 */
+	private $unifyArrays;
+
 
 	public function __construct()
 	{
 		$this->searchPaths = new ArrayCollection();
+		$this->unifyArrays = true;
 	}
 
 	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
@@ -115,5 +121,17 @@ class GeneratorSettings
 	public function getSearchPaths()
 	{
 		return $this->searchPaths;
+	}
+
+	public function setUnifyArrays($unifyArrays)
+	{
+		$this->unifyArrays = $unifyArrays;
+
+		return $this;
+	}
+
+	public function getUnifyArrays()
+	{
+		return $this->unifyArrays;
 	}
 }

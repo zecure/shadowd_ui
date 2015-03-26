@@ -36,6 +36,7 @@ class GeneratorSettingsType extends AbstractType
 			->add('minUniqueVisitors', 'integer', array('label' => 'Min. Unique Visitors'))
 			->add('minFilterDominance', 'integer', array('label' => 'Min. Filter Dominance'))
 			->add('searchPaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+			->add('unifyArrays', 'checkbox', array('required' => false, 'label' => 'Unify Arrays'))
 			->add('actions', 'form_actions', array('buttons' => array('generate' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 

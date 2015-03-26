@@ -55,6 +55,28 @@ class GeneratorManager
 		throw new Exception('The whitelist filter table seems to be damaged.');
 	}
 
+	private function splitPath($path) {
+		return preg_split('/\\\\.(*SKIP)(*FAIL)|\|/s', $path);
+	}
+
+	public function unifyArray($path)
+	{
+		$pathes = $this->splitPath($path);
+
+		/* A path with 2 parts is not an array. */
+		if (count($pathes) === 2)
+		{
+			return $path;
+		}
+
+		/* Replace last item with asterisk. */
+		array_pop($pathes);
+		array_push($pathes, '*');
+
+		/* Return new path as string. */
+		return implode('|', $pathes);
+	}
+
 	public function normalizeCaller($path, $caller)
 	{
 		/* SERVER and COOKIE input should be valid for all callers. */
@@ -76,11 +98,12 @@ class GeneratorManager
 		foreach ($parameters as $parameter)
 		{
 			$request = $parameter->getRequest();
-			$caller = $this->normalizeCaller($parameter->getPath(), $request->getCaller());
+			$path = ($settings->getUnifyArrays() ? $this->unifyArray($parameter->getPath()) : $parameter->getPath());
+			$caller = $this->normalizeCaller($path, $request->getCaller());
 
 			/* Get existing stat object for this (caller, path) or create a new one. */
-			$stat = (isset($this->statistics[$caller][$parameter->getPath()]) ?
-				$this->statistics[$caller][$parameter->getPath()] :
+			$stat = (isset($this->statistics[$caller][$path]) ?
+				$this->statistics[$caller][$path] :
 				new ParameterStatistic()
 			);
 
@@ -90,7 +113,7 @@ class GeneratorManager
 			/* Increase the counters. This has to happen last. */
 			$stat->increaseCounter($request->getClientIP());
 
-			$this->statistics[$caller][$parameter->getPath()] = $stat;
+			$this->statistics[$caller][$path] = $stat;
 		}
 	}
 
