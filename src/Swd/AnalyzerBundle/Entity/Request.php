@@ -190,7 +190,7 @@ class Request
 		/* Check if broken whitelist rule. */
 		foreach ($this->getParameters() as $parameter)
 		{
-			if (!empty($parameter->getBrokenRules()))
+			if ($parameter->getBrokenRules()->count() > 0)
 			{
 				$reasons[] = 'anomaly';
 				break;
