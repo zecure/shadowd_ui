@@ -172,4 +172,78 @@ class Request
 	{
 		return $this->profile;
 	}
+
+	public function getReasons()
+	{
+		$reasons = array();
+
+		/* Check if no whitelist rule. */
+		foreach ($this->getParameters() as $parameter)
+		{
+			if ($parameter->getTotalRules() === 0)
+			{
+				$reasons[] = 'unknown';
+				break;
+			}
+		}
+
+		/* Check if broken whitelist rule. */
+		foreach ($this->getParameters() as $parameter)
+		{
+			if (!empty($parameter->getBrokenRules()))
+			{
+				$reasons[] = 'anomaly';
+				break;
+			}
+		}
+
+		/* Count tags. */
+		$tags = array();
+
+		foreach ($this->getParameters() as $parameter)
+		{
+			foreach ($parameter->getMatchingFilters() as $filter)
+			{
+				foreach ($filter->getTags() as $tag)
+				{
+					if (isset($tags[$tag->getTag()]))
+					{
+						$tags[$tag->getTag()]++;
+					}
+					else
+					{
+						$tags[$tag->getTag()] = 1;
+					}
+				}
+			}
+		}
+
+		/* Add most likely tags. */
+		if (!empty($tags))
+		{
+			array_multisort($tags, SORT_DESC);
+
+			$totalTags = array_sum($tags);
+			$counter = 0;
+
+			foreach ($tags as $key => $value)
+			{
+				/* Limit the amount of tags. */
+				if ($counter++ > 2)
+				{
+					break;
+				}
+
+				/* Filter out unrealistic tags. */
+				if (($value / $totalTags) < 0.2)
+				{
+					break;
+				}
+
+				$reasons[] = $key;
+			}
+		}
+
+		return $reasons;
+	}
 }
