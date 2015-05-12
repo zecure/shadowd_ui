@@ -31,8 +31,8 @@ class UserType extends AbstractType
 	{
 		$builder
 			->add('username')
-			->add('password', 'password')
-			->add('email')
+			->add('password', 'password', array('attr' => array('autocomplete' => 'off')))
+			->add('email', null, array('required' => false))
 			->add('role', 'choice', array('choices' => array('0' => 'User', '1' => 'Admin')))
 			->add('changePassword', 'checkbox', array('required' => false, 'label' => 'Demand password change on login'))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));

@@ -32,7 +32,7 @@ class ProfileType extends AbstractType
 		$builder
 			->add('serverIP', null, array('label' => 'Server IP'))
 			->add('name')
-			->add('key')
+			->add('key', 'password', array('attr' => array('autocomplete' => 'off')))
 			->add('learningEnabled', 'choice', array('label' => 'Learning', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('whitelistEnabled', 'choice', array('label' => 'Whitelist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('blacklistEnabled', 'choice', array('label' => 'Blacklist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))

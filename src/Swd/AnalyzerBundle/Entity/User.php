@@ -49,7 +49,8 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @ORM\Column(type="string")
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"add"})
+	 * @Assert\Length(min=5, groups={"add"})
 	 */
 	private $password;
 

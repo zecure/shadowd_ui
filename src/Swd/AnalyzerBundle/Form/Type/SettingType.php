@@ -63,6 +63,28 @@ class SettingType extends AbstractType
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$resolver->setDefaults(array(
+			'csrf_protection' => true,
+			'csrf_field_name' => '_token',
+			'validation_groups' =>
+				function($form)
+				{
+					$settings = $form->getData();
+
+					if (empty($settings->getOldPassword()))
+					{
+						return array('Default');
+					}
+					else
+					{
+						return array('Default', 'change_password');
+					}
+				}
+		));
+	}
+
 	public function getName()
 	{
 		return 'setting_defaults';

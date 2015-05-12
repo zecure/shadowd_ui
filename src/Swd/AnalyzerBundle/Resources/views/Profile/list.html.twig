@@ -15,7 +15,6 @@
         <th>{{ knp_pagination_sortable(profiles, 'Modified', 'v.date') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Server IP', 'v.serverIP') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
-        {% if is_granted('ROLE_ADMIN') %}<th>{{ knp_pagination_sortable(profiles, 'Key', 'v.key') }}</th>{% endif %}
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding Time (min.)', 'v.floodingTime') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding Threshold', 'v.floodingThreshold') }}</th>
@@ -35,7 +34,6 @@
         <td>{{ profile.getDate|date('Y-m-d H:i') }}</td>
         <td><a href="{{ mergePath({'profile_filter': {'searchServerIPs': [profile.getServerIP]}}) }}">{{ profile.getServerIP }}</a></td>
         <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
-        {% if is_granted('ROLE_ADMIN') %}<td>{{ profile.getKey }}</td>{% endif %}
         <td>{{ profile.getThreshold }}</td>
         <td>
           {% if profile.getFloodingTime <= 0 %}

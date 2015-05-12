@@ -72,7 +72,8 @@ class Profile
 	 *
 	 * @ORM\Column(name="hmac_key", type="text")
 	 *
-	 * @Assert\NotBlank()
+	 * @Assert\NotBlank(groups={"add"})
+	 * @Assert\Length(min=5, groups={"add"})
 	 */
 	private $key;
 

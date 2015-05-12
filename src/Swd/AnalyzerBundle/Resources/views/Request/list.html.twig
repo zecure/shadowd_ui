@@ -13,7 +13,6 @@
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
         <th>{{ knp_pagination_sortable(requests, 'Request ID', 'r.id') }}</th>
         <th>{{ knp_pagination_sortable(requests, 'Profile ID', 'v.id') }}</th>
-        <th>{{ knp_pagination_sortable(requests, 'Learning', 'r.learning') }}</th>
         <th>{{ knp_pagination_sortable(requests, 'Date', 'r.date') }}</th>
         <th>{{ knp_pagination_sortable(requests, 'Caller', 'r.caller') }}</th>
         <th>{{ knp_pagination_sortable(requests, 'Client IP', 'r.clientIP') }}</th>
@@ -27,11 +26,6 @@
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ request.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
         <td><a href="{{ mergePath({'request_filter': {'requestId': request.getId}}) }}">{{ request.getId }}</a></td>
         <td><a href="{{ mergePath({'request_filter': {'profileId': request.getProfile.getId}}) }}">{{ request.getProfile.getId }} ({{ request.getProfile.getName }})</a></td>
-        <td>
-          <a href="{{ mergePath({'request_filter': {'learning': request.getLearning}}) }}">
-            {% if request.getLearning == 0 %}Deactivated{% elseif request.getLearning == 1 %}Activated{% endif %}
-          </a>
-        </td>
         <td>{{ request.getDate|date('Y-m-d H:i') }}</td>
         <td title="{{ request.getCaller }}"><a href="{{ mergePath({'request_filter': {'searchCallers': [request.getCaller]}}) }}">{{ request.getCaller|truncate(50) }}</a></td>
         <td><a href="{{ mergePath({'request_filter': {'searchClientIPs': [request.getClientIP]}}) }}">{{ request.getClientIP }}</a></td>

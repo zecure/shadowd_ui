@@ -80,10 +80,13 @@ class Setting
 	private $user;
 
 	/**
+	 * @Assert\NotBlank(groups={"change_password"})
 	 */
 	private $oldPassword;
 
 	/**
+	 * @Assert\NotBlank(groups={"change_password"})
+	 * @Assert\Length(min=5, groups={"change_password"})
 	 */
 	private $newPassword;
 

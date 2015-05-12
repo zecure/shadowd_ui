@@ -141,7 +141,7 @@ class ProfileController extends Controller
 	{
 		/* Handle form. */
 		$profile = new Profile();
-		$form = $this->createForm(new ProfileType(), $profile);
+		$form = $this->createForm(new ProfileType(), $profile, array('validation_groups' => array('Default', 'add')));
 		$form->handleRequest($this->get('request'));
 
 		/* Insert and redirect or show the form. */
@@ -176,14 +176,21 @@ class ProfileController extends Controller
 			throw $this->createNotFoundException('No profile found for id ' . $id);
 		}
 
+		$oldKey = $profile->getKey();
+
 		/* Handle form. */
-		$form = $this->createForm(new ProfileType(), $profile);
+		$form = $this->createForm(new ProfileType(), $profile, array('required' => false, 'validation_groups' => array('Default', 'edit')));
 		$form->handleRequest($this->get('request'));
 
 		/* Update and redirect or show the form. */
 		if ($form->isValid())
 		{
 			$profile->setDate(new \DateTime());
+
+			if (empty($profile->getKey()))
+			{
+				$profile->setKey($oldKey);
+			}
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($profile);

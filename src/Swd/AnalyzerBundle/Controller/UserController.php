@@ -112,7 +112,7 @@ class UserController extends Controller
 		$setting = new Setting();
 		$setting->setUser($user);
 
-		$form = $this->createForm(new UserType(), $user);
+		$form = $this->createForm(new UserType(), $user, array('validation_groups' => array('Default', 'add')));
 		$form->handleRequest($this->get('request'));
 
 		/* Insert and redirect or show the form. */
@@ -151,7 +151,7 @@ class UserController extends Controller
 		$oldPassword = $user->getPassword();
 
 		/* Handle form. */
-		$form = $this->createForm(new UserType(), $user, array('required' => false));
+		$form = $this->createForm(new UserType(), $user, array('required' => false, 'validation_groups' => array('Default', 'edit')));
 		$form->handleRequest($this->get('request'));
 
 		/* Update and redirect or show the form. */
