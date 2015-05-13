@@ -179,7 +179,7 @@ class Profile
 
 	public function __construct()
 	{
-		$this->threshold = 20;
+		$this->threshold = 10;
 		$this->floodingTime = 1;
 		$this->floodingThreshold = 5;
 		$this->requests = new ArrayCollection();
