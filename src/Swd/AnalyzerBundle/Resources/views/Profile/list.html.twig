@@ -36,15 +36,11 @@
         <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
         <td>{{ profile.getThreshold }}</td>
         <td>
-          {% if profile.getFloodingTime <= 0 %}
-            {{ label_danger('Protection disabled') }}
-          {% else %}
-            {{ profile.getFloodingTime }}
-          {% endif %}
+          {{ profile.getFloodingTime }}
         </td>
         <td>
           {% if profile.getFloodingThreshold <= 0 %}
-            {{ label_danger('Protection disabled') }}
+            {{ label_danger('None') }}
           {% else %}
             {{ profile.getFloodingThreshold }}
           {% endif %}
