@@ -33,8 +33,8 @@ class WhitelistRuleType extends AbstractType
 			->add('profile', null, array('property' => 'getIdAndName'))
 			->add('caller')
 			->add('path')
-			->add('minLength', null, array('label' => 'Min. Length'))
-			->add('maxLength', null, array('label' => 'Max. Length'))
+			->add('minLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Min. Length'))
+			->add('maxLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Max. Length'))
 			->add('filter', 'entity', array('property' => 'getDescription', 'class' => 'SwdAnalyzerBundle:WhitelistFilter',
 				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('wf')->orderBy('wf.impact', 'ASC'); }
 			))

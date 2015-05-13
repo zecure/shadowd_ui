@@ -33,7 +33,7 @@ class BlacklistRuleType extends AbstractType
 			->add('profile', null, array('property' => 'getIdAndName'))
 			->add('caller')
 			->add('path')
-			->add('threshold')
+			->add('threshold', null, array('required' => false, 'empty_data' => '-1'))
 			->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
