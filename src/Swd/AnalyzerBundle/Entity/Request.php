@@ -202,6 +202,12 @@ class Request
 
 		foreach ($this->getParameters() as $parameter)
 		{
+			/* Do not add tags if impact is not critical. */
+			if (!$parameter->getCriticalImpact())
+			{
+				continue;
+			}
+
 			foreach ($parameter->getMatchingFilters() as $filter)
 			{
 				foreach ($filter->getTags() as $tag)
