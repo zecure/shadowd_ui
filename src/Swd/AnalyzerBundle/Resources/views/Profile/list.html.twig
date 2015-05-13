@@ -40,7 +40,7 @@
         </td>
         <td>
           {% if profile.getFloodingThreshold <= 0 %}
-            {{ label_danger('None') }}
+            {{ label_warning('No limitation') }}
           {% else %}
             {{ profile.getFloodingThreshold }}
           {% endif %}
