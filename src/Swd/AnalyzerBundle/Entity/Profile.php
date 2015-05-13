@@ -186,7 +186,8 @@ class Profile
 		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
 		$this->date = new \DateTime();
-		$this->whitelistEnabled = 1;
+		$this->learningEnabled = 0;
+		$this->whitelistEnabled = 0;
 		$this->blacklistEnabled = 1;
 	}
 
