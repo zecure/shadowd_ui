@@ -73,7 +73,7 @@ class SettingType extends AbstractType
 				{
 					$settings = $form->getData();
 
-					if (empty($settings->getOldPassword()))
+					if (!$settings->getOldPassword())
 					{
 						return array('Default');
 					}
