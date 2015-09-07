@@ -187,7 +187,7 @@ class ProfileController extends Controller
 		{
 			$profile->setDate(new \DateTime());
 
-			if (empty($profile->getKey()))
+			if (!$profile->getKey())
 			{
 				$profile->setKey($oldKey);
 			}
