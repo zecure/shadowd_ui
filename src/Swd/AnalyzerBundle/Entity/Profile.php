@@ -179,6 +179,7 @@ class Profile
 
 	public function __construct()
 	{
+		$this->serverIP = '*';
 		$this->threshold = 10;
 		$this->floodingTime = 1;
 		$this->floodingThreshold = 5;
