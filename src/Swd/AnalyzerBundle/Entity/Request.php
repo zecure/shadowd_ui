@@ -260,7 +260,7 @@ class Request
 				}
 
 				/* Filter out unrealistic tags. */
-				if (($value / $totalTags) < 0.1)
+				if (($value / $totalTags) < 0.5)
 				{
 					break;
 				}
