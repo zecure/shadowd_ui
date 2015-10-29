@@ -35,10 +35,12 @@ class RequestFilterType extends AbstractType
 			->add('profileId', 'integer', array('required' => false, 'label'  => 'Profile ID'))
 			->add('learning', 'choice', array('required' => false, 'choices' => array('1' => 'Activated', '0' => 'Deactivated')))
 			->add('searchCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+			->add('searchResources', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
 			->add('searchClientIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
 			->add('dateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('dateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('ignoreCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+			->add('ignoreResources', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
 			->add('ignoreClientIPs','bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}

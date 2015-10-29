@@ -55,7 +55,27 @@ class RequestFilter
 	/**
 	 * @var \ArrayCollection
 	 */
+	private $searchResources;
+
+	/**
+	 * @var \ArrayCollection
+	 */
 	private $searchClientIPs;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $ignoreCallers;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $ignoreResources;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $ignoreClientIPs;
 
 	/**
 	 * @var \DateTime
@@ -71,8 +91,10 @@ class RequestFilter
 	public function __construct()
 	{
 		$this->searchCallers = new ArrayCollection();
+		$this->searchResources = new ArrayCollection();
 		$this->searchClientIPs = new ArrayCollection();
 		$this->ignoreCallers = new ArrayCollection();
+		$this->ignoreResources = new ArrayCollection();
 		$this->ignoreClientIPs = new ArrayCollection();
 		$this->learning = 0;
 	}
@@ -154,6 +176,18 @@ class RequestFilter
 		return $this->searchCallers;
 	}
 
+	public function addSearchResource($resource)
+	{
+		$this->searchResources[] = $resource;
+
+		return $this;
+	}
+
+	public function getSearchResources()
+	{
+		return $this->searchResources;
+	}
+
 	public function addSearchClientIP($clientIP)
 	{
 		$this->searchClientIPs[] = $clientIP;
@@ -176,6 +210,18 @@ class RequestFilter
 	public function getIgnoreCallers()
 	{
 		return $this->ignoreCallers;
+	}
+
+	public function addIgnoreResource($resource)
+	{
+		$this->ignoreResources[] = $resource;
+
+		return $this;
+	}
+
+	public function getIgnoreResources()
+	{
+		return $this->ignoreResources;
 	}
 
 	public function addIgnoreClientIP($clientIP)
