@@ -55,6 +55,13 @@ class Request
 	private $caller;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="resource", type="text")
+	 */
+	private $resource;
+
+	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="learning", type="smallint")
@@ -106,6 +113,18 @@ class Request
 	public function getCaller()
 	{
 		return $this->caller;
+	}
+
+	public function setResource($resource)
+	{
+		$this->resource = $resource;
+
+		return $this;
+	}
+
+	public function getResource()
+	{
+		return $this->resource;
 	}
 
 	public function setLearning($learning)

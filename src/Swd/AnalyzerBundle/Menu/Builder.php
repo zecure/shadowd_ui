@@ -33,10 +33,19 @@ class Builder extends ContainerAware
 		if ($this->container->get('security.context')->isGranted('ROLE_USER'))
 		{
 			$menu->addChild('Home', array('route' => 'swd_analyzer_home'));
+
+			// TODO: add subcat: attacks
 			$menu->addChild('Requests', array('route' => 'swd_analyzer_requests_list'));
 			$menu->addChild('Parameters', array('route' => 'swd_analyzer_parameters_list'));
+			// TODO: add files to attacks?
+
+			// TODO: add subcat: rules
 			$menu->addChild('Blacklist', array('route' => 'swd_analyzer_blacklist_rules'));
 			$menu->addChild('Whitelist', array('route' => 'swd_analyzer_whitelist_rules'));
+			// TODO: add files to rules
+			// TODO: add headers to rules
+
+			// TODO: add subcat: administration
 			$menu->addChild('Profiles', array('route' => 'swd_analyzer_profiles_list'));
 
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
@@ -44,6 +53,7 @@ class Builder extends ContainerAware
 				$menu->addChild('Users', array('route' => 'swd_analyzer_users_list'));
 			}
 
+			// TODO: add subcat: user
 			$menu->addChild('Settings', array('route' => 'swd_analyzer_settings'));
 			$menu->addChild('Logout', array('route' => 'logout'));
 		}

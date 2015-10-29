@@ -5,6 +5,7 @@
   {{ form_row(form.profileId) }}
   {{ form_row(form.learning) }}
   {{ form_row(form.searchCallers) }}
+  {{ form_row(form.searchResources) }}
   {{ form_row(form.searchClientIPs) }}
   {{ form_row(form.dateStart) }}
   {{ form_row(form.dateEnd) }}
@@ -13,6 +14,7 @@
 
 {% block ignore %}
   {{ form_row(form.ignoreCallers) }}
+  {{ form_row(form.ignoreResources) }}
   {{ form_row(form.ignoreClientIPs) }}
 {% endblock %}
 

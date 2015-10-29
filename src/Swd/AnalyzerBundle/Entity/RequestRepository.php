@@ -60,6 +60,19 @@ class RequestRepository extends EntityRepository
 			$builder->andWhere($orExpr);
 		}
 
+		if (!$filter->getSearchResources()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getSearchResources() as $key => $value)
+			{
+				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
+				$orExpr->add($builder->expr()->like("r.resource", $builder->expr()->literal($value)));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
 		if (!$filter->getSearchClientIPs()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
@@ -102,6 +115,19 @@ class RequestRepository extends EntityRepository
 			{
 				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
 				$andExpr->add($builder->expr()->not($builder->expr()->like("r.caller", $builder->expr()->literal($value))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getIgnoreResources()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getIgnoreResources() as $key => $value)
+			{
+				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
+				$andExpr->add($builder->expr()->not($builder->expr()->like("r.resource", $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
