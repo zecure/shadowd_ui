@@ -1,0 +1,8 @@
+Se vuoi referenziare i risultati dovresti ordinare in ordine ascendente in base alla richiesta o all'ID del parametro. In questo modo, nuovi risultati saranno aggiunti alla fine della lista e ci saranno sempre gli stessi elementi all'inizio della pagina.
+Se clicchi sull'icona degli ingranaggi puoi inserire e rimuovere filtri, per visualizzare solamente ciò che ti interessa.
+Puoi cliccare direttamente su ogni tupla della tabella per aggiungere un nuovo filtro. Questo ci risparmia un sacco di tempo! I vecchi e nuovi filtri sono uniti, mentre filtri vuoti sono rimossi dall'URL.
+Puoi usare gli asterischi come un jolly per la maggior parte dei filtri basati su testo.
+Shadow Daemon è molto flessibile e funziona con la maggior parte delle applicazioni web. In molti casi, non sono richiesti cambi nel codice sorgente, il plugin può essere caricato direttamente all'esecuzione dello script.
+Puoi cambiare i valori predefiniti, come il numero di tuple per pagina o il senso di ordinamento nelle impostazioni. Le configurazioni di altri utenti non saranno influenzate.
+I filtri Blacklist sono molto sensibili ed hanno un alto numero di falsi positivi. Questa è la ragione per cui le impressioni di filtri uguali sono uniti. Solo se la somma è più grande di una soglia, viene classificato come attacco. La soglia può variare da profilo a profilo.
+Regole e filtri solo controllati all'arrivo di nuove richieste. Quindi se aggiungi o modifichi una regola dopo che una richiesta è stata salvata nel database, essa non risulterà come una minaccia.
