@@ -73,6 +73,8 @@ class MergePathExtension extends \Twig_Extension
 		/* Remove empty elements. */
 		$result = $this->array_filter_recursive($result);
 
+		// TODO: escape special characters (*)
+
 		/* Generate the url. */
 		$url = $router->generate($routeName, $result);
 

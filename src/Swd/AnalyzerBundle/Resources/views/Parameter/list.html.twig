@@ -12,13 +12,20 @@
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
         <th>{{ knp_pagination_sortable(parameters, 'Parameter ID', 'p.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Profile ID', 'v.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Request ID', 'r.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Date', 'r.date') }}</th>
         <th>{{ knp_pagination_sortable(parameters, 'Caller', 'r.caller') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Client IP', 'r.clientIP') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Path', 'p.path') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(parameters, 'Value', 'p.value') }}</th>
+        <th></th>
         <th class="icons"></th>
       </tr>
     </thead>
@@ -26,22 +33,54 @@
       {% for parameter in parameters %}
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ parameter.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
-        <td><a href="{{ mergePath({'parameter_filter': {'parameterId': parameter.getId}}) }}">{{ parameter.getId }}</a></td>
-        <td><a href="{{ mergePath({'parameter_filter': {'profileId': parameter.getRequest.getProfile.getId}}) }}">{{ parameter.getRequest.getProfile.getId }} ({{ parameter.getRequest.getProfile.getName }})</a></td>
-        <td><a href="{{ mergePath({'parameter_filter': {'requestId': parameter.getRequest.getId}}) }}">{{ parameter.getRequest.getId }}</a></td>
+        <td>{{ parameter.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeParameterIds': [parameter.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeParameterIds': [parameter.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ parameter.getRequest.getProfile.getId }} ({{ parameter.getRequest.getProfile.getName }})</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeProfileIds': [parameter.getRequest.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeProfileIds': [parameter.getRequest.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ parameter.getRequest.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeRequestIds': [parameter.getRequest.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeRequestIds': [parameter.getRequest.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>{{ parameter.getRequest.getDate|date('Y-m-d H:i') }}</td>
-        <td title="{{ parameter.getRequest.getCaller }}"><a href="{{ mergePath({'parameter_filter': {'searchCallers': [parameter.getRequest.getCaller]}}) }}">{{ parameter.getRequest.getCaller|truncate(50) }}</a></td>
-        <td><a href="{{ mergePath({'parameter_filter': {'searchClientIPs': [parameter.getRequest.getClientIP]}}) }}">{{ parameter.getRequest.getClientIP }}</a></td>
+        <td title="{{ parameter.getRequest.getCaller }}">{{ parameter.getRequest.getCaller|truncate(50) }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeCallers': [parameter.getRequest.getCaller]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeCallers': [parameter.getRequest.getCaller]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ parameter.getRequest.getClientIP }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeClientIPs': [parameter.getRequest.getClientIP]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeClientIPs': [parameter.getRequest.getClientIP]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td title="{{ parameter.getPath|truncate(250) }}">
-          <a href="{{ mergePath({'parameter_filter': {'searchPaths': [parameter.getPath]}}) }}">{{ parameter.getPath|truncate(50) }}</a>
+          {{ parameter.getPath|truncate(50) }}
           {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown') }} {% endif %}
         </td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includePaths': [parameter.getPath]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludePaths': [parameter.getPath]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td title="{{ parameter.getValue|truncate(250) }}">
-          <a href="{{ mergePath({'parameter_filter': {'searchValues': [parameter.getValue]}}) }}">{{ parameter.getValue|truncate(50) }}</a>
+          {{ parameter.getValue|truncate(50) }}
           {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact') }} {% endif %}
           {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule') }} {% endif %}
         </td>
-        <td class="icons"><a href="{{ path('swd_analyzer_parameter_show', {'id': parameter.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/magnifying-glass.svg') }}" title="Show details" /></a></td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'parameter_filter': {'includeValues': [parameter.getValue]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'parameter_filter': {'excludeValues': [parameter.getValue]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_parameter_show', {'id': parameter.getId}) }}">
+            <i class="fa fa-search" title="Show details"></i>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

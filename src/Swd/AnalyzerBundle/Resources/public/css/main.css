@@ -23,12 +23,21 @@ td.icons {
   text-align: center;
 }
 
-.icons, .icons img {
+.icons {
   width: 22px;
 }
 
-#filters-button img {
-  width: 75px;
+.icons i {
+  font-size: 22px;
+}
+
+.filter-icons i {
+  opacity: 0.7;
+}
+
+#filters-button {
+  font-size: 100px;
+  line-height: 0;
 }
 
 #filters-form {

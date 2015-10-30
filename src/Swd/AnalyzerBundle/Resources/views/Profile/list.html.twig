@@ -12,9 +12,12 @@
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
         <th>{{ knp_pagination_sortable(profiles, 'Profile ID', 'v.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(profiles, 'Modified', 'v.date') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Server IP', 'v.serverIP') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding Time (min.)', 'v.floodingTime') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding Threshold', 'v.floodingThreshold') }}</th>
@@ -30,10 +33,22 @@
       {% for profile in profiles %}
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ profile.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
-        <td><a href="{{ mergePath({'profile_filter': {'profileId': profile.getId}}) }}">{{ profile.getId }}</a></td>
+        <td>{{ profile.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'profile_filter': {'includeProfileIds': [profile.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeProfileIds': [profile.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>{{ profile.getDate|date('Y-m-d H:i') }}</td>
-        <td><a href="{{ mergePath({'profile_filter': {'searchServerIPs': [profile.getServerIP]}}) }}">{{ profile.getServerIP }}</a></td>
-        <td><a href="{{ mergePath({'profile_filter': {'searchNames': [profile.getName]}}) }}">{{ profile.getName }}</a></td>
+        <td>{{ profile.getServerIP }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'profile_filter': {'includeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ profile.getName }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'profile_filter': {'includeNames': [profile.getName]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeNames': [profile.getName]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>{{ profile.getThreshold }}</td>
         <td>
           {{ profile.getFloodingTime }}
@@ -62,7 +77,13 @@
         </td>
         <td>{{ profile.getLearningRequests }}</td>
         <td>{{ profile.getProductiveRequests }}</td>
-        {% if is_granted('ROLE_ADMIN') %}<td class="icons"><a href="{{ path('swd_analyzer_profile_edit', {'id': profile.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit profile" /></a></td>{% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_profile_edit', {'id': profile.getId}) }}">
+            <i class="fa fa-pencil" title="Edit"></i>
+          </a>
+        </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>

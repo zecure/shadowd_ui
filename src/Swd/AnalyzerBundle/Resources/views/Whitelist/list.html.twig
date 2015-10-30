@@ -12,11 +12,16 @@
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
         <th>{{ knp_pagination_sortable(rules, 'Rule ID', 'wr.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(rules, 'Profile ID', 'v.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(rules, 'Status', 'wr.status') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(rules, 'Modified', 'wr.date') }}</th>
         <th>{{ knp_pagination_sortable(rules, 'Caller', 'wr.caller') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(rules, 'Path', 'wr.path') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(rules, 'Min. Length', 'wr.minLength') }}</th>
         <th>{{ knp_pagination_sortable(rules, 'Max. Length', 'wr.maxLength') }}</th>
         <th>{{ knp_pagination_sortable(rules, 'Filter', 'wf.impact') }}</th>
@@ -27,19 +32,37 @@
       {% for rule in rules %}
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ rule.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
-        <td><a href="{{ mergePath({'whitelist_rule_filter': {'ruleId': rule.getId}}) }}">{{ rule.getId }}</a></td>
-        <td><a href="{{ mergePath({'whitelist_rule_filter': {'profileId': rule.getProfile.getId}}) }}">{{ rule.getProfile.getId }} ({{ rule.getProfile.getName }})</a></td>
+        <td>{{ rule.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeRuleIds': [rule.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeRuleIds': [rule.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ rule.getProfile.getId }} ({{ rule.getProfile.getName }})</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'status': rule.getStatus}}) }}">
           {% if rule.getStatus == 1 %} {{ label_success('Active') }}
           {% elseif rule.getStatus == 2 %} {{ label_danger('Inactive') }}
           {% elseif rule.getStatus == 3 %} {{ label_danger('Pending') }}
           {% endif %}
-          </a>
+        </td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeStatus': rule.getStatus}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeStatus': rule.getStatus}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
         </td>
         <td>{{ rule.getDate|date('Y-m-d H:i') }}</td>
-        <td title="{{ rule.getCaller }}"><a href="{{ mergePath({'whitelist_rule_filter': {'searchCallers': [rule.getCaller]}}) }}">{{ rule.getCaller|truncate(50) }}</a></td>
-        <td title="{{ rule.getPath|truncate(250) }}"><a href="{{ mergePath({'whitelist_rule_filter': {'searchPaths': [rule.getPath]}}) }}">{{ rule.getPath|truncate(50) }}</a></td>
+        <td title="{{ rule.getCaller }}">{{ rule.getCaller|truncate(50) }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeCallers': [rule.getCaller]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeCallers': [rule.getCaller]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td title="{{ rule.getPath|truncate(250) }}">{{ rule.getPath|truncate(50) }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includePaths': [rule.getPath]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludePaths': [rule.getPath]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>
           {% if rule.getMinLength < 0 %}
             {{ label_warning('No limitation') }}
@@ -75,7 +98,13 @@
             {{ label_danger('Conflict') }}
           {% endif %}
         </td>
-        {% if is_granted('ROLE_ADMIN') %}<td class="icons"><a href="{{ path('swd_analyzer_whitelist_edit_rule', {'id': rule.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit rule" /></a></td>{% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_whitelist_edit_rule', {'id': rule.getId}) }}">
+            <i class="fa fa-pencil" title="Edit"></i>
+          </a>
+        </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>

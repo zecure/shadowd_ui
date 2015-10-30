@@ -1,5 +1,7 @@
 <div id="filters" class="clearfix">
-  <a id="filters-button" href="#"><img src="{{ asset('bundles/swdanalyzer/images/icons/cogs.svg') }}" title="Show/hide filters" /></a>
+  <a id="filters-button" href="#">
+    <i class="fa fa-cogs" title="Toggle filters"></i>
+  </a>
   <div id="filters-form" class="clearfix">
     {{ form_start(form) }}
       {{ form_errors(form) }}

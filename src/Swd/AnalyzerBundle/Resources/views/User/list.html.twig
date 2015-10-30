@@ -12,9 +12,12 @@
       <tr>
         <th><input id="select-all" type="checkbox" /></th>
         <th>{{ knp_pagination_sortable(users, 'User ID', 'u.id') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(users, 'Modified', 'u.date') }}</th>
         <th>{{ knp_pagination_sortable(users, 'Username', 'u.username') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
+        <th></th>
         <th>{{ knp_pagination_sortable(users, 'Role', 'u.role') }}</th>
         <th class="icons"></th>
       </tr>
@@ -23,10 +26,22 @@
       {% for user in users %}
       <tr>
         <td><input name="selected[]" value="{{ user.getId }}" class="select-item" type="checkbox" /></td>
-        <td><a href="{{ mergePath({'user_filter': {'userId': user.getId}}) }}">{{ user.getId }}</a></td>
+        <td>{{ user.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeUserIds': [user.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeUserIds': [user.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>{{ user.getDate|date('Y-m-d H:i') }}</td>
-        <td><a href="{{ mergePath({'user_filter': {'searchUsernames': [user.getUsername]}}) }}">{{ user.getUsername }}</a></td>
-        <td><a href="{{ mergePath({'user_filter': {'searchEmails': [user.getEmail]}}) }}">{{ user.getEmail }}</a></td>
+        <td>{{ user.getUsername }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeUsernames': [user.getUsername]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeUsernames': [user.getUsername]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
+        <td>{{ user.getEmail }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeEmails': [user.getEmail]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeEmails': [user.getEmail]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+        </td>
         <td>
           {% if user.getRole == 0 %}
             User
@@ -34,7 +49,11 @@
             Admin
           {% endif %}
         </td>
-        <td class="icons"><a href="{{ path('swd_analyzer_user_edit', {'id': user.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit user" /></a></td>
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_user_edit', {'id': user.getId}) }}">
+            <i class="fa fa-pencil" title="Edit"></i>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
