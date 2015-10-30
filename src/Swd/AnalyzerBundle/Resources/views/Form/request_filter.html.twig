@@ -1,21 +1,22 @@
 {% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
 
-{% block search %}
-  {{ form_row(form.requestId) }}
-  {{ form_row(form.profileId) }}
-  {{ form_row(form.learning) }}
-  {{ form_row(form.searchCallers) }}
-  {{ form_row(form.searchResources) }}
-  {{ form_row(form.searchClientIPs) }}
-  {{ form_row(form.dateStart) }}
-  {{ form_row(form.dateEnd) }}
+{% block include %}
+  {{ form_row(form.includeRequestIds) }}
+  {{ form_row(form.includeProfileIds) }}
+  {{ form_row(form.includeCallers) }}
+  {{ form_row(form.includeResources) }}
+  {{ form_row(form.includeClientIPs) }}
+  {{ form_row(form.includeDateStart) }}
+  {{ form_row(form.includeDateEnd) }}
 {% endblock %}
 
 
-{% block ignore %}
-  {{ form_row(form.ignoreCallers) }}
-  {{ form_row(form.ignoreResources) }}
-  {{ form_row(form.ignoreClientIPs) }}
+{% block exclude %}
+  {{ form_row(form.excludeRequestIds) }}
+  {{ form_row(form.excludeProfileIds) }}
+  {{ form_row(form.excludeCallers) }}
+  {{ form_row(form.excludeResources) }}
+  {{ form_row(form.excludeClientIPs) }}
+  {{ form_row(form.excludeDateStart) }}
+  {{ form_row(form.excludeDateEnd) }}
 {% endblock %}
-
-

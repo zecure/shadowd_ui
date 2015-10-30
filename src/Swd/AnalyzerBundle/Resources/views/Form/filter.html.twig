@@ -4,13 +4,13 @@
     {{ form_start(form) }}
       {{ form_errors(form) }}
       <div class="row">
-        <div class="filters-form-search col-md-6">
-          <h1>Search</h1>
-          {% block search %}{% endblock %}
+        <div class="filters-form-include col-md-6">
+          <h1>Include</h1>
+          {% block include %}{% endblock %}
         </div>
-        <div class="filters-form-ignore col-md-6">
-          <h1>Ignore</h1>
-          {% block ignore %}{% endblock %}
+        <div class="filters-form-exclude col-md-6">
+          <h1>Exclude</h1>
+          {% block exclude %}{% endblock %}
         </div>
       </div>
       <hr />

@@ -31,12 +31,16 @@ class UserFilterType extends AbstractType
 		$builder
 			->setMethod('GET')
 			->setAction('#')
-			->add('searchUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
-			->add('searchEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'E-Mail'))
-			->add('dateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-			->add('dateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-			->add('ignoreUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
-			->add('ignoreEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'E-Mail'))
+			->add('includeUserIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
+			->add('includeUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
+			->add('includeEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'E-Mail'))
+			->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+			->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+			->add('excludeUserIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
+			->add('excludeUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
+			->add('excludeEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'E-Mail'))
+			->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+			->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 

@@ -26,8 +26,8 @@
       {% for request in requests %}
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ request.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
-        <td><a href="{{ mergePath({'request_filter': {'requestId': request.getId}}) }}">{{ request.getId }}</a></td>
-        <td><a href="{{ mergePath({'request_filter': {'profileId': request.getProfile.getId}}) }}">{{ request.getProfile.getId }} ({{ request.getProfile.getName }})</a></td>
+        <td><a href="{{ mergePath({'request_filter': {'includeRequestIds': [request.getId]}}) }}">{{ request.getId }}</a></td>
+        <td><a href="{{ mergePath({'request_filter': {'includeProfileIds': [request.getProfile.getId]}}) }}">{{ request.getProfile.getId }} ({{ request.getProfile.getName }})</a></td>
         <td>{{ request.getDate|date('Y-m-d H:i') }}</td>
         <td title="{{ request.getCaller }}"><a href="{{ mergePath({'request_filter': {'searchCallers': [request.getCaller]}}) }}">{{ request.getCaller|truncate(50) }}</a></td>
         <td title="{{ request.getResource }}"><a href="{{ mergePath({'request_filter': {'searchResources': [request.getResource]}}) }}">{{ request.getResource|truncate(50) }}</a></td>

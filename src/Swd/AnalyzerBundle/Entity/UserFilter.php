@@ -35,40 +35,62 @@ class UserFilter
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchUsernames;
+	private $includeUserIds;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchEmails;
+	private $includeUsernames;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $includeEmails;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateStart;
+	private $includeDateStart;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateEnd;
+	private $includeDateEnd;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignoreUsernames;
+	private $excludeUserIds;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignoreEmails;
+	private $excludeUsernames;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeEmails;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateStart;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateEnd;
 
 
 	public function __construct()
 	{
-		$this->searchUsernames = new ArrayCollection();
-		$this->ignoreUsernames = new ArrayCollection();
-		$this->searchEmails = new ArrayCollection();
-		$this->ignoreEmails = new ArrayCollection();
+		$this->includeUserIds = new ArrayCollection();
+		$this->includeUsernames = new ArrayCollection();
+		$this->includeEmails = new ArrayCollection();
+		$this->excludeUserIds = new ArrayCollection();
+		$this->excludeUsernames = new ArrayCollection();
+		$this->excludeEmails = new ArrayCollection();
 	}
 
 	public function getId()
@@ -76,75 +98,123 @@ class UserFilter
 		return $this->id;
 	}
 
-	public function setDateStart($dateStart)
+	public function addIncludeUserId($userId)
 	{
-		$this->dateStart = $dateStart;
+		$this->includeUserIds[] = $userId;
 
 		return $this;
 	}
 
-	public function getDateStart()
+	public function getIncludeUserIds()
 	{
-		return $this->dateStart;
+		return $this->includeUserIds;
 	}
 
-	public function setDateEnd($dateEnd)
+	public function addIncludeUsername($username)
 	{
-		$this->dateEnd = $dateEnd;
+		$this->includeUsernames[] = $username;
 
 		return $this;
 	}
 
-	public function getDateEnd()
+	public function getIncludeUsernames()
 	{
-		return $this->dateEnd;
+		return $this->includeUsernames;
 	}
 
-	public function addSearchUsername($username)
+	public function addIncludeEmail($email)
 	{
-		$this->searchUsernames[] = $username;
+		$this->includeEmails[] = $email;
 
 		return $this;
 	}
 
-	public function getSearchUsernames()
+	public function getIncludeEmails()
 	{
-		return $this->searchUsernames;
+		return $this->includeEmails;
 	}
 
-	public function addSearchEmail($email)
+	public function setIncludeDateStart($dateStart)
 	{
-		$this->searchEmails[] = $email;
+		$this->includeDateStart = $dateStart;
 
 		return $this;
 	}
 
-	public function getSearchEmails()
+	public function getIncludeDateStart()
 	{
-		return $this->searchEmails;
+		return $this->includeDateStart;
 	}
 
-	public function addIgnoreUsername($username)
+	public function setIncludeDateEnd($dateEnd)
 	{
-		$this->ignoreUsernames[] = $username;
+		$this->includeDateEnd = $dateEnd;
 
 		return $this;
 	}
 
-	public function getIgnoreUsernames()
+	public function getIncludeDateEnd()
 	{
-		return $this->ignoreUsernames;
+		return $this->includeDateEnd;
 	}
 
-	public function addIgnoreEmail($email)
+	public function addExcludeUserId($userId)
 	{
-		$this->ignoreEmails[] = $email;
+		$this->excludeUserIds[] = $userId;
 
 		return $this;
 	}
 
-	public function getIgnoreEmails()
+	public function getExcludeUserIds()
 	{
-		return $this->ignoreEmails;
+		return $this->excludeUserIds;
+	}
+
+	public function addExcludeUsername($username)
+	{
+		$this->excludeUsernames[] = $username;
+
+		return $this;
+	}
+
+	public function getExcludeUsernames()
+	{
+		return $this->excludeUsernames;
+	}
+
+	public function addExcludeEmail($email)
+	{
+		$this->excludeEmails[] = $email;
+
+		return $this;
+	}
+
+	public function getExcludeEmails()
+	{
+		return $this->excludeEmails;
+	}
+
+	public function setExcludeDateStart($dateStart)
+	{
+		$this->excludeDateStart = $dateStart;
+
+		return $this;
+	}
+
+	public function getExcludeDateStart()
+	{
+		return $this->excludeDateStart;
+	}
+
+	public function setExcludeDateEnd($dateEnd)
+	{
+		$this->excludeDateEnd = $dateEnd;
+
+		return $this;
+	}
+
+	public function getExcludeDateEnd()
+	{
+		return $this->excludeDateEnd;
 	}
 }

@@ -20,95 +20,129 @@
 
 namespace Swd\AnalyzerBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
 
 /**
  * BlacklistRuleRepository
  */
-class BlacklistRuleRepository extends EntityRepository
+class BlacklistRuleRepository extends EntityRepositoryTransformer
 {
 	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\BlacklistRuleFilter $filter)
 	{
 		$builder = $this->createQueryBuilder('br')->leftJoin('br.profile', 'v');
 
-		/* Search. */
-		if ($filter->getRuleId())
-		{
-			$builder->andWhere('br.id = :ruleId')->setParameter('ruleId', $filter->getRuleId());
-		}
-
-		if ($filter->getProfileId())
-		{
-			$builder->andWhere('v.id = :profileId')->setParameter('profileId', $filter->getProfileId());
-		}
-
-		if (!$filter->getSearchCallers()->isEmpty())
+		if (!$filter->getIncludeRuleIds()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchCallers() as $key => $value)
+			foreach ($filter->getIncludeRuleIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("br.caller", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->eq('br.id', $builder->expr()->literal($value)));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		if ($filter->getDateStart())
-		{
-			$builder->andWhere('br.date >= :dateStart')->setParameter('dateStart', $filter->getDateStart());
-		}
-
-		if ($filter->getDateEnd())
-		{
-			$builder->andWhere('br.date <= :dateEnd')->setParameter('dateEnd', $filter->getDateEnd());
-		}
-
-		if (!$filter->getSearchPaths()->isEmpty())
+		if (!$filter->getIncludeProfileIds()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchPaths() as $key => $value)
+			foreach ($filter->getIncludeProfileIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("br.path", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		/* Status. */
-		if ($filter->getStatus() !== null)
+		if (!$filter->getIncludeCallers()->isEmpty())
 		{
-			$builder->andWhere('br.status = :status')->setParameter('status', $filter->getStatus());
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludeCallers() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('br.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
 		}
 
-		/* Ignore. */
-		if (!$filter->getIgnoreCallers()->isEmpty())
+		if ($filter->getIncludeDateStart())
+		{
+			$builder->andWhere('br.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
+		}
+
+		if ($filter->getIncludeDateEnd())
+		{
+			$builder->andWhere('br.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+		}
+
+		if (!$filter->getIncludePaths()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludePaths() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if ($filter->getIncludeStatus())
+		{
+			$builder->andWhere('br.status = :includeStatus')->setParameter('includeStatus', $filter->getIncludeStatus());
+		}
+
+		if (!$filter->getExcludeRuleIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getIgnoreCallers() as $key => $value)
+			foreach ($filter->getExcludeRuleIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("br.caller", $builder->expr()->literal($value))));
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('br.id', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
 		}
 
-		if (!$filter->getIgnorePaths()->isEmpty())
+		if (!$filter->getExcludeProfileIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getIgnorePaths() as $key => $value)
+			foreach ($filter->getExcludeProfileIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("br.path", $builder->expr()->literal($value))));
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
+		}
+
+		if ($filter->getExcludeDateStart())
+		{
+			$builder->andWhere('br.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
+		}
+
+		if ($filter->getExcludeDateEnd())
+		{
+			$builder->andWhere('br.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+		}
+
+		if (!$filter->getExcludePaths()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludePaths() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if ($filter->getExcludeStatus())
+		{
+			$builder->andWhere('br.status != :excludeStatus')->setParameter('excludeStatus', $filter->getExcludeStatus());
 		}
 
 		return $builder->getQuery();
@@ -141,8 +175,7 @@ class BlacklistRuleRepository extends EntityRepository
 
 			foreach ($filter->getCallers() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("br.caller", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->like('br.caller', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
@@ -154,8 +187,7 @@ class BlacklistRuleRepository extends EntityRepository
 
 			foreach ($filter->getPaths() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("br.path", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
