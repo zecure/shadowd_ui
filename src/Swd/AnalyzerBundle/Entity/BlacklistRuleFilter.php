@@ -33,57 +33,86 @@ class BlacklistRuleFilter
 	private $id;
 
 	/**
-	 * @var integer
+	 * @var \ArrayCollection
 	 */
-	private $ruleId;
+	private $includeRuleIds;
 
 	/**
-	 * @var integer
+	 * @var \ArrayCollection
 	 */
-	private $profileId;
+	private $includeProfileIds;
 
 	/**
 	 * @var smallint
 	 */
-	private $status;
+	private $includeStatus;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchCallers;
+	private $includeCallers;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchPaths;
+	private $includePaths;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateStart;
+	private $includeDateStart;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateEnd;
+	private $includeDateEnd;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignoreCallers;
+	private $excludeRuleIds;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignorePaths;
+	private $excludeProfileIds;
+
+	/**
+	 * @var smallint
+	 */
+	private $excludeStatus;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeCallers;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludePaths;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateStart;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateEnd;
 
 
 	public function __construct()
 	{
-		$this->searchCallers = new ArrayCollection();
-		$this->searchPaths = new ArrayCollection();
-		$this->ignoreCallers = new ArrayCollection();
-		$this->ignorePaths = new ArrayCollection();
+		$this->includeRuleIds = new ArrayCollection();
+		$this->includeProfileIds = new ArrayCollection();
+		$this->includeCallers = new ArrayCollection();
+		$this->includePaths = new ArrayCollection();
+		$this->excludeRuleIds = new ArrayCollection();
+		$this->excludeProfileIds = new ArrayCollection();
+		$this->excludeCallers = new ArrayCollection();
+		$this->excludePaths = new ArrayCollection();
 	}
 
 	public function getId()
@@ -91,111 +120,171 @@ class BlacklistRuleFilter
 		return $this->id;
 	}
 
-	public function setRuleId($ruleId)
+	public function addIncludeRuleId($ruleId)
 	{
-		$this->ruleId = $ruleId;
+		$this->includeRuleIds[] = $ruleId;
 
 		return $this;
 	}
 
-	public function getRuleId()
+	public function getIncludeRuleIds()
 	{
-		return $this->ruleId;
+		return $this->includeRuleIds;
 	}
 
-	public function setProfileId($profileId)
+	public function addIncludeProfileId($profileId)
 	{
-		$this->profileId = $profileId;
+		$this->includeProfileIds[] = $profileId;
 
 		return $this;
 	}
 
-	public function getProfileId()
+	public function getIncludeProfileIds()
 	{
-		return $this->profileId;
+		return $this->includeProfileIds;
 	}
 
-	public function setStatus($status)
+	public function setIncludeStatus($status)
 	{
-		$this->status = $status;
+		$this->includeStatus = $status;
 
 		return $this;
 	}
 
-	public function getStatus()
+	public function getIncludeStatus()
 	{
-		return $this->status;
+		return $this->includeStatus;
 	}
 
-	public function setDateStart($dateStart)
+	public function setIncludeDateStart($dateStart)
 	{
-		$this->dateStart = $dateStart;
+		$this->includeDateStart = $dateStart;
 
 		return $this;
 	}
 
-	public function getDateStart()
+	public function getIncludeDateStart()
 	{
-		return $this->dateStart;
+		return $this->includeDateStart;
 	}
 
-	public function setDateEnd($dateEnd)
+	public function setIncludeDateEnd($dateEnd)
 	{
-		$this->dateEnd = $dateEnd;
+		$this->includeDateEnd = $dateEnd;
 
 		return $this;
 	}
 
-	public function getDateEnd()
+	public function getIncludeDateEnd()
 	{
-		return $this->dateEnd;
+		return $this->includeDateEnd;
 	}
 
-	public function addSearchCaller($caller)
+	public function addIncludeCaller($caller)
 	{
-		$this->searchCallers[] = $caller;
+		$this->includeCallers[] = $caller;
 
 		return $this;
 	}
 
-	public function getSearchCallers()
+	public function getIncludeCallers()
 	{
-		return $this->searchCallers;
+		return $this->includeCallers;
 	}
 
-	public function addSearchPath($path)
+	public function addIncludePath($path)
 	{
-		$this->searchPaths[] = $path;
+		$this->includePaths[] = $path;
 
 		return $this;
 	}
 
-	public function getSearchPaths()
+	public function getIncludePaths()
 	{
-		return $this->searchPaths;
+		return $this->includePaths;
 	}
 
-	public function addIgnoreCaller($caller)
+	public function addExcludeRuleId($ruleId)
 	{
-		$this->ignoreCallers[] = $caller;
+		$this->excludeRuleIds[] = $ruleId;
 
 		return $this;
 	}
 
-	public function getIgnoreCallers()
+	public function getExcludeRuleIds()
 	{
-		return $this->ignoreCallers;
+		return $this->excludeRuleIds;
 	}
 
-	public function addIgnorePath($path)
+	public function addExcludeProfileId($profileId)
 	{
-		$this->ignorePaths[] = $path;
+		$this->excludeProfileIds[] = $profileId;
 
 		return $this;
 	}
 
-	public function getIgnorePaths()
+	public function getExcludeProfileIds()
 	{
-		return $this->ignorePaths;
+		return $this->excludeProfileIds;
+	}
+
+	public function setExcludeStatus($status)
+	{
+		$this->excludeStatus = $status;
+
+		return $this;
+	}
+
+	public function getExcludeStatus()
+	{
+		return $this->excludeStatus;
+	}
+
+	public function setExcludeDateStart($dateStart)
+	{
+		$this->excludeDateStart = $dateStart;
+
+		return $this;
+	}
+
+	public function getExcludeDateStart()
+	{
+		return $this->excludeDateStart;
+	}
+
+	public function setExcludeDateEnd($dateEnd)
+	{
+		$this->excludeDateEnd = $dateEnd;
+
+		return $this;
+	}
+
+	public function getExcludeDateEnd()
+	{
+		return $this->excludeDateEnd;
+	}
+
+	public function addExcludeCaller($caller)
+	{
+		$this->excludeCallers[] = $caller;
+
+		return $this;
+	}
+
+	public function getExcludeCallers()
+	{
+		return $this->excludeCallers;
+	}
+
+	public function addExcludePath($path)
+	{
+		$this->excludePaths[] = $path;
+
+		return $this;
+	}
+
+	public function getExcludePaths()
+	{
+		return $this->excludePaths;
 	}
 }

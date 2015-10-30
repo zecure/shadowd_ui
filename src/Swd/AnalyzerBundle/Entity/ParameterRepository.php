@@ -20,12 +20,12 @@
 
 namespace Swd\AnalyzerBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
 
 /**
  * ParameterRepository
  */
-class ParameterRepository extends EntityRepository
+class ParameterRepository extends EntityRepositoryTransformer
 {
 	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\ParameterFilter $filter)
 	{
@@ -33,149 +33,232 @@ class ParameterRepository extends EntityRepository
 			->leftJoin('p.request', 'r')
 			->leftJoin('r.profile', 'v');
 
-		/* Search. */
-		if ($filter->getParameterId())
-		{
-			$builder->andWhere('p.id = :parameterId')->setParameter('parameterId', $filter->getParameterId());
-		}
-
-		if ($filter->getProfileId())
-		{
-			$builder->andWhere('v.id = :profileId')->setParameter('profileId', $filter->getProfileId());
-		}
-
-		if ($filter->getRequestId())
-		{
-			$builder->andWhere('r.id = :requestId')->setParameter('requestId', $filter->getRequestId());
-		}
-
-		if (!$filter->getSearchCallers()->isEmpty())
+		if (!$filter->getIncludeParameterIds()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchCallers() as $key => $value)
+			foreach ($filter->getIncludeParameterIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("r.caller", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->eq('p.id', $builder->expr()->literal($value)));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		if (!$filter->getSearchClientIPs()->isEmpty())
+		if (!$filter->getIncludeProfileIds()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchClientIPs() as $key => $value)
+			foreach ($filter->getIncludeProfileIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("r.clientIP", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		if ($filter->getDateStart())
-		{
-			$builder->andWhere('r.date >= :dateStart')->setParameter('dateStart', $filter->getDateStart());
-		}
-
-		if ($filter->getDateEnd())
-		{
-			$builder->andWhere('r.date <= :dateEnd')->setParameter('dateEnd', $filter->getDateEnd());
-		}
-
-		if (!$filter->getSearchPaths()->isEmpty())
+		if (!$filter->getIncludeRequestIds()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchPaths() as $key => $value)
+			foreach ($filter->getIncludeRequestIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("p.path", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->eq('r.id', $builder->expr()->literal($value)));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		if (!$filter->getSearchValues()->isEmpty())
+		if (!$filter->getIncludeCallers()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getSearchValues() as $key => $value)
+			foreach ($filter->getIncludeCallers() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("p.value", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
 		}
 
-		/* Threats. */
-		if ($filter->getThreat())
+		if (!$filter->getIncludeClientIPs()->isEmpty())
 		{
-			$builder->andWhere('p.threat = :threat')->setParameter('threat', '1');
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludeClientIPs() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
 		}
 
-		if ($filter->getNoRule())
+		if ($filter->getIncludeDateStart())
 		{
-			$builder->andWhere('p.totalRules = :totalRules')->setParameter('totalRules', '0');
+			$builder->andWhere('r.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
 		}
 
-		if ($filter->getBrokenRule())
+		if ($filter->getIncludeDateEnd())
+		{
+			$builder->andWhere('r.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+		}
+
+		if (!$filter->getIncludePaths()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludePaths() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('p.path', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if (!$filter->getIncludeValues()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludeValues() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('p.value', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if ($filter->getIncludeThreat())
+		{
+			$builder->andWhere('p.threat = :includeThreat')->setParameter('includeThreat', '1');
+		}
+
+		if ($filter->getIncludeNoRule())
+		{
+			$builder->andWhere('p.totalRules = :includeTotalRules')->setParameter('includeTotalRules', '0');
+		}
+
+		if ($filter->getIncludeBrokenRule())
 		{
 			$builder->innerJoin('p.brokenRules', 'b');
 		}
 
-		if ($filter->getCriticalImpact())
+		if ($filter->getIncludeCriticalImpact())
 		{
-			$builder->andWhere('p.criticalImpact = :criticalImpact')->setParameter('criticalImpact', '1');
+			$builder->andWhere('p.criticalImpact = :includeCriticalImpact')->setParameter('includeCriticalImpact', '1');
 		}
 
-		/* Learning data. */
-		if ($filter->getLearning() !== null)
-		{
-			$builder->andWhere('r.learning = :learning')->setParameter('learning', $filter->getLearning());
-		}
-
-		/* Ignore. */
-		if (!$filter->getIgnoreCallers()->isEmpty())
+		if (!$filter->getExcludeParameterIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getIgnoreCallers() as $key => $value)
+			foreach ($filter->getExcludeParameterIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("r.caller", $builder->expr()->literal($value))));
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('p.id', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
 		}
 
-		if (!$filter->getIgnoreClientIPs()->isEmpty())
+		if (!$filter->getExcludeProfileIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getIgnoreClientIPs() as $key => $value)
+			foreach ($filter->getExcludeProfileIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("r.clientIP", $builder->expr()->literal($value))));
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
 		}
 
-		if (!$filter->getIgnorePaths()->isEmpty())
+		if (!$filter->getExcludeRequestIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getIgnorePaths() as $key => $value)
+			foreach ($filter->getExcludeRequestIds() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("p.path", $builder->expr()->literal($value))));
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('r.id', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if ($filter->getExcludeDateStart())
+		{
+			$builder->andWhere('r.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
+		}
+
+		if ($filter->getExcludeDateEnd())
+		{
+			$builder->andWhere('r.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+		}
+
+		if (!$filter->getExcludeClientIPs()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeClientIPs() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludePaths()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludePaths() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('p.path', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludeValues()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeValues() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('p.value', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if ($filter->getExcludeThreat())
+		{
+			$builder->andWhere('p.threat != :excludeThreat')->setParameter('excludeThreat', '1');
+		}
+
+		if ($filter->getExcludeNoRule())
+		{
+			$builder->andWhere('p.totalRules != :excludeTotalRules')->setParameter('excludeTotalRules', '0');
+		}
+
+		if ($filter->getExcludeBrokenRule())
+		{
+			// TODO
+		}
+
+		if ($filter->getExcludeCriticalImpact())
+		{
+			$builder->andWhere('p.criticalImpact != :excludeCriticalImpact')->setParameter('excludeCriticalImpact', '1');
 		}
 
 		return $builder->getQuery();
@@ -193,8 +276,7 @@ class ParameterRepository extends EntityRepository
 
 			foreach ($settings->getSearchPaths() as $key => $value)
 			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("p.path", $builder->expr()->literal($value)));
+				$orExpr->add($builder->expr()->like("p.path", $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);

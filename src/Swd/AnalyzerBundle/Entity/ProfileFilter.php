@@ -33,47 +33,64 @@ class ProfileFilter
 	private $id;
 
 	/**
-	 * @var integer
+	 * @var \ArrayCollection
 	 */
-	private $profileId;
+	private $includeProfileIds;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchServerIPs;
+	private $includeServerIPs;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $searchNames;
+	private $includeNames;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateStart;
+	private $includeDateStart;
 
 	/**
 	 * @var \DateTime
 	 */
-	private $dateEnd;
+	private $includeDateEnd;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignoreServerIPs;
+	private $excludeProfileIds;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $ignoreNames;
+	private $excludeServerIPs;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeNames;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateStart;
+
+	/**
+	 * @var \DateTime
+	 */
+	private $excludeDateEnd;
 
 
 	public function __construct()
 	{
-		$this->searchServerIPs = new ArrayCollection();
-		$this->searchNames = new ArrayCollection();
-		$this->ignoreServerIPs = new ArrayCollection();
-		$this->ignoreNames = new ArrayCollection();
+		$this->includeProfileIds = new ArrayCollection();
+		$this->includeServerIPs = new ArrayCollection();
+		$this->includeNames = new ArrayCollection();
+		$this->excludeProfileIds = new ArrayCollection();
+		$this->excludeServerIPs = new ArrayCollection();
+		$this->excludeNames = new ArrayCollection();
 	}
 
 	public function getId()
@@ -81,87 +98,123 @@ class ProfileFilter
 		return $this->id;
 	}
 
-	public function setProfileId($profileId)
+	public function addIncludeProfileId($profileId)
 	{
-		$this->profileId = $profileId;
+		$this->includeProfileIds[] = $profileId;
 
 		return $this;
 	}
 
-	public function getProfileId()
+	public function getIncludeProfileIds()
 	{
-		return $this->profileId;
+		return $this->includeProfileIds;
 	}
 
-	public function setDateStart($dateStart)
+	public function addIncludeServerIP($serverIP)
 	{
-		$this->dateStart = $dateStart;
+		$this->includeServerIPs[] = $serverIP;
 
 		return $this;
 	}
 
-	public function getDateStart()
+	public function getIncludeServerIPs()
 	{
-		return $this->dateStart;
+		return $this->includeServerIPs;
 	}
 
-	public function setDateEnd($dateEnd)
+	public function addIncludeName($name)
 	{
-		$this->dateEnd = $dateEnd;
+		$this->includeNames[] = $name;
 
 		return $this;
 	}
 
-	public function getDateEnd()
+	public function getIncludeNames()
 	{
-		return $this->dateEnd;
+		return $this->includeNames;
 	}
 
-	public function addSearchServerIP($serverIP)
+	public function setIncludeDateStart($dateStart)
 	{
-		$this->searchServerIPs[] = $serverIP;
+		$this->includeDateStart = $dateStart;
 
 		return $this;
 	}
 
-	public function getSearchServerIPs()
+	public function getIncludeDateStart()
 	{
-		return $this->searchServerIPs;
+		return $this->includeDateStart;
 	}
 
-	public function addSearchName($name)
+	public function setIncludeDateEnd($dateEnd)
 	{
-		$this->searchNames[] = $name;
+		$this->includeDateEnd = $dateEnd;
 
 		return $this;
 	}
 
-	public function getSearchNames()
+	public function getIncludeDateEnd()
 	{
-		return $this->searchNames;
+		return $this->includeDateEnd;
 	}
 
-	public function addIgnoreServerIP($serverIP)
+	public function addExcludeProfileId($profileId)
 	{
-		$this->ignoreServerIPs[] = $serverIP;
+		$this->excludeProfileIds[] = $profileId;
 
 		return $this;
 	}
 
-	public function getIgnoreServerIPs()
+	public function getExcludeProfileIds()
 	{
-		return $this->ignoreServerIPs;
+		return $this->excludeProfileIds;
 	}
 
-	public function addIgnoreName($name)
+	public function addExcludeServerIP($serverIP)
 	{
-		$this->ignoreNames[] = $name;
+		$this->excludeServerIPs[] = $serverIP;
 
 		return $this;
 	}
 
-	public function getIgnoreNames()
+	public function getExcludeServerIPs()
 	{
-		return $this->ignoreNames;
+		return $this->excludeServerIPs;
+	}
+
+	public function addExcludeName($name)
+	{
+		$this->excludeNames[] = $name;
+
+		return $this;
+	}
+
+	public function getExcludeNames()
+	{
+		return $this->excludeNames;
+	}
+
+	public function setExcludeDateStart($dateStart)
+	{
+		$this->excludeDateStart = $dateStart;
+
+		return $this;
+	}
+
+	public function getExcludeDateStart()
+	{
+		return $this->excludeDateStart;
+	}
+
+	public function setExcludeDateEnd($dateEnd)
+	{
+		$this->excludeDateEnd = $dateEnd;
+
+		return $this;
+	}
+
+	public function getExcludeDateEnd()
+	{
+		return $this->excludeDateEnd;
 	}
 }

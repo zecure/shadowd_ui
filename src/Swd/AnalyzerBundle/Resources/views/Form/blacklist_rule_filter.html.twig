@@ -1,19 +1,22 @@
 {% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
 
-{% block search %}
-  {{ form_row(form.ruleId) }}
-  {{ form_row(form.profileId) }}
-  {{ form_row(form.status) }}
-  {{ form_row(form.searchCallers) }}
-  {{ form_row(form.searchPaths) }}
-  {{ form_row(form.dateStart) }}
-  {{ form_row(form.dateEnd) }}
+{% block include %}
+  {{ form_row(form.includeRuleIds) }}
+  {{ form_row(form.includeProfileIds) }}
+  {{ form_row(form.includeCallers) }}
+  {{ form_row(form.includePaths) }}
+  {{ form_row(form.includeDateStart) }}
+  {{ form_row(form.includeDateEnd) }}
+  {{ form_row(form.includeStatus) }}
 {% endblock %}
 
 
-{% block ignore %}
-  {{ form_row(form.ignoreCallers) }}
-  {{ form_row(form.ignorePaths) }}
+{% block exclude %}
+  {{ form_row(form.excludeRuleIds) }}
+  {{ form_row(form.excludeProfileIds) }}
+  {{ form_row(form.excludeCallers) }}
+  {{ form_row(form.excludePaths) }}
+  {{ form_row(form.excludeDateStart) }}
+  {{ form_row(form.excludeDateEnd) }}
+  {{ form_row(form.excludeStatus) }}
 {% endblock %}
-
-

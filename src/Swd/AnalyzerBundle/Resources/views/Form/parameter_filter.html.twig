@@ -1,28 +1,34 @@
 {% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
 
-{% block search %}
-  {{ form_row(form.parameterId) }}
-  {{ form_row(form.profileId) }}
-  {{ form_row(form.requestId) }}
-  {{ form_row(form.learning) }}
-  {{ form_row(form.searchCallers) }}
-  {{ form_row(form.searchClientIPs) }}
-  {{ form_row(form.dateStart) }}
-  {{ form_row(form.dateEnd) }}
-  {{ form_row(form.searchPaths) }}
-  {{ form_row(form.searchValues) }}
-  <hr />
-  {{ form_row(form.threat) }}
-  {{ form_row(form.noRule) }}
-  {{ form_row(form.brokenRule) }}
-  {{ form_row(form.criticalImpact) }}
+{% block include %}
+  {{ form_row(form.includeParameterIds) }}
+  {{ form_row(form.includeProfileIds) }}
+  {{ form_row(form.includeRequestIds) }}
+  {{ form_row(form.includeCallers) }}
+  {{ form_row(form.includeClientIPs) }}
+  {{ form_row(form.includeDateStart) }}
+  {{ form_row(form.includeDateEnd) }}
+  {{ form_row(form.includePaths) }}
+  {{ form_row(form.includeValues) }}
+  {{ form_row(form.includeThreat) }}
+  {{ form_row(form.includeNoRule) }}
+  {{ form_row(form.includeBrokenRule) }}
+  {{ form_row(form.includeCriticalImpact) }}
 {% endblock %}
 
 
-{% block ignore %}
-  {{ form_row(form.ignoreCallers) }}
-  {{ form_row(form.ignoreClientIPs) }}
-  {{ form_row(form.ignorePaths) }}
+{% block exclude %}
+  {{ form_row(form.excludeParameterIds) }}
+  {{ form_row(form.excludeProfileIds) }}
+  {{ form_row(form.excludeRequestIds) }}
+  {{ form_row(form.excludeCallers) }}
+  {{ form_row(form.excludeClientIPs) }}
+  {{ form_row(form.excludeDateStart) }}
+  {{ form_row(form.excludeDateEnd) }}
+  {{ form_row(form.excludePaths) }}
+  {{ form_row(form.excludeValues) }}
+  {{ form_row(form.excludeThreat) }}
+  {{ form_row(form.excludeNoRule) }}
+  {{ form_row(form.excludeBrokenRule) }}
+  {{ form_row(form.excludeCriticalImpact) }}
 {% endblock %}
-
-

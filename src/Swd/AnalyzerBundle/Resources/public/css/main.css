@@ -80,3 +80,7 @@ td.icons {
 th, td {
   white-space: nowrap;
 }
+
+.filters-form-actions .form-group {
+  display: inline-block;
+}

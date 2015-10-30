@@ -95,7 +95,7 @@ class Setting
 		$this->pageLimit = 50;
 		$this->sortOrder = 0;
 		$this->theme = 0;
-		$this->openFilter = true;
+		$this->openFilter = false;
 	}
 
 	public function getId()
