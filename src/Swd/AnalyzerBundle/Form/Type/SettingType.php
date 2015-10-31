@@ -35,7 +35,6 @@ class SettingType extends AbstractType
 			->add('openFilter', 'checkbox', array('required' => false, 'label' => 'Automatically open filter mask on new filter'))
 			->add('theme', 'choice', array('choices' => array(
 				'0' => 'Default',
-				'amelia' => 'Amelia',
 				'cerulean' => 'Cerulean',
 				'cosmo' => 'Cosmo',
 				'cyborg' => 'Cyborg',
