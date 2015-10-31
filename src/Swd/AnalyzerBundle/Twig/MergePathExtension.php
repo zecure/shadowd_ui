@@ -41,7 +41,36 @@ class MergePathExtension extends \Twig_Extension
 		return $this->container->get('security.context')->getToken()->getUser();
 	}
 
-	private function array_filter_recursive($input)
+	private function array_merge_recursive(array &$array1, array &$array2)
+	{
+		$merged = $array1;
+
+		foreach ($array2 as $key => &$value)
+		{
+			if (is_array($value) && isset($merged[$key]) && is_array($merged[$key]))
+			{
+				$merged[$key] = $this->array_merge_recursive($merged[$key], $value);
+			}
+			else
+			{
+				if (is_int($key))
+				{
+					if (!in_array($value, $merged))
+					{
+						$merged[] = $value;
+					}
+				}
+				else
+				{
+					$merged[$key] = $value;
+				}
+			}
+		}
+
+		return $merged;
+	}
+
+	function array_filter_recursive($input)
 	{
 		foreach ($input as &$value)
 		{
@@ -51,7 +80,16 @@ class MergePathExtension extends \Twig_Extension
 			}
 		}
 
-		return array_filter($input);
+		// Remove empty elements.
+		$output = array_filter($input);
+
+		// Escape asterisk.
+		$escape = function($text)
+		{
+			return str_replace('*', '\*', $text);
+		};
+
+		return array_map($escape, $output);
 	}
 
 	public function mergePath($input, $disableFilter = false)
@@ -67,13 +105,11 @@ class MergePathExtension extends \Twig_Extension
 			unset($routeParams['page']);
 		}
 
-		/* Merge (and replace) arrays. */
-		$result = array_replace_recursive($routeParams, $input);
+		/* Merge and replace arrays. */
+		$result = $this->array_merge_recursive($routeParams, $input);
 
-		/* Remove empty elements. */
+		/* Remove empty elements and escape asterisk. */
 		$result = $this->array_filter_recursive($result);
-
-		// TODO: escape special characters (*)
 
 		/* Generate the url. */
 		$url = $router->generate($routeName, $result);
