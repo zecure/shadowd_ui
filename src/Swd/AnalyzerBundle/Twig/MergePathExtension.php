@@ -81,15 +81,7 @@ class MergePathExtension extends \Twig_Extension
 		}
 
 		// Remove empty elements.
-		$output = array_filter($input);
-
-		// Escape asterisk.
-		$escape = function($text)
-		{
-			return str_replace('*', '\*', $text);
-		};
-
-		return array_map($escape, $output);
+		return array_filter($input);
 	}
 
 	public function mergePath($input, $disableFilter = false)
@@ -108,7 +100,7 @@ class MergePathExtension extends \Twig_Extension
 		/* Merge and replace arrays. */
 		$result = $this->array_merge_recursive($routeParams, $input);
 
-		/* Remove empty elements and escape asterisk. */
+		/* Remove empty elements. */
 		$result = $this->array_filter_recursive($result);
 
 		/* Generate the url. */
