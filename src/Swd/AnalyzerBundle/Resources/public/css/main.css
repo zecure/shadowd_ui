@@ -40,6 +40,12 @@ td.icons {
   line-height: 0;
 }
 
+.icons a, .filter-icons a, #filters-button {
+  color: inherit;
+  user-select: none;
+  outline: 0;
+}
+
 #filters-form {
   display: none;
 }
