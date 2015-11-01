@@ -30,8 +30,8 @@ class SettingType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('pageLimit', 'integer', array('label' => 'Entries Per Page'))
-			->add('sortOrder', 'choice', array('choices' => array('0' => 'Descendent', '1' => 'Ascendent'), 'label' => 'Sort Order'))
+			->add('pageLimit', 'integer', array('label' => 'Entries per page'))
+			->add('sortOrder', 'choice', array('choices' => array('0' => 'Descendent', '1' => 'Ascendent'), 'label' => 'Sort order'))
 			->add('openFilter', 'checkbox', array('required' => false, 'label' => 'Automatically open filter mask on new filter'))
 			->add('theme', 'choice', array('choices' => array(
 				'0' => 'Default',
@@ -53,11 +53,11 @@ class SettingType extends AbstractType
 				'yeti' => 'Yeti',
 				'1337h4x0r' => '1337h4x0r',
 			)))
-			->add('oldPassword', 'password', array('required' => false, 'label' => 'Old Password'))
+			->add('oldPassword', 'password', array('required' => false, 'label' => 'Old password'))
 			->add('newPassword', 'repeated', array('required' => false, 'type' => 'password',
 				'invalid_message' => 'The password fields must match.',
-				'first_options'  => array('label' => 'New Password'),
-				'second_options' => array('label' => 'Repeat Password'),
+				'first_options'  => array('label' => 'New password'),
+				'second_options' => array('label' => 'Repeat password'),
 			))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}

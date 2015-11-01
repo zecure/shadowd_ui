@@ -29,7 +29,7 @@ class BlacklistRuleSelectorType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('subaction', 'choice', array('choices' => array('activate' => 'Activate Rules', 'deactivate' => 'Deactivate Rules', 'delete' => 'Delete Rules')))
+			->add('subaction', 'choice', array('choices' => array('activate' => 'Activate rules', 'deactivate' => 'Deactivate rules', 'delete' => 'Delete rules')))
 			->add('actions', 'form_actions', array('buttons' => array('do' => array(
 				'type' => 'submit', 'options' => array('label' => 'Execute'))
 			)));

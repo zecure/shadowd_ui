@@ -44,7 +44,7 @@ class HomeController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		/* Get random tooltip. */
-		$path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/translations/tooltips.en.txt');
+		$path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/tooltips/tooltips.en.txt');
 		$tooltip = $this->randomLine($path);
 
 		/* Get profile data. */

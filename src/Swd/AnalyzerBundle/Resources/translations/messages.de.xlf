@@ -1,0 +1,635 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Home</source>
+                <target>Startseite</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>User Interface</source>
+                <target>Benutzeroberfläche</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Profile</source>
+                <target>Profil</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Learning</source>
+                <target>Lernen</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Whitelist</source>
+                <target>Weiße Liste</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Blacklist</source>
+                <target>Schwarze Liste</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Last request</source>
+                <target>Letzte Anfrage</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Disabled</source>
+                <target>Deaktiviert</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Enabled</source>
+                <target>Aktiviert</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Did you know ... ?</source>
+                <target>Wusstest du schon ... ?</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Learn more</source>
+                <target>Mehr Informationen</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Include</source>
+                <target>Einschließen</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Exclude</source>
+                <target>Ausschließen</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Toggle filters</source>
+                <target>Filter umschalten</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Toggle navigation</source>
+                <target>Navigation umschalten</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Warning!</source>
+                <target>Warnung!</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>You do not have Javascript enabled and thus some functionality won't work.</source>
+                <target>Javascript ist deaktiviert, daher stehen manche Funktionen nicht zur Verfügung.</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Requests</source>
+                <target>Anfragen</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Request ID</source>
+                <target>Anfrage ID</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Profile ID</source>
+                <target>Profil ID</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Caller</source>
+                <target>Anrufer</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Resource</source>
+                <target>Ressource</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Client IP</source>
+                <target>Klient IP</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Summary</source>
+                <target>Übersicht</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source># Parameters</source>
+                <target># Parameter</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Show details</source>
+                <target>Details anzeigen</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Parameters</source>
+                <target>Parameter</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Parameter ID</source>
+                <target>Parameter ID</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Path</source>
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Unknown</source>
+                <target>Unbekannt</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Critical impact</source>
+                <target>Kritischer Impakt</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Broken rule</source>
+                <target>Verletzte Regel</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Parameter</source>
+                <target>Parameter</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Whitelist: Broken Rules</source>
+                <target>Weiße Liste: Verletzte Regeln</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Rule ID</source>
+                <target>Regel ID</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Min. length</source>
+                <target>Min. Länge</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Max. length</source>
+                <target>Max. Länge</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Filter</source>
+                <target>Filter</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>No limitation</source>
+                <target>Keine Begrenzung</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>Too short</source>
+                <target>Zu kurz</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Adhered to</source>
+                <target>Eingehalten</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>Match</source>
+                <target>Übereinstimmung</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>No match</source>
+                <target>Keine Übereinstimmung</target>
+            </trans-unit>
+            <trans-unit id="46">
+                <source>Blacklist: Matching Filters</source>
+                <target>Schwarze Liste: Übereinstimmende Filter</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>Filter ID</source>
+                <target>Filter ID</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Impact</source>
+                <target>Impakt</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>Classification</source>
+                <target>Klassifizierung</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Blacklist Rules</source>
+                <target>Regeln der schwarzen Liste</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>Status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Modified</source>
+                <target>Bearbeitet</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Threshold</source>
+                <target>Schwellwert</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>Edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Active</source>
+                <target>Aktiv</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>Inactive</source>
+                <target>Inaktiv</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>Pending</source>
+                <target>Ausstehend</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>Blacklist Rule</source>
+                <target>Regeln der schwarzen Liste</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>Blacklist Rules Export</source>
+                <target>Regeln der schwarzen Liste Export</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>The value of &lt;em&gt;base&lt;/em&gt; in the caller will be replaced with &lt;em&gt;{BASE}&lt;/em&gt;. You can use this to set the base path dynamically when you import the rules collection.</source>
+                <target>Im Anrufer wird der Wert &lt;em&gt;base&lt;/em&gt; durch &lt;em&gt;{BASE}&lt;/em&gt; ersetzt. Diese Funktion kann benutzt werden, um den Basispfad beim importieren automatisch anzupassen.</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source>Use &lt;em&gt;paths&lt;/em&gt; and &lt;em&gt;callers&lt;/em&gt; to specify which rules you want to export.</source>
+                <target>Benutze &lt;em&gt;paths&lt;/em&gt; und &lt;em&gt;callers&lt;/em&gt; um festzulegen, welche Regeln du exportieren willst.</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Blacklist Rules Import</source>
+                <target>Regeln der schwarzen Liste Import</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>On this page you can import rules collections. If the collection supports it you can use &lt;em&gt;base&lt;/em&gt; to specify a base directory (f.i. &lt;em&gt;/var/www/blog/&lt;/em&gt;).</source>
+                <target>Auf dieser Seite kannst du Sammlungen von Regeln importieren. Wenn die Sammlung es unterstützt, kannst du &lt;em&gt;base&lt;/em&gt; benutzen um den Basispfad anzupassen irectory (z.B. &lt;em&gt;/var/www/blog/&lt;/em&gt;).</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>You can use this for backups, but you can also use it to &lt;a href=&quot;https://github.com/zecure/shadowd_rules&quot;&gt;share good collections with others&lt;/a&gt;. Sharing is caring and everybody saves time!</source>
+                <target>Du kannst diese Funktion für Backups verwenden, oder aber du benutzt sie um &lt;a href=&quot;https://github.com/zecure/shadowd_rules&quot;&gt;gute Regeln mit Anderen zu teilen&lt;/a&gt;. Jeder hat etwas davon!</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Whitelist Rules</source>
+                <target>Regeln der weißen Liste</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Conflict</source>
+                <target>Konflikt</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Insecure</source>
+                <target>Unsicher</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Secure</source>
+                <target>Sicher</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Add</source>
+                <target>Hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Import</source>
+                <target>Importieren</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Export</source>
+                <target>Exportieren</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Generator</source>
+                <target>Generator</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Whitelist Rule</source>
+                <target>Regel der weißen Liste</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Caution!</source>
+                <target>Achtung!</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Filters are ordered by dangerousness. The more characters are allowed the more insecure the rule gets. Still, fields with direct user input (f.i. search keywords or forum posts and titles) should be set to &quot;everything&quot; in almost any case to avoid false positives. The purpose of the whitelist is to protect the user input that does not directly comes from the user. Direct input can only be protected by the blacklist.</source>
+                <target>Die Filter sind nach Gefährlichkeit angeordnet. Je mehr Zeichen erlaubt sind, desto unsicherer wird die Regel. Dennoch sollten Parameter mit direkten Benutzereingaben (z.B. Suchwörter oder Forenbeiträge und Titel) so gut wie immer auf &quot;alles&quot; gesetzt werden um Falschmeldungen zu vermeiden. Der Sinn der weißen Liste ist es Benutzereingaben zu beschützen, welche nicht direkt vom User eingegeben werden. Direkte Benutzereingaben können nur durch die schwarze Liste abgesichert werden.</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Whitelist Rules Export</source>
+                <target>Regeln der weißen Liste Export</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Whitelist Rules Import</source>
+                <target>Regeln der weißen Liste Import</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Whitelist Rules Generator</source>
+                <target>Regeln der weißen Liste Generator</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>The quality of the rules depends on the quality and quantity of the gathered learning data. If you know what you are doing you can tweak the settings to get better results, but in most cases the default values should be fine. For more information have a look at the documentation.</source>
+                <target>Die Qualität der Regeln hängt von der Qualität und Quantität der gesammelten Lerndaten ab. Wenn du weißt was du tust kannst du die Einstellungen modifizieren um bessere Ergebnisse zu erhalten. In den meisten Fällen sollten die Standardeinstellungen allerdings ausreichend sein. Für mehr Informationen bitte die Dokumentation lesen.</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Profiles</source>
+                <target>Profile</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>Server IP</source>
+                <target>Server IP</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Blacklist threshold</source>
+                <target>Schwarze Liste Schwellwert</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>Flooding time (min.)</source>
+                <target>Flutzeit (Min.)</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>Flooding threshold</source>
+                <target>Flutschwellwert</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source># Requests</source>
+                <target># Anfragen</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>Users</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>User ID</source>
+                <target>Benutzer ID</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>Username</source>
+                <target>Benutzername</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>Role</source>
+                <target>Rolle</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>Admin</source>
+                <target>Admin</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>Settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>Defaults</source>
+                <target>Standardeinstellungen</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Password</source>
+                <target>Passwort</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Limit</source>
+                <target>Limit</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>Execute</source>
+                <target>Ausführen</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>Filter</source>
+                <target>Filter</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Reset</source>
+                <target>Zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Clear</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>From</source>
+                <target>Von</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>To</source>
+                <target>Bis</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Year</source>
+                <target>Jahr</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Month</source>
+                <target>Monat</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>Day</source>
+                <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Hour</source>
+                <target>Stunde</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Minute</source>
+                <target>Minute</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Save</source>
+                <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Base</source>
+                <target>Basis</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Paths</source>
+                <target>Pfade</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Callers</source>
+                <target>Anrufer</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>File</source>
+                <target>Datei</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Activated</source>
+                <target>Aktiviert</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Deactivated</source>
+                <target>Deaktiviert</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Activate rules</source>
+                <target>Aktiviere Regeln</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>Deactivate rules</source>
+                <target>Deaktiviere Regeln</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Delete rules</source>
+                <target>Lösche Regeln</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Min. unique visitors</source>
+                <target>Min. einzigartige Besucher</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>Min. filter dominance</source>
+                <target>Min. Dominanz des Filters</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Unify arrays</source>
+                <target>Vereine Arrays</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>Is threat</source>
+                <target>Ist Gefahr</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>Has no rule</source>
+                <target>Hat keine Regeln</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>Has broken rule</source>
+                <target>Hat Regeln gebrochen</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>Has critical impact</source>
+                <target>Hat kritischen Impakt</target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>Delete parameters</source>
+                <target>Lösche Parameter</target>
+            </trans-unit>
+            <trans-unit id="128">
+                <source>Enable learning</source>
+                <target>Aktiviere Lernen</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>Disable learning</source>
+                <target>Deaktiviere Lernen</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>Enable whitelist</source>
+                <target>Aktiviere weiße Liste</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>Disable whitelist</source>
+                <target>Deaktiviere weiße Liste</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>Enable blacklist</source>
+                <target>Aktiviere schwarze Liste</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>Disable blacklist</source>
+                <target>Deaktiviere schwarze Liste</target>
+            </trans-unit>
+            <trans-unit id="134">
+                <source>Delete learning requests</source>
+                <target>Lösche Lernanfragen</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>Delete productive requests</source>
+                <target>Lösche Produktivanfragen</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>Delete profiles</source>
+                <target>Lösche Profile</target>
+            </trans-unit>
+            <trans-unit id="137">
+                <source>Key</source>
+                <target>Schlüssel</target>
+            </trans-unit>
+            <trans-unit id="138">
+                <source>Delete requests</source>
+                <target>Lösche Anfragen</target>
+            </trans-unit>
+            <trans-unit id="139">
+                <source>Entries per page</source>
+                <target>Einträge pro Seite</target>
+            </trans-unit>
+            <trans-unit id="140">
+                <source>Descendent</source>
+                <target>Absteigend</target>
+            </trans-unit>
+            <trans-unit id="141">
+                <source>Ascendent</source>
+                <target>Aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="142">
+                <source>Sort order</source>
+                <target>Sortierrichtung</target>
+            </trans-unit>
+            <trans-unit id="143">
+                <source>Theme</source>
+                <target>Thema</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>Old password</source>
+                <target>Altes Passwort</target>
+            </trans-unit>
+            <trans-unit id="145">
+                <source>New password</source>
+                <target>Neues Passwort</target>
+            </trans-unit>
+            <trans-unit id="146">
+                <source>Repeat password</source>
+                <target>Passwort wiederholen</target>
+            </trans-unit>
+            <trans-unit id="147">
+                <source>Automatically open filter mask on new filter</source>
+                <target>Automatisch die Filtermaske bei neuem Filter öffnen</target>
+            </trans-unit>
+            <trans-unit id="148">
+                <source>Delete users</source>
+                <target>Lösche Benutzer</target>
+            </trans-unit>
+            <trans-unit id="149">
+                <source>Demand password change on login</source>
+                <target>Verlange Passwortänderung bei Anmeldung</target>
+            </trans-unit>
+            <trans-unit id="150">
+                <source>Has conflict</source>
+                <target>Hat Konflikt</target>
+            </trans-unit>
+            <trans-unit id="151">
+                <source>Previous</source>
+                <target>Vorherige</target>
+            </trans-unit>
+            <trans-unit id="152">
+                <source>Next</source>
+                <target>Nächste</target>
+            </trans-unit>
+            <trans-unit id="153">
+                <source>First</source>
+                <target>Erste</target>
+            </trans-unit>
+            <trans-unit id="154">
+                <source>Last</source>
+                <target>Letzte</target>
+            </trans-unit>
+            <trans-unit id="155">
+                <source>Analysis</source>
+                <target>Analyse</target>
+            </trans-unit>
+            <trans-unit id="156">
+                <source>Management</source>
+                <target>Management</target>
+            </trans-unit>
+            <trans-unit id="157">
+                <source>Administration</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="158">
+                <source>Logout</source>
+                <target>Abmelden</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

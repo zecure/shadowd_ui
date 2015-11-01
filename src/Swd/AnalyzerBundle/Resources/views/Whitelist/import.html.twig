@@ -1,12 +1,12 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Whitelist Rules Import{% endblock %}
+{% block title %}{% trans %}Whitelist Rules Import{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Whitelist Rules Import</h1>
+  <h1>{% trans %}Whitelist Rules Import{% endtrans %}</h1>
 </div>
 
 <div class="col-md-8">
@@ -14,10 +14,10 @@
 </div>
 <div class="col-md-4">
   <div class="alert alert-info">
-    On this page you can import rules collections. If the collection supports it you can use <em>base</em> to specify a base directory (f.i. <em>/var/www/blog/</em>).
+    {% trans %}On this page you can import rules collections. If the collection supports it you can use <em>base</em> to specify a base directory (f.i. <em>/var/www/blog/</em>).{% endtrans %}
   </div>
   <div class="alert alert-info">
-    You can use this for backups, but you can also use it to <a href="https://github.com/zecure/shadowd_rules">share good collections with others</a>. Sharing is caring and everybody saves time!
+    {% trans %}You can use this for backups, but you can also use it to <a href="https://github.com/zecure/shadowd_rules">share good collections with others</a>. Sharing is caring and everybody saves time!{% endtrans %}
   </div>
 </div>
 

@@ -32,30 +32,45 @@ class Builder extends ContainerAware
 
 		if ($this->container->get('security.context')->isGranted('ROLE_USER'))
 		{
-			$menu->addChild('Home', array('route' => 'swd_analyzer_home'));
+			$menu->addChild(
+				$this->container->get('translator')->trans('Home'),
+				array('route' => 'swd_analyzer_home'));
 
-			// TODO: add subcat: attacks
-			$menu->addChild('Requests', array('route' => 'swd_analyzer_requests_list'));
-			$menu->addChild('Parameters', array('route' => 'swd_analyzer_parameters_list'));
-			// TODO: add files to attacks?
+			$analysis = $menu->addChild($this->container->get('translator')->trans('Analysis'));
+			$analysis->addChild(
+				$this->container->get('translator')->trans('Requests'),
+				array('route' => 'swd_analyzer_requests_list'));
+			$analysis->addChild(
+				$this->container->get('translator')->trans('Parameters'),
+				array('route' => 'swd_analyzer_parameters_list'));
 
-			// TODO: add subcat: rules
-			$menu->addChild('Blacklist', array('route' => 'swd_analyzer_blacklist_rules'));
-			$menu->addChild('Whitelist', array('route' => 'swd_analyzer_whitelist_rules'));
-			// TODO: add files to rules
-			// TODO: add headers to rules
+			$management = $menu->addChild($this->container->get('translator')->trans('Management'));
+			$management->addChild(
+				$this->container->get('translator')->trans('Blacklist'),
+				array('route' => 'swd_analyzer_blacklist_rules'));
+			$management->addChild(
+				$this->container->get('translator')->trans('Whitelist'),
+				array('route' => 'swd_analyzer_whitelist_rules'));
 
-			// TODO: add subcat: administration
-			$menu->addChild('Profiles', array('route' => 'swd_analyzer_profiles_list'));
+			$administration = $menu->addChild($this->container->get('translator')->trans('Administration'));
+			$administration->addChild(
+				$this->container->get('translator')->trans('Profiles'),
+				array('route' => 'swd_analyzer_profiles_list'));
 
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				$menu->addChild('Users', array('route' => 'swd_analyzer_users_list'));
+				$administration->addChild(
+					$this->container->get('translator')->trans('Users'),
+					array('route' => 'swd_analyzer_users_list'));
 			}
 
-			// TODO: add subcat: user
-			$menu->addChild('Settings', array('route' => 'swd_analyzer_settings'));
-			$menu->addChild('Logout', array('route' => 'logout'));
+			$user = $menu->addChild($this->container->get('translator')->trans('User'));
+			$user->addChild(
+				$this->container->get('translator')->trans('Settings'),
+				array('route' => 'swd_analyzer_settings'));
+			$user->addChild(
+				$this->container->get('translator')->trans('Logout'),
+				array('route' => 'logout'));
 		}
 
 		return $menu;

@@ -33,10 +33,10 @@ class GeneratorSettingsType extends AbstractType
 			->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
 				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
 			))
-			->add('minUniqueVisitors', 'integer', array('label' => 'Min. Unique Visitors'))
-			->add('minFilterDominance', 'integer', array('label' => 'Min. Filter Dominance'))
+			->add('minUniqueVisitors', 'integer', array('label' => 'Min. unique visitors'))
+			->add('minFilterDominance', 'integer', array('label' => 'Min. filter dominance'))
 			->add('searchPaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-			->add('unifyArrays', 'checkbox', array('required' => false, 'label' => 'Unify Arrays'))
+			->add('unifyArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
 			->add('actions', 'form_actions', array('buttons' => array('generate' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 

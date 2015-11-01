@@ -1,12 +1,12 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Blacklist Rule{% endblock %}
+{% block title %}{% trans %}Blacklist Rule{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Blacklist Rule</h1>
+  <h1>{% trans %}Blacklist Rule{% endtrans %}</h1>
 </div>
 <div>
   {{ form_start(form) }}

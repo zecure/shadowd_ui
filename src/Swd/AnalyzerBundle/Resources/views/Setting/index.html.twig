@@ -1,16 +1,16 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Settings{% endblock %}
+{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Settings</h1>
+  <h1>{% trans %}Settings{% endtrans %}</h1>
 </div>
 {{ form_start(form) }}
   <div class="col-md-6 whitelist-rule-information">
-    <h2>Defaults</h2>
+    <h2>{% trans %}Defaults{% endtrans %}</h2>
     {{ form_row(form.pageLimit) }}
     {{ form_row(form.sortOrder) }}
     {{ form_row(form.theme) }}
@@ -18,7 +18,7 @@
     {{ form_row(form.actions) }}
   </div>
   <div class="col-md-6 whitelist-rule-information">
-    <h2>Password</h2>
+    <h2>{% trans %}Password{% endtrans %}</h2>
     {{ form_row(form.oldPassword) }}
     {{ form_row(form.newPassword) }}
   </div>

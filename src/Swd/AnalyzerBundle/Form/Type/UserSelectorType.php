@@ -29,7 +29,7 @@ class UserSelectorType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('subaction', 'choice', array('choices' => array('delete' => 'Delete Users')))
+			->add('subaction', 'choice', array('choices' => array('delete' => 'Delete users')))
 			->add('actions', 'form_actions', array('buttons' => array('do' => array(
 				'type' => 'submit', 'options' => array('label' => 'Execute'))
 			)));

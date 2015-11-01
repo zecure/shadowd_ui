@@ -1,12 +1,12 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Profile{% endblock %}
+{% block title %}{% trans %}Profile{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Profile</h1>
+  <h1>{% trans %}Profile{% endtrans %}</h1>
 </div>
 <div>
   {{ form_start(form) }}

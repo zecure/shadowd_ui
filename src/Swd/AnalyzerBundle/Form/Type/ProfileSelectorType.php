@@ -30,15 +30,15 @@ class ProfileSelectorType extends AbstractType
 	{
 		$builder
 			->add('subaction', 'choice', array('choices' => array(
-				'enablelearning' => 'Enable Learning',
-				'disablelearning' => 'Disable Learning',
-				'enablewhitelist' => 'Enable Whitelist',
-				'disablewhitelist' => 'Disable Whitelist',
-				'enableblacklist' => 'Enable Blacklist',
-				'disableblacklist' => 'Disable Blacklist',
-				'deletelearning' => 'Delete "Learning" Requests',
-				'deleteproductive' => 'Delete "Productive" Requests',
-				'delete' => 'Delete Profiles'
+				'enablelearning' => 'Enable learning',
+				'disablelearning' => 'Disable learning',
+				'enablewhitelist' => 'Enable whitelist',
+				'disablewhitelist' => 'Disable whitelist',
+				'enableblacklist' => 'Enable blacklist',
+				'disableblacklist' => 'Disable blacklist',
+				'deletelearning' => 'Delete learning requests',
+				'deleteproductive' => 'Delete productive requests',
+				'delete' => 'Delete profiles'
 			)))
 			->add('actions', 'form_actions', array('buttons' => array('do' => array(
 				'type' => 'submit', 'options' => array('label' => 'Execute'))

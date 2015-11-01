@@ -30,7 +30,7 @@ class RequestSelectorType extends AbstractType
 	{
 		$builder
 			->add('subaction', 'choice', array('choices' => array(
-				'delete' => 'Delete Requests'
+				'delete' => 'Delete requests'
 			)))
 			->add('actions', 'form_actions', array('buttons' => array('do' => array(
 				'type' => 'submit', 'options' => array('label' => 'Execute'))

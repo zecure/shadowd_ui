@@ -1,7 +1,7 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Whitelist Rules{% endblock %}
+{% block title %}{% trans %}Whitelist Rules{% endtrans %}{% endblock %}
 
 
 {% block body %}
@@ -11,20 +11,20 @@
     <thead>
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
-        <th>{{ knp_pagination_sortable(rules, 'Rule ID', 'wr.id') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Rule ID'|trans, 'wr.id') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(rules, 'Profile ID', 'v.id') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Profile ID'|trans, 'v.id') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(rules, 'Status', 'wr.status') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Status'|trans, 'wr.status') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(rules, 'Modified', 'wr.date') }}</th>
-        <th>{{ knp_pagination_sortable(rules, 'Caller', 'wr.caller') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Modified'|trans, 'wr.date') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Caller'|trans, 'wr.caller') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(rules, 'Path', 'wr.path') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Path'|trans, 'wr.path') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(rules, 'Min. Length', 'wr.minLength') }}</th>
-        <th>{{ knp_pagination_sortable(rules, 'Max. Length', 'wr.maxLength') }}</th>
-        <th>{{ knp_pagination_sortable(rules, 'Filter', 'wf.impact') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Min. length'|trans, 'wr.minLength') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Max. length'|trans, 'wr.maxLength') }}</th>
+        <th>{{ knp_pagination_sortable(rules, 'Filter'|trans, 'wf.impact') }}</th>
         {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
       </tr>
     </thead>
@@ -34,74 +34,74 @@
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ rule.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
         <td>{{ rule.getId }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'whitelist_rule_filter': {'includeRuleIds': [rule.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeRuleIds': [rule.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeRuleIds': [rule.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeRuleIds': [rule.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ rule.getProfile.getId }} ({{ rule.getProfile.getName }})</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'whitelist_rule_filter': {'includeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeProfileIds': [rule.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>
-          {% if rule.getStatus == 1 %} {{ label_success('Active') }}
-          {% elseif rule.getStatus == 2 %} {{ label_danger('Inactive') }}
-          {% elseif rule.getStatus == 3 %} {{ label_danger('Pending') }}
+          {% if rule.getStatus == 1 %} {{ label_success('Active'|trans) }}
+          {% elseif rule.getStatus == 2 %} {{ label_danger('Inactive'|trans) }}
+          {% elseif rule.getStatus == 3 %} {{ label_danger('Pending'|trans) }}
           {% endif %}
         </td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'whitelist_rule_filter': {'includeStatus': rule.getStatus}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeStatus': rule.getStatus}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeStatus': rule.getStatus}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeStatus': rule.getStatus}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ rule.getDate|date('Y-m-d H:i') }}</td>
         <td title="{{ rule.getCaller }}">{{ rule.getCaller|truncate(50) }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'whitelist_rule_filter': {'includeCallers': [rule.getCaller]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeCallers': [rule.getCaller]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includeCallers': [rule.getCaller]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludeCallers': [rule.getCaller]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td title="{{ rule.getPath|truncate(250) }}">{{ rule.getPath|truncate(50) }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'whitelist_rule_filter': {'includePaths': [rule.getPath]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'whitelist_rule_filter': {'excludePaths': [rule.getPath]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'includePaths': [rule.getPath]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'whitelist_rule_filter': {'excludePaths': [rule.getPath]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>
           {% if rule.getMinLength < 0 %}
-            {{ label_warning('No limitation') }}
+            {{ label_warning('No limitation'|trans) }}
           {% else %}
             {{ rule.getMinLength }}
           {% endif %}
           {% if rule.hasMinLengthConflict %}
-            {{ label_danger('Conflict') }}
+            {{ label_danger('Conflict'|trans) }}
           {% endif %}
         </td>
         <td>
           {% if rule.getMaxLength < 0 %}
-            {{ label_warning('No limitation') }}
+            {{ label_warning('No limitation'|trans) }}
           {% else %}
             {{ rule.getMaxLength }}
           {% endif %}
           {% if rule.hasMaxLengthConflict %}
-            {{ label_danger('Conflict') }}
+            {{ label_danger('Conflict'|trans) }}
           {% endif %}
         </td>
         <td>
           {% if rule.getFilter.getImpact == 100 %}
-            {{ label_warning('No limitation') }}
+            {{ label_warning('No limitation'|trans) }}
           {% else %}
             {{ rule.getFilter.getDescription }}
             {% if rule.getFilter.getImpact > 75 %}
-              {{ label_warning('Insecure') }}
+              {{ label_warning('Insecure'|trans) }}
             {% elseif rule.getFilter.getImpact < 25 %}
-              {{ label_success('Secure') }}
+              {{ label_success('Secure'|trans) }}
             {% endif %}
           {% endif %}
           {% if rule.hasFilterConflict %}
-            {{ label_danger('Conflict') }}
+            {{ label_danger('Conflict'|trans) }}
           {% endif %}
         </td>
         {% if is_granted('ROLE_ADMIN') %}
         <td class="icons">
           <a href="{{ path('swd_analyzer_whitelist_edit_rule', {'id': rule.getId}) }}">
-            <i class="fa fa-pencil" title="Edit"></i>
+            <i class="fa fa-pencil" title="{% trans %}Edit{% endtrans %}"></i>
           </a>
         </td>
         {% endif %}
@@ -112,17 +112,17 @@
   <div class="clearfix">
     {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
     <div class="page">
-      {{ knp_pagination_render(rules, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+      {{ knp_pagination_render(rules, "", {}, { "class": "pagination", "prev_label": "Previous"|trans, "next_label": "Next"|trans, "first_label": "First"|trans, "last_label": "Last"|trans}) }}
     </div>
   </div>
 {% if is_granted('ROLE_ADMIN') %}
   <div id="embedded-form-control">
     {{ form_row(embeddedForm.subaction) }}
     {{ form_row(embeddedForm.actions) }}
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_add_rule') }}">Add</a>
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_import') }}">Import</a>
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_export') }}">Export</a>
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_generator') }}">Generator</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_add_rule') }}">{% trans %}Add{% endtrans %}</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_import') }}">{% trans %}Import{% endtrans %}</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_export') }}">{% trans %}Export{% endtrans %}</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_whitelist_generator') }}">{% trans %}Generator{% endtrans %}</a>
   </div>
 {{ form_end(embeddedForm) }}
 {% endif %}

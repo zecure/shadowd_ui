@@ -30,7 +30,7 @@ class ParameterSelectorType extends AbstractType
 	{
 		$builder
 			->add('subaction', 'choice', array('choices' => array(
-				'delete' => 'Delete Parameters'
+				'delete' => 'Delete parameters'
 			)))
 			->add('actions', 'form_actions', array('buttons' => array('do' => array(
 				'type' => 'submit', 'options' => array('label' => 'Execute'))

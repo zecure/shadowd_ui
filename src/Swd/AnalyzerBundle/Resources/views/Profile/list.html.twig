@@ -1,7 +1,7 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Profiles{% endblock %}
+{% block title %}{% trans %}Profiles{% endtrans %}{% endblock %}
 
 
 {% block body %}
@@ -11,21 +11,20 @@
     <thead>
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
-        <th>{{ knp_pagination_sortable(profiles, 'Profile ID', 'v.id') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Profile ID'|trans, 'v.id') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(profiles, 'Modified', 'v.date') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Server IP', 'v.serverIP') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Modified'|trans, 'v.date') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Server IP'|trans, 'v.serverIP') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(profiles, 'Name', 'v.name') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Name'|trans, 'v.name') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(profiles, 'Blacklist Threshold', 'v.threshold') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Flooding Time (min.)', 'v.floodingTime') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Flooding Threshold', 'v.floodingThreshold') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Learning', 'v.learningEnabled') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Whitelist', 'v.whitelistEnabled') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Blacklist', 'v.blacklistEnabled') }}</th>
-        <th># Learning Requests</th>
-        <th># Productive Requests</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist threshold'|trans, 'v.threshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding time (min.)'|trans, 'v.floodingTime') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding threshold'|trans, 'v.floodingThreshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Learning'|trans, 'v.learningEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Whitelist'|trans, 'v.whitelistEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist'|trans, 'v.blacklistEnabled') }}</th>
+        <th>{% trans %}# Requests{% endtrans %}</th>
         {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
       </tr>
     </thead>
@@ -35,19 +34,19 @@
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ profile.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
         <td>{{ profile.getId }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'profile_filter': {'includeProfileIds': [profile.getId]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'profile_filter': {'excludeProfileIds': [profile.getId]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'includeProfileIds': [profile.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeProfileIds': [profile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ profile.getDate|date('Y-m-d H:i') }}</td>
         <td>{{ profile.getServerIP }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'profile_filter': {'includeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'profile_filter': {'excludeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'includeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ profile.getName }}</td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'profile_filter': {'includeNames': [profile.getName]}}) }}"><i class="fa fa-plus-square" title="Include"></i></a>
-          <a href="{{ mergePath({'profile_filter': {'excludeNames': [profile.getName]}}) }}"><i class="fa fa-minus-square" title="Exclude"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'includeNames': [profile.getName]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeNames': [profile.getName]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ profile.getThreshold }}</td>
         <td>
@@ -55,32 +54,31 @@
         </td>
         <td>
           {% if profile.getFloodingThreshold <= 0 %}
-            {{ label_warning('No limitation') }}
+            {{ label_warning('No limitation'|trans) }}
           {% else %}
             {{ profile.getFloodingThreshold }}
           {% endif %}
         </td>
         <td>
-          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
-          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}
+          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled'|trans) }}
+          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled'|trans) }}
           {% endif %}
         </td>
         <td>
-          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled') }}
-          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
         <td>
-          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled') }}
-          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
-        <td>{{ profile.getLearningRequests }}</td>
-        <td>{{ profile.getProductiveRequests }}</td>
+        <td>{{ profile.getLearningRequests }} / {{ profile.getProductiveRequests }}</td>
         {% if is_granted('ROLE_ADMIN') %}
         <td class="icons">
           <a href="{{ path('swd_analyzer_profile_edit', {'id': profile.getId}) }}">
-            <i class="fa fa-pencil" title="Edit"></i>
+            <i class="fa fa-pencil" title="{% trans %}Edit{% endtrans %}"></i>
           </a>
         </td>
         {% endif %}
@@ -91,14 +89,14 @@
   <div class="clearfix">
     {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
     <div class="page">
-      {{ knp_pagination_render(profiles, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+      {{ knp_pagination_render(profiles, "", {}, { "class": "pagination", "prev_label": "Previous"|trans, "next_label": "Next"|trans, "first_label": "First"|trans, "last_label": "Last"|trans}) }}
     </div>
   </div>
 {% if is_granted('ROLE_ADMIN') %}
   <div id="embedded-form-control">
     {{ form_row(embeddedForm.subaction) }}
     {{ form_row(embeddedForm.actions) }}
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_profile_add') }}">Add</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_profile_add') }}">{% trans %}Add{% endtrans %}</a>
   </div>
 {{ form_end(embeddedForm) }}
 {% endif %}

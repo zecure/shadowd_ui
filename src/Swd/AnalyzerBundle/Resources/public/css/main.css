@@ -92,6 +92,10 @@ td.icons {
   width: 100%;
 }
 
+th {
+  text-transform: capitalize;
+}
+
 th, td {
   white-space: nowrap;
 }
