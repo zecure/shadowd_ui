@@ -35,6 +35,10 @@ td.icons {
   opacity: 0.7;
 }
 
+.menu-icons {
+  padding-right: 10px;
+}
+
 #filters-button {
   font-size: 100px;
   line-height: 0;

@@ -33,44 +33,52 @@ class Builder extends ContainerAware
 		if ($this->container->get('security.context')->isGranted('ROLE_USER'))
 		{
 			$menu->addChild(
-				$this->container->get('translator')->trans('Home'),
-				array('route' => 'swd_analyzer_home'));
+				'<i class="menu-icons fa fa-home"></i>' . $this->container->get('translator')->trans('Home'),
+				array('route' => 'swd_analyzer_home', 'extras' => array('safe_label' => true)));
 
-			$analysis = $menu->addChild($this->container->get('translator')->trans('Analysis'));
+			$analysis = $menu->addChild(
+				'<i class="menu-icons fa fa-binoculars"></i>' . $this->container->get('translator')->trans('Analysis'),
+				array('extras' => array('safe_label' => true)));
 			$analysis->addChild(
-				$this->container->get('translator')->trans('Requests'),
-				array('route' => 'swd_analyzer_requests_list'));
+				'<i class="menu-icons fa fa-cog"></i>' . $this->container->get('translator')->trans('Requests'),
+				array('route' => 'swd_analyzer_requests_list', 'extras' => array('safe_label' => true)));
 			$analysis->addChild(
-				$this->container->get('translator')->trans('Parameters'),
-				array('route' => 'swd_analyzer_parameters_list'));
+				'<i class="menu-icons fa fa-cogs"></i>' . $this->container->get('translator')->trans('Parameters'),
+				array('route' => 'swd_analyzer_parameters_list', 'extras' => array('safe_label' => true)));
 
-			$management = $menu->addChild($this->container->get('translator')->trans('Management'));
+			$management = $menu->addChild(
+				'<i class="menu-icons fa fa-balance-scale"></i>' . $this->container->get('translator')->trans('Management'),
+				array('extras' => array('safe_label' => true)));
 			$management->addChild(
-				$this->container->get('translator')->trans('Blacklist'),
-				array('route' => 'swd_analyzer_blacklist_rules'));
+				'<i class="menu-icons fa fa-square"></i>' . $this->container->get('translator')->trans('Blacklist'),
+				array('route' => 'swd_analyzer_blacklist_rules', 'extras' => array('safe_label' => true)));
 			$management->addChild(
-				$this->container->get('translator')->trans('Whitelist'),
-				array('route' => 'swd_analyzer_whitelist_rules'));
+				'<i class="menu-icons fa fa-square-o"></i>' . $this->container->get('translator')->trans('Whitelist'),
+				array('route' => 'swd_analyzer_whitelist_rules', 'extras' => array('safe_label' => true)));
 
-			$administration = $menu->addChild($this->container->get('translator')->trans('Administration'));
+			$administration = $menu->addChild(
+				'<i class="menu-icons fa fa-university"></i>' . $this->container->get('translator')->trans('Administration'),
+				array('extras' => array('safe_label' => true)));
 			$administration->addChild(
-				$this->container->get('translator')->trans('Profiles'),
-				array('route' => 'swd_analyzer_profiles_list'));
+				'<i class="menu-icons fa fa-cubes"></i>' . $this->container->get('translator')->trans('Profiles'),
+				array('route' => 'swd_analyzer_profiles_list', 'extras' => array('safe_label' => true)));
 
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
 				$administration->addChild(
-					$this->container->get('translator')->trans('Users'),
-					array('route' => 'swd_analyzer_users_list'));
+					'<i class="menu-icons fa fa-users"></i>' . $this->container->get('translator')->trans('Users'),
+					array('route' => 'swd_analyzer_users_list', 'extras' => array('safe_label' => true)));
 			}
 
-			$user = $menu->addChild($this->container->get('translator')->trans('User'));
+			$user = $menu->addChild(
+				'<i class="menu-icons fa fa-user"></i>' . $this->container->get('translator')->trans('User'),
+				array('extras' => array('safe_label' => true)));
 			$user->addChild(
-				$this->container->get('translator')->trans('Settings'),
-				array('route' => 'swd_analyzer_settings'));
+				'<i class="menu-icons fa fa-wrench"></i>' . $this->container->get('translator')->trans('Settings'),
+				array('route' => 'swd_analyzer_settings', 'extras' => array('safe_label' => true)));
 			$user->addChild(
-				$this->container->get('translator')->trans('Logout'),
-				array('route' => 'logout'));
+				'<i class="menu-icons fa fa-sign-out"></i>' . $this->container->get('translator')->trans('Logout'),
+				array('route' => 'logout', 'extras' => array('safe_label' => true)));
 		}
 
 		return $menu;
