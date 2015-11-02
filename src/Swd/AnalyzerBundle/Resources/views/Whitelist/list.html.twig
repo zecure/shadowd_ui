@@ -87,7 +87,7 @@
           {% if rule.getFilter.getImpact == 100 %}
             {{ label_warning('No limitation'|trans) }}
           {% else %}
-            {{ rule.getFilter.getDescription }}
+            {{ rule.getFilter.getDescription|trans }}
             {% if rule.getFilter.getImpact > 75 %}
               {{ label_warning('Insecure'|trans) }}
             {% elseif rule.getFilter.getImpact < 25 %}

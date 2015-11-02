@@ -320,7 +320,7 @@
             </trans-unit>
             <trans-unit id="80">
                 <source>Rules Generator</source>
-                <target>Regelgenerator</target>
+                <target>Regelngenerator</target>
             </trans-unit>
             <trans-unit id="81">
                 <source>Invalid file.</source>
@@ -408,7 +408,7 @@
             </trans-unit>
             <trans-unit id="102">
                 <source>Clear</source>
-                <target>Löschen</target>
+                <target>Säubern</target>
             </trans-unit>
             <trans-unit id="103">
                 <source>From</source>
@@ -733,6 +733,58 @@
             <trans-unit id="184">
                 <source>There are no tooltips :(</source>
                 <target>Es gibt keine Tooltips :(</target>
+            </trans-unit>
+            <trans-unit id="185">
+                <source>User</source>
+                <target>Benutzer</target>
+            </trans-unit>
+            <trans-unit id="186">
+                <source>Low security</source>
+                <target>Niedrige Sicherheit</target>
+            </trans-unit>
+            <trans-unit id="187">
+                <source>Moderate security</source>
+                <target>Mittelmäßige Sicherheit</target>
+            </trans-unit>
+            <trans-unit id="188">
+                <source>High security</source>
+                <target>Hohe Sicherheit</target>
+            </trans-unit>
+            <trans-unit id="189">
+                <source>Custom</source>
+                <target>Benutzerdefiniert</target>
+            </trans-unit>
+            <trans-unit id="190">
+                <source>Generate</source>
+                <target>Generieren</target>
+            </trans-unit>
+            <trans-unit id="191">
+                <source>Numeric</source>
+                <target>Numerisch</target>
+            </trans-unit>
+            <trans-unit id="192">
+                <source>Numeric (extended)</source>
+                <target>Numerisch (erweitert)</target>
+            </trans-unit>
+            <trans-unit id="193">
+                <source>Hexadecimal</source>
+                <target>Hexadezimal</target>
+            </trans-unit>
+            <trans-unit id="194">
+                <source>Alphanumeric</source>
+                <target>Alphanumerisch</target>
+            </trans-unit>
+            <trans-unit id="195">
+                <source>Base64</source>
+                <target>Base64</target>
+            </trans-unit>
+            <trans-unit id="196">
+                <source>Special Characters</source>
+                <target>Spezialzeichen</target>
+            </trans-unit>
+            <trans-unit id="197">
+                <source>Everything</source>
+                <target>Alles</target>
             </trans-unit>
         </body>
     </file>

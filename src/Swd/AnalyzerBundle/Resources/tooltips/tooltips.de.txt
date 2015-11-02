@@ -1,0 +1,8 @@
+Wenn du deine Suchergebnisse referenzieren willst, dann solltest du aufsteigend nach der Anfrage- oder Parameter-ID sortieren. Neue Anfragen werden an das Ende der Liste angehängt, somit sind immer die selben Element auf einer Seite.
+Wenn du auf die Zahnräder klickst kannst du Filter setzen und entfernen um nur das anzuzeigen was du auch wirklich sehen möchtest.
+Du kannst auf die meisten Tabelleneinträge klicken um einen neuen Filter hinzuzufügen. Die alten und neuen Filter werden zusammengeführt und leere Filter werden aus der URL entfernt.
+Du kannst das Sternchen als universellen Platzhalter bei den meisten textbasierenden Filtern benutzen.
+Shadow Daemon ist sehr flexibel and funktioniert für fast alle Web Applikationen. In vielen Fällen sind keine Programmänderungen erforderlich und das Verbindungsstück kann direkt bei Ausführung eines Skriptes geladen werden.
+Du kannst die Standardwerte (z.B. die Anzahl der Element pro Seite und die Sortierrichtung) in den Einstellungen ändern. Andere Benutzer sind von den Änderungen nicht betroffen.
+Die Filter der schwarzen Liste sind sehr sensibel und haben eine hohe Rate an Falschmeldungen. Daher werden die Impakts von allen zutreffenden Filtern aufaddiert und nur wenn die Summe höher als ein Schwellwert ist, als Angriff klassifiziert. Der Schwellwert kann global für ein Profil festgelegt werden oder mit Regeln für einzelne Eingaben.
+Regeln und Filter werden nur überprüft wenn eine Anfrage eintrifft. Solltest du also eine Regel bearbeiten, nachdem eine Anfrage in der Datenbank gespeichert wurde, dann wird die Anfrage nicht nachträglich als Angriff klassifiziert.
