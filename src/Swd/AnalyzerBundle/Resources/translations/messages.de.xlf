@@ -343,8 +343,8 @@
                 <target>Schwellwert sw. Liste</target>
             </trans-unit>
             <trans-unit id="86">
-                <source>Flooding time (min.)</source>
-                <target>Zeitraum Flutung (Min.)</target>
+                <source>Flooding time</source>
+                <target>Zeitraum Flutung</target>
             </trans-unit>
             <trans-unit id="87">
                 <source>Flooding threshold</source>
@@ -785,6 +785,10 @@
             <trans-unit id="197">
                 <source>Everything</source>
                 <target>Alles</target>
+            </trans-unit>
+            <trans-unit id="198">
+                <source>Min.</source>
+                <target>Min.</target>
             </trans-unit>
         </body>
     </file>

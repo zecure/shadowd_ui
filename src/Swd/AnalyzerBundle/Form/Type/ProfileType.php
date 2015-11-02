@@ -37,7 +37,7 @@ class ProfileType extends AbstractType
 			->add('whitelistEnabled', 'choice', array('label' => 'Whitelist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('blacklistEnabled', 'choice', array('label' => 'Blacklist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('threshold', null, array('label' => 'Blacklist threshold'))
-			->add('floodingTime', null, array('label' => 'Flooding time (min.)'))
+			->add('floodingTime', null, array('label' => 'Flooding time'))
 			->add('floodingThreshold', null, array('label' => 'Flooding threshold'))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
