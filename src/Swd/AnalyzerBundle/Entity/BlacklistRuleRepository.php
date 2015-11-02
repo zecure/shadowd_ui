@@ -169,11 +169,11 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 			->where('br.status = 1')
 			->andWhere('br.profile = :profile')->setParameter('profile', $filter->getProfile());
 
-		if (!$filter->getCallers()->isEmpty())
+		if (!$filter->getIncludeCallers()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getCallers() as $key => $value)
+			foreach ($filter->getIncludeCallers() as $key => $value)
 			{
 				$orExpr->add($builder->expr()->like('br.caller', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
@@ -181,7 +181,7 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere($orExpr);
 		}
 
-		if (!$filter->getPaths()->isEmpty())
+		if (!$filter->getIncludePaths()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
@@ -191,6 +191,30 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 			}
 
 			$builder->andWhere($orExpr);
+		}
+
+		if (!$filter->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('br.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludePaths()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludePaths() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
 		}
 
 		return $builder->getQuery();

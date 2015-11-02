@@ -270,16 +270,52 @@ class ParameterRepository extends EntityRepositoryTransformer
 			->where('r.learning = 1 AND p.criticalImpact = 0')
 			->andWhere('r.profile = :profile')->setParameter('profile', $settings->getProfile());
 
-		if (!$settings->getSearchPaths()->isEmpty())
+		if (!$settings->getIncludeCallers()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($settings->getSearchPaths() as $key => $value)
+			foreach ($settings->getIncludeCallers() as $key => $value)
 			{
-				$orExpr->add($builder->expr()->like("p.path", $builder->expr()->literal($this->prepareWildcard($value))));
+				$orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
+		}
+
+		if (!$settings->getIncludePaths()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($settings->getIncludePaths() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('p.path', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if (!$settings->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($settings->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$settings->getExcludePaths()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($settings->getExcludePaths() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('p.path', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
 		}
 			
 		return $builder->getQuery();

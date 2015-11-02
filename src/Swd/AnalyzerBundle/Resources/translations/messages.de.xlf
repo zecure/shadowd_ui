@@ -243,24 +243,24 @@
                 <target>Regeln der schwarzen Liste Export</target>
             </trans-unit>
             <trans-unit id="61">
-                <source>The value of &lt;em&gt;base&lt;/em&gt; in the caller will be replaced with &lt;em&gt;{BASE}&lt;/em&gt;. You can use this to set the base path dynamically when you import the rules collection.</source>
-                <target>Im Anrufer wird der Wert &lt;em&gt;base&lt;/em&gt; durch &lt;em&gt;{BASE}&lt;/em&gt; ersetzt. Diese Funktion kann benutzt werden, um den Basispfad beim importieren automatisch anzupassen.</target>
+                <source>Last attack</source>
+                <target>Letzter Angriff</target>
             </trans-unit>
             <trans-unit id="62">
-                <source>Use &lt;em&gt;paths&lt;/em&gt; and &lt;em&gt;callers&lt;/em&gt; to specify which rules you want to export.</source>
-                <target>Benutze &lt;em&gt;paths&lt;/em&gt; und &lt;em&gt;callers&lt;/em&gt; um festzulegen, welche Regeln du exportieren willst.</target>
+                <source># Attacks</source>
+                <target># Angriffe</target>
             </trans-unit>
             <trans-unit id="63">
                 <source>Blacklist Rules Import</source>
                 <target>Regeln der schwarzen Liste Import</target>
             </trans-unit>
             <trans-unit id="64">
-                <source>On this page you can import rules collections. If the collection supports it you can use &lt;em&gt;base&lt;/em&gt; to specify a base directory (f.i. &lt;em&gt;/var/www/blog/&lt;/em&gt;).</source>
-                <target>Auf dieser Seite kannst du Sammlungen von Regeln importieren. Wenn die Sammlung es unterstützt, kannst du &lt;em&gt;base&lt;/em&gt; benutzen um den Basispfad anzupassen irectory (z.B. &lt;em&gt;/var/www/blog/&lt;/em&gt;).</target>
+                <source>The rules were updated.</source>
+                <target>Die Regeln wurden aktualisiert.</target>
             </trans-unit>
             <trans-unit id="65">
-                <source>You can use this for backups, but you can also use it to &lt;a href=&quot;https://github.com/zecure/shadowd_rules&quot;&gt;share good collections with others&lt;/a&gt;. Sharing is caring and everybody saves time!</source>
-                <target>Du kannst diese Funktion für Backups verwenden, oder aber du benutzt sie um &lt;a href=&quot;https://github.com/zecure/shadowd_rules&quot;&gt;gute Regeln mit Anderen zu teilen&lt;/a&gt;. Jeder hat etwas davon!</target>
+                <source>The rule was added.</source>
+                <target>Die Regel wurde hinzugefügt.</target>
             </trans-unit>
             <trans-unit id="66">
                 <source>Whitelist Rules</source>
@@ -302,9 +302,13 @@
                 <source>Caution!</source>
                 <target>Achtung!</target>
             </trans-unit>
+            <trans-unit id="76">
+                <source>The rule was updated.</source>
+                <target>Die Regel wurde aktualisiert.</target>
+            </trans-unit>
             <trans-unit id="77">
-                <source>Filters are ordered by dangerousness. The more characters are allowed the more insecure the rule gets. Still, fields with direct user input (f.i. search keywords or forum posts and titles) should be set to &quot;everything&quot; in almost any case to avoid false positives. The purpose of the whitelist is to protect the user input that does not directly comes from the user. Direct input can only be protected by the blacklist.</source>
-                <target>Die Filter sind nach Gefährlichkeit angeordnet. Je mehr Zeichen erlaubt sind, desto unsicherer wird die Regel. Dennoch sollten Parameter mit direkten Benutzereingaben (z.B. Suchwörter oder Forenbeiträge und Titel) so gut wie immer auf &quot;alles&quot; gesetzt werden um Falschmeldungen zu vermeiden. Der Sinn der weißen Liste ist es Benutzereingaben zu beschützen, welche nicht direkt vom User eingegeben werden. Direkte Benutzereingaben können nur durch die schwarze Liste abgesichert werden.</target>
+                <source>The rules were imported.</source>
+                <target>Die Regeln wurden importiert.</target>
             </trans-unit>
             <trans-unit id="78">
                 <source>Whitelist Rules Export</source>
@@ -315,12 +319,12 @@
                 <target>Regeln der weißen Liste Import</target>
             </trans-unit>
             <trans-unit id="80">
-                <source>Whitelist Rules Generator</source>
-                <target>Regeln der weißen Liste Generator</target>
+                <source>Rules Generator</source>
+                <target>Regelgenerator</target>
             </trans-unit>
             <trans-unit id="81">
-                <source>The quality of the rules depends on the quality and quantity of the gathered learning data. If you know what you are doing you can tweak the settings to get better results, but in most cases the default values should be fine. For more information have a look at the documentation.</source>
-                <target>Die Qualität der Regeln hängt von der Qualität und Quantität der gesammelten Lerndaten ab. Wenn du weißt was du tust kannst du die Einstellungen modifizieren um bessere Ergebnisse zu erhalten. In den meisten Fällen sollten die Standardeinstellungen allerdings ausreichend sein. Für mehr Informationen bitte die Dokumentation lesen.</target>
+                <source>Invalid file.</source>
+                <target>Ungültige Datei.</target>
             </trans-unit>
             <trans-unit id="82">
                 <source>Profiles</source>
@@ -629,6 +633,106 @@
             <trans-unit id="158">
                 <source>Logout</source>
                 <target>Abmelden</target>
+            </trans-unit>
+            <trans-unit id="160">
+                <source>Unify callers</source>
+                <target>Vereine Anrufer</target>
+            </trans-unit>
+            <trans-unit id="161">
+                <source>Predefined</source>
+                <target>Voreingestellt</target>
+            </trans-unit>
+            <trans-unit id="162">
+                <source>Generate whitelist rules</source>
+                <target>Generiere Regeln für die weiße Liste</target>
+            </trans-unit>
+            <trans-unit id="163">
+                <source>Generate blacklist rules</source>
+                <target>Generiere Regeln für die schwarze Liste</target>
+            </trans-unit>
+            <trans-unit id="164">
+                <source>Min. threshold dominance</source>
+                <target>Min. Dominanz des Schwellwerts</target>
+            </trans-unit>
+            <trans-unit id="165">
+                <source>Statistics</source>
+                <target>Statistiken</target>
+            </trans-unit>
+            <trans-unit id="166">
+                <source>You are still using the default password. Please change it immediately.</source>
+                <target>Du benutzt immer noch das Standardpasswort. Bitte ändere es unverzüglich.</target>
+            </trans-unit>
+            <trans-unit id="167">
+                <source>The parameters were updated.</source>
+                <target>Die Parameter wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="168">
+                <source>Unable to modify rules.</source>
+                <target>Nicht möglich Regeln zu bearbeiten.</target>
+            </trans-unit>
+            <trans-unit id="169">
+                <source>Unable to modify parameters.</source>
+                <target>Nicht möglich Parameter zu bearbeiten.</target>
+            </trans-unit>
+            <trans-unit id="170">
+                <source>Unable to modify profiles.</source>
+                <target>Nicht möglich Profile zu bearbeiten.</target>
+            </trans-unit>
+            <trans-unit id="171">
+                <source>The profiles were updated.</source>
+                <target>Die Profile wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="172">
+                <source>The profile was added.</source>
+                <target>Das Profil wurde hinzugefügt</target>
+            </trans-unit>
+            <trans-unit id="173">
+                <source>The profile was updated.</source>
+                <target>Das Profil wurde aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="174">
+                <source>Unable to modify requests.</source>
+                <target>Nicht möglich Anfragen zu bearbeiten.</target>
+            </trans-unit>
+            <trans-unit id="175">
+                <source>The requests were updated.</source>
+                <target>Die Anfragen wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="176">
+                <source>The new password can not be empty.</source>
+                <target>Das neue Passwort kann nicht leer sein.</target>
+            </trans-unit>
+            <trans-unit id="177">
+                <source>The old password is not correct.</source>
+                <target>Das alte Passwort ist nicht korrekt.</target>
+            </trans-unit>
+            <trans-unit id="178">
+                <source>The settings and password were updated.</source>
+                <target>Die Einstellungen und das Passwort wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="179">
+                <source>The settings were updated.</source>
+                <target>Die Einstellungen wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="180">
+                <source>The users were updated.</source>
+                <target>Die Benutzer wurden aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="181">
+                <source>The user was added.</source>
+                <target>Der Benutzer wurde hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="182">
+                <source>The user was updated.</source>
+                <target>Der Benutzer wurde aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="183">
+                <source>Locale</source>
+                <target>Sprache</target>
+            </trans-unit>
+            <trans-unit id="184">
+                <source>There are no tooltips :(</source>
+                <target>Es gibt keine Tooltips :(</target>
             </trans-unit>
         </body>
     </file>

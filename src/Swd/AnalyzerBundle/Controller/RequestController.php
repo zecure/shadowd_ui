@@ -47,7 +47,7 @@ class RequestController extends Controller
 			/* Check user permissions, just in case. */
 			if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				throw $this->createAccessDeniedException('Unable to modify requests');
+				throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify requests.'));
 			}
 
 			foreach ($this->get('request')->get('selected') as $id)
@@ -75,7 +75,7 @@ class RequestController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The requests were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The requests were updated.'));
 		}
 
 		/* Get results from database. */

@@ -9,18 +9,6 @@
   <h1>{% trans %}Profile{% endtrans %}</h1>
 </div>
 <div>
-  {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    {{ form_row(form.serverIP) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.key) }}
-    {{ form_row(form.learningEnabled) }}
-    {{ form_row(form.whitelistEnabled) }}
-    {{ form_row(form.blacklistEnabled) }}
-    {{ form_row(form.threshold) }}
-    {{ form_row(form.floodingTime) }}
-    {{ form_row(form.floodingThreshold) }}
-  {{ form_end(form) }}
+  {{ form(form) }}
 </div>
 {% endblock %}

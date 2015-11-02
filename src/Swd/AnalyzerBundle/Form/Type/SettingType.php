@@ -53,6 +53,10 @@ class SettingType extends AbstractType
 				'yeti' => 'Yeti',
 				'1337h4x0r' => '1337h4x0r',
 			)))
+			->add('locale', 'choice', array('choices' => array(
+				'de' => 'Deutsch',
+				'en' => 'English',
+			)))
 			->add('oldPassword', 'password', array('required' => false, 'label' => 'Old password'))
 			->add('newPassword', 'repeated', array('required' => false, 'type' => 'password',
 				'invalid_message' => 'The password fields must match.',

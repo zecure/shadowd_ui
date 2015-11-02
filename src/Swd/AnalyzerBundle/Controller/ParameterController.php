@@ -48,7 +48,7 @@ class ParameterController extends Controller
 			/* Check user permissions, just in case. */
 			if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				throw $this->createAccessDeniedException('Unable to modify parameters');
+				throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify parameters.'));
 			}
 
 			foreach ($this->get('request')->get('selected') as $id)
@@ -71,7 +71,7 @@ class ParameterController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The parameters were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The parameters were updated.'));
 		}
 
 		/* Get results from database. */

@@ -16,7 +16,8 @@
         <th>{% trans %}Learning{% endtrans %}</th>
         <th>{% trans %}Whitelist{% endtrans %}</th>
         <th>{% trans %}Blacklist{% endtrans %}</th>
-        <th>{% trans %}Last request{% endtrans %}</th>
+        <th>{% trans %}# Attacks{% endtrans %}</th>
+        <th>{% trans %}Last attack{% endtrans %}</th>
       </tr>
     </thead>
     <tbody>
@@ -38,8 +39,15 @@
           {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
-        {% set foo = profile.getRequests|last %}
-        <td>{% if foo %}{{ foo.getDate|date('Y-m-d H:i') }}{% endif %}</td>
+        <td>{{ profile.getProductiveRequests }}</td>
+        {% set lastRequest = profile.getRequests|last %}
+        <td>
+          {% if lastRequest %}
+            <a href="{{ path('swd_analyzer_requests_list', {'includeProfileIds': [profile.getId], 'sort': 'r.id', 'direction': 'desc'}) }}">
+              {{ lastRequest.getDate|date('Y-m-d H:i') }}
+            </a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

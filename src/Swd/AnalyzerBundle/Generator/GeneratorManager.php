@@ -22,6 +22,8 @@ namespace Swd\AnalyzerBundle\Generator;
 
 use Swd\AnalyzerBundle\Entity\WhitelistRule;
 use Swd\AnalyzerBundle\Entity\WhitelistFilter;
+use Swd\AnalyzerBundle\Entity\BlacklistRule;
+use Swd\AnalyzerBundle\Entity\BlacklistFilter;
 use Swd\AnalyzerBundle\Entity\Parameter;
 use Swd\AnalyzerBundle\Entity\ParameterStatistic;
 

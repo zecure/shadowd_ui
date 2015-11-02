@@ -56,7 +56,7 @@ class BlacklistController extends Controller
 			/* Check user permissions, just in case. */
 			if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				throw $this->createAccessDeniedException('Unable to modify rules');
+				throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
 			}
 
 			foreach ($this->get('request')->get('selected') as $id)
@@ -85,7 +85,7 @@ class BlacklistController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rules were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were updated.'));
 		}
 
 		/* Get results from database. */
@@ -132,7 +132,7 @@ class BlacklistController extends Controller
 			$em->persist($rule);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rule was added.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
 		}
 		else
@@ -170,7 +170,7 @@ class BlacklistController extends Controller
 			$em->persist($rule);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rule was updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
 		}
 		else
@@ -216,11 +216,11 @@ class BlacklistController extends Controller
 
 				$em->flush();
 
-				$this->get('session')->getFlashBag()->add('info', 'The rules were imported.');
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were imported.'));
 			}
 			else
 			{
-				$this->get('session')->getFlashBag()->add('alert', 'Invalid file.');
+				$this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('Invalid file.'));
 			}
 
 			return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));

@@ -8,23 +8,7 @@
 <div class="page-header">
   <h1>{% trans %}Whitelist Rule{% endtrans %}</h1>
 </div>
-<div class="col-md-8">
-  {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    {{ form_row(form.profile) }}
-    {{ form_row(form.caller) }}
-    {{ form_row(form.path) }}
-    {{ form_row(form.minLength) }}
-    {{ form_row(form.maxLength) }}
-    {{ form_row(form.filter) }}
-    {{ form_row(form.status) }}
-    {{ form_row(form.actions) }}
-  {{ form_end(form) }}
-</div>
-<div class="col-md-4 whitelist-rule-information">
-  <div class="alert alert-info whitelist-rule-information">
-    {% trans %}Filters are ordered by dangerousness. The more characters are allowed the more insecure the rule gets. Still, fields with direct user input (f.i. search keywords or forum posts and titles) should be set to "everything" in almost any case to avoid false positives. The purpose of the whitelist is to protect the user input that does not directly comes from the user. Direct input can only be protected by the blacklist.{% endtrans %}
-  </div>
+<div>
+  {{ form(form) }}
 </div>
 {% endblock %}

@@ -30,8 +30,6 @@ use Swd\AnalyzerBundle\Form\Type\WhitelistRuleType;
 use Swd\AnalyzerBundle\Entity\WhitelistRule;
 use Swd\AnalyzerBundle\Form\Type\WhitelistRuleSelectorType;
 use Swd\AnalyzerBundle\Entity\Selector;
-use Swd\AnalyzerBundle\Entity\GeneratorSettings;
-use Swd\AnalyzerBundle\Form\Type\GeneratorSettingsType;
 use Swd\AnalyzerBundle\Entity\WhitelistImport;
 use Swd\AnalyzerBundle\Form\Type\WhitelistImportType;
 use Swd\AnalyzerBundle\Entity\WhitelistExport;
@@ -58,7 +56,7 @@ class WhitelistController extends Controller
 			/* Check user permissions, just in case. */
 			if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				throw $this->createAccessDeniedException('Unable to modify rules');
+				throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
 			}
 
 			foreach ($this->get('request')->get('selected') as $id)
@@ -87,7 +85,7 @@ class WhitelistController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rules were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were updated.'));
 		}
 
 		/* Get results from database. */
@@ -142,7 +140,7 @@ class WhitelistController extends Controller
 			$em->persist($rule);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rule was added.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));
 		}
 		else
@@ -180,7 +178,7 @@ class WhitelistController extends Controller
 			$em->persist($rule);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The rule was updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));
 		}
 		else
@@ -188,51 +186,6 @@ class WhitelistController extends Controller
 			return $this->render(
 				'SwdAnalyzerBundle:Whitelist:show.html.twig',
 				array('form' => $form->createView())
-			);
-		}
-	}
-
-	/**
-	 * @Security("has_role('ROLE_ADMIN')")
-	 */
-	public function generateAction()
-	{
-		/* Handle form. */
-		$settings = new GeneratorSettings();
-		$form = $this->createForm(new GeneratorSettingsType(), $settings);
-		$form->handleRequest($this->get('request'));
-
-		/* Insert and redirect or show the form. */
-		if ($form->isValid())
-		{
-			$learner = $this->get('generator_manager');
-			$learner->generateStatistics($settings);
-			$learner->generateRules($settings);
-			$counter = $learner->persistRules();
-
-			if ($counter === 0)
-			{
-				$this->get('session')->getFlashBag()->add('info', 'No new rules were added.');
-			}
-			elseif ($counter === 1)
-			{
-				$this->get('session')->getFlashBag()->add('info', 'One new rule was added.');
-			}
-			else
-			{
-				$this->get('session')->getFlashBag()->add('info', $counter . ' new rules were added.');
-			}
-
-			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));
-		}
-		else
-		{
-			/* Render template. */
-			return $this->render(
-				'SwdAnalyzerBundle:Whitelist:generate.html.twig',
-				array(
-					'form' => $form->createView()
-				)
 			);
 		}
 	}
@@ -275,11 +228,11 @@ class WhitelistController extends Controller
 
 				$em->flush();
 
-				$this->get('session')->getFlashBag()->add('info', 'The rules were imported.');
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were imported.'));
 			}
 			else
 			{
-				$this->get('session')->getFlashBag()->add('alert', 'Invalid file.');
+				$this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('Invalid file.'));
 			}
 
 			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));

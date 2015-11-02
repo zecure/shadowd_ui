@@ -72,7 +72,7 @@ class UserController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The users were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
 		}
 
 		/* Get results from database. */
@@ -123,7 +123,7 @@ class UserController extends Controller
 			$em->persist($setting);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The user was added.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
 		}
 		else
@@ -168,7 +168,7 @@ class UserController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The user was updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
 		}
 		else

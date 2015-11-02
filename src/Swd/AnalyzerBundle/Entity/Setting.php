@@ -69,6 +69,17 @@ class Setting
 	private $theme;
 
 	/**
+	 * @ORM\Column(type="text")
+	 *
+     * @Assert\Regex("/^\w+$/")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 10
+     * )
+	 */
+	private $locale;
+
+	/**
 	 * @ORM\Column(name="open_filter", type="boolean")
 	 */
 	private $openFilter;
@@ -95,6 +106,7 @@ class Setting
 		$this->pageLimit = 50;
 		$this->sortOrder = 0;
 		$this->theme = 0;
+		$this->locale = 'en';
 		$this->openFilter = false;
 	}
 
@@ -149,6 +161,18 @@ class Setting
 	public function getTheme()
 	{
 		return $this->theme;
+	}
+
+	public function setLocale($locale)
+	{
+		$this->locale = $locale;
+
+		return $this;
+	}
+
+	public function getLocale()
+	{
+		return $this->locale;
 	}
 
 	public function setOpenFilter($openFilter)

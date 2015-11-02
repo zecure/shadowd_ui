@@ -46,10 +46,6 @@ swd_analyzer_whitelist_edit_rule:
     path:     /whitelist/rule/{id}
     defaults: { _controller: SwdAnalyzerBundle:Whitelist:edit }
 
-swd_analyzer_whitelist_generator:
-    path:     /whitelist/generator
-    defaults: { _controller: SwdAnalyzerBundle:Whitelist:generate }
-
 swd_analyzer_whitelist_import:
     path:     /whitelist/import
     defaults: { _controller: SwdAnalyzerBundle:Whitelist:import }
@@ -57,6 +53,10 @@ swd_analyzer_whitelist_import:
 swd_analyzer_whitelist_export:
     path:     /whitelist/export
     defaults: { _controller: SwdAnalyzerBundle:Whitelist:export }
+
+swd_analyzer_generator:
+    path:     /generator
+    defaults: { _controller: SwdAnalyzerBundle:Generator:index }
 
 swd_analyzer_profiles_list:
     path:     /profiles

@@ -50,7 +50,7 @@ class ProfileController extends Controller
 			/* Check user permissions, just in case. */
 			if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
-				throw $this->createAccessDeniedException('Unable to modify profiles');
+				throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify profiles.'));
 			}
 
 			foreach ($this->get('request')->get('selected') as $id)
@@ -97,7 +97,7 @@ class ProfileController extends Controller
 			/* Save all the changes to the database. */
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The profiles were updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profiles were updated.'));
 		}
 
 		/* Get results from database. */
@@ -151,7 +151,7 @@ class ProfileController extends Controller
 			$em->persist($profile);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The profile was added.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
 		}
 		else
@@ -196,7 +196,7 @@ class ProfileController extends Controller
 			$em->persist($profile);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('info', 'The profile was updated.');
+			$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
 		}
 		else

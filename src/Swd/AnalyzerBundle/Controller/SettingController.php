@@ -39,26 +39,29 @@ class SettingController extends Controller
 
 		if ($form->isValid())
 		{
+			$this->get('request')->setLocale($settings->getLocale());
+			$this->get('session')->set('_locale', $settings->getLocale());
+
 			if ($settings->getOldPassword())
 			{
 				if (!$settings->getNewPassword())
 				{
-					$this->get('session')->getFlashBag()->add('alert', 'The new password can not be empty.');
+					$this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.'));
 				}
 				elseif (!password_verify($settings->getOldPassword(), $user->getPassword()))
 				{
-					$this->get('session')->getFlashBag()->add('alert', 'The old password is not correct.');
+					$this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.'));
 				}
 				else
 				{
 					$user->setPassword($settings->getNewPassword());
 					$user->setChangePassword(false);
-					$this->get('session')->getFlashBag()->add('info', 'The settings and password were updated.');
+					$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.'));
 				}
 			}
 			else
 			{
-				$this->get('session')->getFlashBag()->add('info', 'The settings were updated.');
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.'));
 			}
 
 			$this->getDoctrine()->getManager()->flush();

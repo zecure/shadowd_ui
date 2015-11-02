@@ -42,12 +42,12 @@ td.icons {
 #filters-button {
   font-size: 100px;
   line-height: 0;
+  outline: 0;
 }
 
 .icons a, .filter-icons a, #filters-button {
   color: inherit;
   user-select: none;
-  outline: 0;
 }
 
 #filters-form {
@@ -106,4 +106,13 @@ th, td {
 
 .filters-form-actions .form-group {
   display: inline-block;
+}
+
+.include-exclude {
+  padding-bottom: 10px;
+}
+
+.generator .include-exclude, .export .include-exclude {
+  margin-top: -15px;
+  padding-bottom: 15px;
 }

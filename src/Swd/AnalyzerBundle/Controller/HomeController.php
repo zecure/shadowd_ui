@@ -37,18 +37,36 @@ class HomeController extends Controller
 	{
 		if ($this->getUser()->getChangePassword())
 		{
-			$this->get('session')->getFlashBag()->add('alert', 'You are still using the default password. Please change it immediately.');
+			$this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('You are still using the default password. Please change it immediately.'));
 			return $this->redirect($this->generateUrl('swd_analyzer_settings'));
 		}
 
 		$em = $this->getDoctrine()->getManager();
 
 		/* Get random tooltip. */
-		$path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/tooltips/tooltips.en.txt');
-		$tooltip = $this->randomLine($path);
+		try
+		{
+			$locale = $this->getUser()->getSetting()->getLocale();
+
+			if (!preg_match('/^\w+$/i', $locale)) {
+				$locale = 'en';
+			}
+
+			$path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/tooltips/tooltips.' . $locale . '.txt');
+			$tooltip = $this->randomLine($path);
+		}
+		catch (\InvalidArgumentException $e)
+		{
+			$tooltip = $this->get('translator')->trans('There are no tooltips :(');
+		}
 
 		/* Get profile data. */
 		$profiles = $em->getRepository('SwdAnalyzerBundle:Profile')->findAll();
+
+		foreach ($profiles as $profile)
+		{
+			$profile->setProductiveRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 0)->getSingleScalarResult());
+		}
 
 		/* Render template. */
 		return $this->render(

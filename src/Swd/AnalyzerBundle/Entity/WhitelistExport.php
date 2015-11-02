@@ -43,18 +43,30 @@ class WhitelistExport
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $paths;
+	private $includePaths;
 
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $callers;
+	private $includeCallers;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludePaths;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeCallers;
 
 
 	public function __construct()
 	{
-		$this->paths = new ArrayCollection();
-		$this->callers = new ArrayCollection();
+		$this->includePaths = new ArrayCollection();
+		$this->includeCallers = new ArrayCollection();
+		$this->excludePaths = new ArrayCollection();
+		$this->excludeCallers = new ArrayCollection();
 	}
 
 	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
@@ -81,27 +93,51 @@ class WhitelistExport
 		return $this->base;
 	}
 
-	public function addPath($path)
+	public function addIncludePath($path)
 	{
-		$this->paths[] = $path;
+		$this->includePaths[] = $path;
 
 		return $this;
 	}
 
-	public function getPaths()
+	public function getIncludePaths()
 	{
-		return $this->paths;
+		return $this->includePaths;
 	}
 
-	public function addCaller($caller)
+	public function addIncludeCaller($caller)
 	{
-		$this->callers[] = $caller;
+		$this->includeCallers[] = $caller;
 
 		return $this;
 	}
 
-	public function getCallers()
+	public function getIncludeCallers()
 	{
-		return $this->callers;
+		return $this->includeCallers;
+	}
+
+	public function addExcludePath($path)
+	{
+		$this->excludePaths[] = $path;
+
+		return $this;
+	}
+
+	public function getExcludePaths()
+	{
+		return $this->excludePaths;
+	}
+
+	public function addExcludeCaller($caller)
+	{
+		$this->excludeCallers[] = $caller;
+
+		return $this;
+	}
+
+	public function getExcludeCallers()
+	{
+		return $this->excludeCallers;
 	}
 }

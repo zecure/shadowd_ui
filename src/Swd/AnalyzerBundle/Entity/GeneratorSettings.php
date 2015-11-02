@@ -39,11 +39,28 @@ class GeneratorSettings
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
+	 */
+	private $predefined = 2;
+
+	/**
+	 * @var boolean
+	 */
+	private $enableWhitelist = true;
+
+	/**
+	 * @var boolean
+	 */
+	private $enableBlacklist = true;
+
+	/**
+	 * @var integer
+	 *
+	 * @Assert\NotBlank()
 	 * @Assert\GreaterThan(
 	 *	 value = 0
 	 * )
 	 */
-	private $minUniqueVisitors = 100;
+	private $minUniqueVisitors = 20;
 
 	/**
 	 * @var integer
@@ -59,20 +76,65 @@ class GeneratorSettings
 	private $minFilterDominance = 90;
 
 	/**
-	 * @var \ArrayCollection
+	 * @var integer
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\GreaterThan(
+	 *	 value = 0
+	 * )
+	 * @Assert\LessThanOrEqual(
+	 *	 value = 100
+	 * )
 	 */
-	private $searchPaths;
+	private $minThresholdDominance = 90;
 
 	/**
 	 * @var boolean
 	 */
-	private $unifyArrays;
+	private $unifyWhitelistArrays = true;
+
+	/**
+	 * @var boolean
+	 */
+	private $unifyWhitelistCallers = true;
+
+	/**
+	 * @var boolean
+	 */
+	private $unifyBlacklistArrays = true;
+
+	/**
+	 * @var boolean
+	 */
+	private $unifyBlacklistCallers = false;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $includeCallers;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $includePaths;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeCallers;
+
+	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludePaths;
 
 
 	public function __construct()
 	{
-		$this->searchPaths = new ArrayCollection();
-		$this->unifyArrays = true;
+		$this->includeCallers = new ArrayCollection();
+		$this->includePaths = new ArrayCollection();
+		$this->excludeCallers = new ArrayCollection();
+		$this->excludePaths = new ArrayCollection();
 	}
 
 	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
@@ -85,6 +147,42 @@ class GeneratorSettings
 	public function getProfile()
 	{
 		return $this->profile;
+	}
+
+	public function setPredefined($predefined)
+	{
+		$this->predefined = $predefined;
+
+		return $this;
+	}
+
+	public function getPredefined()
+	{
+		return $this->predefined;
+	}
+
+	public function setEnableWhitelist($enableWhitelist)
+	{
+		$this->enableWhitelist = $enableWhitelist;
+
+		return $this;
+	}
+
+	public function getEnableWhitelist()
+	{
+		return $this->enableWhitelist;
+	}
+
+	public function setEnableBlacklist($enableBlacklist)
+	{
+		$this->enableBlacklist = $enableBlacklist;
+
+		return $this;
+	}
+
+	public function getEnableBlacklist()
+	{
+		return $this->enableBlacklist;
 	}
 
 	public function setMinUniqueVisitors($minUniqueVisitors)
@@ -111,27 +209,111 @@ class GeneratorSettings
 		return $this->minFilterDominance;
 	}
 
-	public function addSearchPath($path)
+	public function setMinThresholdDominance($minThresholdDominance)
 	{
-		$this->searchPaths[] = $path;
+		$this->minThresholdDominance = $minThresholdDominance;
 
 		return $this;
 	}
 
-	public function getSearchPaths()
+	public function getMinThresholdDominance()
 	{
-		return $this->searchPaths;
+		return $this->minThresholdDominance;
 	}
 
-	public function setUnifyArrays($unifyArrays)
+	public function setUnifyWhitelistArrays($unifyArrays)
 	{
-		$this->unifyArrays = $unifyArrays;
+		$this->unifyWhitelistArrays = $unifyArrays;
 
 		return $this;
 	}
 
-	public function getUnifyArrays()
+	public function getUnifyWhitelistArrays()
 	{
-		return $this->unifyArrays;
+		return $this->unifyWhitelistArrays;
+	}
+
+	public function setUnifyWhitelistCallers($unifyCallers)
+	{
+		$this->unifyWhitelistCallers = $unifyCallers;
+
+		return $this;
+	}
+
+	public function getUnifyWhitelistCallers()
+	{
+		return $this->unifyWhitelistCallers;
+	}
+
+	public function setUnifyBlacklistArrays($unifyArrays)
+	{
+		$this->unifyBlacklistArrays = $unifyArrays;
+
+		return $this;
+	}
+
+	public function getUnifyBlacklistArrays()
+	{
+		return $this->unifyBlacklistArrays;
+	}
+
+	public function setUnifyBlacklistCallers($unifyCallers)
+	{
+		$this->unifyBlacklistCallers = $unifyCallers;
+
+		return $this;
+	}
+
+	public function getUnifyBlacklistCallers()
+	{
+		return $this->unifyBlacklistCallers;
+	}
+
+	public function addIncludeCaller($caller)
+	{
+		$this->includeCallers[] = $caller;
+
+		return $this;
+	}
+
+	public function getIncludeCallers()
+	{
+		return $this->includeCallers;
+	}
+
+	public function addIncludePath($path)
+	{
+		$this->includePaths[] = $path;
+
+		return $this;
+	}
+
+	public function getIncludePaths()
+	{
+		return $this->includePaths;
+	}
+
+	public function addExcludeCaller($caller)
+	{
+		$this->excludeCallers[] = $caller;
+
+		return $this;
+	}
+
+	public function getExcludeCallers()
+	{
+		return $this->excludeCallers;
+	}
+
+	public function addExcludePath($path)
+	{
+		$this->excludePaths[] = $path;
+
+		return $this;
+	}
+
+	public function getExcludePaths()
+	{
+		return $this->excludePaths;
 	}
 }

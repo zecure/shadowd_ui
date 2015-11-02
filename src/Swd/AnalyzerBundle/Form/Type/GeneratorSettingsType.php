@@ -33,10 +33,20 @@ class GeneratorSettingsType extends AbstractType
 			->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
 				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
 			))
+			->add('predefined', 'choice', array('choices' => array('1' => 'Low security', '2' => 'Moderate security', '3' => 'High security', '4' => 'Custom')))
+			->add('enableWhitelist', 'checkbox', array('required' => false, 'label' => 'Generate whitelist rules'))
+			->add('enableBlacklist', 'checkbox', array('required' => false, 'label' => 'Generate blacklist rules'))
 			->add('minUniqueVisitors', 'integer', array('label' => 'Min. unique visitors'))
 			->add('minFilterDominance', 'integer', array('label' => 'Min. filter dominance'))
-			->add('searchPaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-			->add('unifyArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
+			->add('minThresholdDominance', 'integer', array('label' => 'Min. threshold dominance'))
+			->add('unifyWhitelistArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
+			->add('unifyWhitelistCallers', 'checkbox', array('required' => false, 'label' => 'Unify callers'))
+			->add('unifyBlacklistArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
+			->add('unifyBlacklistCallers', 'checkbox', array('required' => false, 'label' => 'Unify callers'))
+			->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+			->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+			->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+			->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
 			->add('actions', 'form_actions', array('buttons' => array('generate' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 

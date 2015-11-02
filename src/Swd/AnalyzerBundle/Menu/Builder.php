@@ -45,10 +45,18 @@ class Builder extends ContainerAware
 			$analysis->addChild(
 				'<i class="menu-icons fa fa-cogs"></i>' . $this->container->get('translator')->trans('Parameters'),
 				array('route' => 'swd_analyzer_parameters_list', 'extras' => array('safe_label' => true)));
+			/*$analysis->addChild('analysis_divider1')->setAttribute('divider', true);
+			$analysis->addChild(
+				'<i class="menu-icons fa fa-bar-chart"></i>' . $this->container->get('translator')->trans('Statistics'),
+				array('route' => 'swd_analyzer_statistics_list', 'extras' => array('safe_label' => true)));*/
 
 			$management = $menu->addChild(
 				'<i class="menu-icons fa fa-balance-scale"></i>' . $this->container->get('translator')->trans('Management'),
 				array('extras' => array('safe_label' => true)));
+			$management->addChild(
+				'<i class="menu-icons fa fa-cubes"></i>' . $this->container->get('translator')->trans('Profiles'),
+				array('route' => 'swd_analyzer_profiles_list', 'extras' => array('safe_label' => true)));
+			$management->addChild('management_divider1')->setAttribute('divider', true);
 			$management->addChild(
 				'<i class="menu-icons fa fa-square"></i>' . $this->container->get('translator')->trans('Blacklist'),
 				array('route' => 'swd_analyzer_blacklist_rules', 'extras' => array('safe_label' => true)));
@@ -56,18 +64,17 @@ class Builder extends ContainerAware
 				'<i class="menu-icons fa fa-square-o"></i>' . $this->container->get('translator')->trans('Whitelist'),
 				array('route' => 'swd_analyzer_whitelist_rules', 'extras' => array('safe_label' => true)));
 
-			$administration = $menu->addChild(
-				'<i class="menu-icons fa fa-university"></i>' . $this->container->get('translator')->trans('Administration'),
-				array('extras' => array('safe_label' => true)));
-			$administration->addChild(
-				'<i class="menu-icons fa fa-cubes"></i>' . $this->container->get('translator')->trans('Profiles'),
-				array('route' => 'swd_analyzer_profiles_list', 'extras' => array('safe_label' => true)));
-
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
 			{
+				$administration = $menu->addChild(
+					'<i class="menu-icons fa fa-university"></i>' . $this->container->get('translator')->trans('Administration'),
+					array('extras' => array('safe_label' => true)));
 				$administration->addChild(
 					'<i class="menu-icons fa fa-users"></i>' . $this->container->get('translator')->trans('Users'),
 					array('route' => 'swd_analyzer_users_list', 'extras' => array('safe_label' => true)));
+				$administration->addChild(
+					'<i class="menu-icons fa fa-share-alt"></i>' . $this->container->get('translator')->trans('Generator'),
+					array('route' => 'swd_analyzer_generator', 'extras' => array('safe_label' => true)));
 			}
 
 			$user = $menu->addChild(

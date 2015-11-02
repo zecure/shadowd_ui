@@ -9,15 +9,6 @@
   <h1>{% trans %}Blacklist Rule{% endtrans %}</h1>
 </div>
 <div>
-  {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    {{ form_row(form.profile) }}
-    {{ form_row(form.caller) }}
-    {{ form_row(form.path) }}
-    {{ form_row(form.threshold) }}
-    {{ form_row(form.status) }}
-    {{ form_row(form.actions) }}
-  {{ form_end(form) }}
+  {{ form(form) }}
 </div>
 {% endblock %}
