@@ -50,7 +50,7 @@
           <a href="{{ mergePath({'blacklist_rule_filter': {'includeStatus': rule.getStatus}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'blacklist_rule_filter': {'excludeStatus': rule.getStatus}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ rule.getDate|date('Y-m-d H:i|trans') }}</td>
+        <td>{{ rule.getDate|date('Y-m-d H:i'|trans) }}</td>
         <td title="{{ rule.getCaller }}">{{ rule.getCaller|truncate(50) }}</td>
         <td class="filter-icons">
           <a href="{{ mergePath({'blacklist_rule_filter': {'includeCallers': [rule.getCaller]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
