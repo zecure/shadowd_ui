@@ -37,7 +37,7 @@
           <a href="{{ mergePath({'profile_filter': {'includeProfileIds': [profile.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'profile_filter': {'excludeProfileIds': [profile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ profile.getDate|date('Y-m-d H:i') }}</td>
+        <td>{{ profile.getDate|date('Y-m-d H:i'|trans) }}</td>
         <td>{{ profile.getServerIP }}</td>
         <td class="filter-icons">
           <a href="{{ mergePath({'profile_filter': {'includeServerIPs': [profile.getServerIP]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>

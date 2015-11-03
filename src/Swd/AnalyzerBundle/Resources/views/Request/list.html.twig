@@ -41,7 +41,7 @@
           <a href="{{ mergePath({'request_filter': {'includeProfileIds': [request.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'request_filter': {'excludeProfileIds': [request.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ request.getDate|date('Y-m-d H:i') }}</td>
+        <td>{{ request.getDate|date('Y-m-d H:i'|trans) }}</td>
         <td title="{{ request.getCaller }}">{{ request.getCaller|truncate(50) }}</td>
         <td class="filter-icons">
           <a href="{{ mergePath({'request_filter': {'includeCallers': [request.getCaller]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>

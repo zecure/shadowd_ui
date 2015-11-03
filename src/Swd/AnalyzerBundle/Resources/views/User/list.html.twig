@@ -31,7 +31,7 @@
           <a href="{{ mergePath({'user_filter': {'includeUserIds': [user.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'user_filter': {'excludeUserIds': [user.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ user.getDate|date('Y-m-d H:i') }}</td>
+        <td>{{ user.getDate|date('Y-m-d H:i'|trans) }}</td>
         <td>{{ user.getUsername }}</td>
         <td class="filter-icons">
           <a href="{{ mergePath({'user_filter': {'includeUsernames': [user.getUsername]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>

@@ -44,7 +44,7 @@
         <td>
           {% if lastRequest %}
             <a href="{{ path('swd_analyzer_requests_list', {'includeProfileIds': [profile.getId], 'sort': 'r.id', 'direction': 'desc'}) }}">
-              {{ lastRequest.getDate|date('Y-m-d H:i') }}
+              {{ lastRequest.getDate|date('Y-m-d H:i'|trans) }}
             </a>
           {% endif %}
         </td>
