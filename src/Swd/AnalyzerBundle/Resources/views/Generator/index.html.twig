@@ -4,6 +4,12 @@
 {% block title %}{% trans %}Rules Generator{% endtrans %}{% endblock %}
 
 
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/swdanalyzer/js/generator.js') }}"></script>
+{% endblock %}
+
+
 {% block body %}
 <div class="page-header">
   <h1>{% trans %}Rules Generator{% endtrans %}</h1>
@@ -13,11 +19,13 @@
   {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_row(form.profile) }}
+    {{ form_row(form.status) }}
     {{ form_row(form.predefined) }}
     {{ form_row(form.minUniqueVisitors) }}
   <h2>{% trans %}Whitelist{% endtrans %}</h2>
     {{ form_row(form.enableWhitelist) }}
     {{ form_row(form.minFilterDominance) }}
+    {{ form_row(form.maxLengthVariance) }}
     {{ form_row(form.unifyWhitelistArrays) }}
     {{ form_row(form.unifyWhitelistCallers) }}
   <h2>{% trans %}Blacklist{% endtrans %}</h2>
@@ -40,6 +48,4 @@
     {{ form_row(form.actions) }}
   {{ form_end(form) }}
 </div>
-
-
 {% endblock %}

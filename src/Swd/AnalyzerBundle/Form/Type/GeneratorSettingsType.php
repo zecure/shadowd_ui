@@ -34,10 +34,12 @@ class GeneratorSettingsType extends AbstractType
 				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
 			))
 			->add('predefined', 'choice', array('choices' => array('1' => 'Low security', '2' => 'Moderate security', '3' => 'High security', '4' => 'Custom')))
+			->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
 			->add('enableWhitelist', 'checkbox', array('required' => false, 'label' => 'Generate whitelist rules'))
 			->add('enableBlacklist', 'checkbox', array('required' => false, 'label' => 'Generate blacklist rules'))
 			->add('minUniqueVisitors', 'integer', array('label' => 'Min. unique visitors'))
 			->add('minFilterDominance', 'integer', array('label' => 'Min. filter dominance'))
+			->add('maxLengthVariance', 'integer', array('label' => 'Max. length variance'))
 			->add('minThresholdDominance', 'integer', array('label' => 'Min. threshold dominance'))
 			->add('unifyWhitelistArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
 			->add('unifyWhitelistCallers', 'checkbox', array('required' => false, 'label' => 'Unify callers'))

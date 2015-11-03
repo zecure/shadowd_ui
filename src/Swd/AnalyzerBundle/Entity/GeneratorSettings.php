@@ -43,14 +43,21 @@ class GeneratorSettings
 	private $predefined = 2;
 
 	/**
-	 * @var boolean
+	 * @var integer
+	 *
+	 * @Assert\NotBlank()
 	 */
-	private $enableWhitelist = true;
+	private $status = 3;
 
 	/**
 	 * @var boolean
 	 */
-	private $enableBlacklist = true;
+	private $enableWhitelist;
+
+	/**
+	 * @var boolean
+	 */
+	private $enableBlacklist;
 
 	/**
 	 * @var integer
@@ -66,14 +73,11 @@ class GeneratorSettings
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
-	 * @Assert\GreaterThan(
+	 * @Assert\GreaterThanOrEqual(
 	 *	 value = 0
 	 * )
-	 * @Assert\LessThanOrEqual(
-	 *	 value = 100
-	 * )
 	 */
-	private $minFilterDominance = 90;
+	private $maxLengthVariance;
 
 	/**
 	 * @var integer
@@ -86,27 +90,40 @@ class GeneratorSettings
 	 *	 value = 100
 	 * )
 	 */
-	private $minThresholdDominance = 90;
+	private $minFilterDominance;
+
+	/**
+	 * @var integer
+	 *
+	 * @Assert\NotBlank()
+	 * @Assert\GreaterThan(
+	 *	 value = 0
+	 * )
+	 * @Assert\LessThanOrEqual(
+	 *	 value = 100
+	 * )
+	 */
+	private $minThresholdDominance;
 
 	/**
 	 * @var boolean
 	 */
-	private $unifyWhitelistArrays = true;
+	private $unifyWhitelistArrays;
 
 	/**
 	 * @var boolean
 	 */
-	private $unifyWhitelistCallers = true;
+	private $unifyWhitelistCallers;
 
 	/**
 	 * @var boolean
 	 */
-	private $unifyBlacklistArrays = true;
+	private $unifyBlacklistArrays;
 
 	/**
 	 * @var boolean
 	 */
-	private $unifyBlacklistCallers = false;
+	private $unifyBlacklistCallers;
 
 	/**
 	 * @var \ArrayCollection
@@ -161,6 +178,18 @@ class GeneratorSettings
 		return $this->predefined;
 	}
 
+	public function setStatus($status)
+	{
+		$this->status = $status;
+
+		return $this;
+	}
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
 	public function setEnableWhitelist($enableWhitelist)
 	{
 		$this->enableWhitelist = $enableWhitelist;
@@ -207,6 +236,18 @@ class GeneratorSettings
 	public function getMinFilterDominance()
 	{
 		return $this->minFilterDominance;
+	}
+
+	public function setMaxLengthVariance($maxLengthVariance)
+	{
+		$this->maxLengthVariance = $maxLengthVariance;
+
+		return $this;
+	}
+
+	public function getMaxLengthVariance()
+	{
+		return $this->maxLengthVariance;
 	}
 
 	public function setMinThresholdDominance($minThresholdDominance)

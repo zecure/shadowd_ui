@@ -787,8 +787,12 @@
                 <target>Alles</target>
             </trans-unit>
             <trans-unit id="198">
-                <source>Min.</source>
+                <source>Min.</source> <!-- Abbreviation of minutes -->
                 <target>Min.</target>
+            </trans-unit>
+            <trans-unit id="199">
+                <source>Max. length variance</source>
+                <target>Max. Variation der Länge</target>
             </trans-unit>
         </body>
     </file>
