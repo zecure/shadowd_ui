@@ -638,6 +638,10 @@
                 <source>Logout</source>
                 <target>Abmelden</target>
             </trans-unit>
+            <trans-unit id="159">
+                <source>Integrity</source>
+                <target>Integrität</target>
+            </trans-unit>
             <trans-unit id="160">
                 <source>Unify callers</source>
                 <target>Vereine Anrufer</target>
@@ -797,6 +801,46 @@
             <trans-unit id="199">
                 <source>Max. length variance</source>
                 <target>Max. Variation der Länge</target>
+            </trans-unit>
+            <trans-unit id="200">
+                <source>No new rules were added.</source>
+                <target>Es wurden keine neuen Regeln hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="201">
+                <source>One new rule was added.</source>
+                <target>Eine neue Regel wurde hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>%number% new rules were added.</source>
+                <target>%number% neue Regeln wurden hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>Integrity Rules Export</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Integrity Rules Import</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>Integrity Rules</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>Algorithm</source>
+                <target>Algorithmus</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>Algorithms</source>
+                <target>Algorithmen</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>Hash</source>
+                <target>Prüfsumme</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>Hashes</source>
+                <target>Prüfsummen</target>
             </trans-unit>
         </body>
     </file>

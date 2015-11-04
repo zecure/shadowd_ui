@@ -82,7 +82,7 @@ class GeneratorManager
 	public function normalizeCaller($path, $caller)
 	{
 		/* SERVER and COOKIE input should be valid for all callers. */
-		if (preg_match('/(SERVER|COOKIE)\|/i', $path))
+		if (preg_match('/^(SERVER|COOKIE)\|/', $path))
 		{
 			return '*';
 		}
@@ -100,22 +100,50 @@ class GeneratorManager
 		foreach ($parameters as $parameter)
 		{
 			$request = $parameter->getRequest();
-			$path = ($settings->getUnifyArrays() ? $this->unifyArray($parameter->getPath()) : $parameter->getPath());
-			$caller = $this->normalizeCaller($path, $request->getCaller());
+
+			/* Determine caller and path for whitelist statistics. */
+			if ($settings->getUnifyWhitelistCallers())
+			{
+				$path['whitelist'] = '*';
+			}
+			else
+			{
+				$path['whitelist'] = ($settings->getUnifyWhitelistArrays() ?
+					$this->unifyArray($parameter->getPath()) :
+					$parameter->getPath()
+				);
+			}
+
+			$caller['whitelist'] = $this->normalizeCaller($path['whitelist'], $request->getCaller());
+
+			/* Determine caller and path for blacklist statistics. */
+			if ($settings->getUnifyBlacklistCallers())
+			{
+				$path['blacklist'] = '*';
+			}
+			else
+			{
+				$path['blacklist'] = ($settings->getUnifyBlacklistArrays() ?
+					$this->unifyArray($parameter->getPath()) :
+					$parameter->getPath()
+				);
+			}
+
+			$caller['blacklist'] = $this->normalizeCaller($path['blacklist'], $request->getCaller());
 
 			/* Get existing stat object for this (caller, path) or create a new one. */
-			$stat = (isset($this->statistics[$caller][$path]) ?
-				$this->statistics[$caller][$path] :
+			$stats['whitelist'] = (isset($this->statistics[$caller][$path['whitelist']]) ?
+				$this->statistics[$caller][$path['whitelist']] :
 				new ParameterStatistic()
 			);
 
-			$stat->addLength(strlen($parameter->getValue()));
-			$stat->addFilter($this->determineFilter($parameter->getValue()));
+			$stats['whitelist']->addLength(strlen($parameter->getValue()));
+			$stats['whitelist']->addFilter($this->determineFilter($parameter->getValue()));
 
 			/* Increase the counters. This has to happen last. */
-			$stat->increaseCounter($request->getClientIP());
+			$stats['whitelist']->increaseCounter($request->getClientIP());
 
-			$this->statistics[$caller][$path] = $stat;
+			$this->statistics[$caller['whitelist']][$path['whitelist']] = $stats['whitelist'];
 		}
 	}
 
@@ -128,36 +156,36 @@ class GeneratorManager
 
 		foreach ($this->statistics as $caller => $caller_value)
 		{
-			foreach ($caller_value as $path => $stat)
+			foreach ($caller_value as $path => $stats)
 			{
 				/* Ignore slips. */
-				if ($stat->getUniqueCounter() < $settings->getMinUniqueVisitors())
+				if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
 				{
 					continue;
 				}
 
-				/* Create a new (pending) rule. */
+				/* Create a new rule. */
 				$rule = new WhitelistRule();
 				$rule->setProfile($settings->getProfile());
 				$rule->setPath($path);
 				$rule->setCaller($caller);
-				$rule->setStatus(3);
+				$rule->setStatus($settings->getStatus());
 				$rule->setDate(new \DateTime());
 
 				/**
 				 * If the variance is near zero we can use the average length as min and max length.
-				 * If the variance is a bit higher but no really high we can calculate a max length.
+				 * If the variance is a bit higher but not really high we can calculate a max length.
 				 * If the variance is too high it is not possible to set a min or max length.
 				 */
-				if ($stat->getLengthVariance() < 1)
+				if ($stats->getLengthVariance() < ($settings->getMaxLengthVariance() * 0.2))
 				{
-					$rule->setMinLength(ceil($stat->getAverageLength()));
-					$rule->setMaxLength(ceil($stat->getAverageLength()));
+					$rule->setMinLength(ceil($stats->getAverageLength()));
+					$rule->setMaxLength(ceil($stats->getAverageLength()));
 				}
-				elseif ($stat->getLengthVariance() < 5)
+				elseif ($stats->getLengthVariance() < $settings->getMaxLengthVariance())
 				{
-					$rule->setMinLength($stat->getMinLength());
-					$rule->setMaxLength($stat->getMaxLength());
+					$rule->setMinLength($stats->getMinLength());
+					$rule->setMaxLength($stats->getMaxLength());
 				}
 				else
 				{
@@ -169,7 +197,7 @@ class GeneratorManager
 				 * Next we determine the filter. If almost every request used the same filter we can take that filter.
 				 * If this is not the case and there is no clear "winner" we have to take the "everything" filter.
 				 */
-				$filter = $stat->getDominantFilter($settings->getMinFilterDominance());
+				$filter = $stats->getDominantFilter($settings->getMinFilterDominance());
 
 				if ($filter === false)
 				{
@@ -198,7 +226,7 @@ class GeneratorManager
 
 		foreach ($this->rules as $rule)
 		{
-			/* Do not continue if the same rule (caller, path, length, filter) is already in the database. */
+			/* Do not continue if the same rule is already in the database. */
 			$existingRules = $this->em->getRepository('SwdAnalyzerBundle:WhitelistRule')->findAllByRule($rule)->getResult();
 
 			if ($existingRules)

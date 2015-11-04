@@ -54,6 +54,26 @@ swd_analyzer_whitelist_export:
     path:     /whitelist/export
     defaults: { _controller: SwdAnalyzerBundle:Whitelist:export }
 
+swd_analyzer_integrity_rules:
+    path:     /integrity/rules
+    defaults: { _controller: SwdAnalyzerBundle:Integrity:list }
+
+swd_analyzer_integrity_add_rule:
+    path:     /integrity/rule
+    defaults: { _controller: SwdAnalyzerBundle:Integrity:add }
+
+swd_analyzer_integrity_edit_rule:
+    path:     /integrity/rule/{id}
+    defaults: { _controller: SwdAnalyzerBundle:Integrity:edit }
+
+swd_analyzer_integrity_import:
+    path:     /integrity/import
+    defaults: { _controller: SwdAnalyzerBundle:Integrity:import }
+
+swd_analyzer_integrity_export:
+    path:     /integrity/export
+    defaults: { _controller: SwdAnalyzerBundle:Integrity:export }
+
 swd_analyzer_generator:
     path:     /generator
     defaults: { _controller: SwdAnalyzerBundle:Generator:index }

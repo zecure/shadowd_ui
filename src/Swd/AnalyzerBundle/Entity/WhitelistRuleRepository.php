@@ -77,6 +77,18 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere('wr.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
 		}
 
+		if (!$filter->getIncludeCallers()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludeCallers() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('wr.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
 		if (!$filter->getIncludePaths()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
@@ -131,6 +143,18 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 		if ($filter->getExcludeDateEnd())
 		{
 			$builder->andWhere('wr.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+		}
+
+		if (!$filter->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('wr.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
 		}
 
 		if (!$filter->getExcludePaths()->isEmpty())
@@ -215,11 +239,11 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 			->where('wr.status = 1')
 			->andWhere('wr.profile = :profile')->setParameter('profile', $filter->getProfile());
 
-		if (!$filter->getCallers()->isEmpty())
+		if (!$filter->getIncludeCallers()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getCallers() as $key => $value)
+			foreach ($filter->getIncludeCallers() as $key => $value)
 			{
 				$orExpr->add($builder->expr()->like('wr.caller', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
@@ -227,16 +251,40 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere($orExpr);
 		}
 
-		if (!$filter->getPaths()->isEmpty())
+		if (!$filter->getIncludePaths()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getPaths() as $key => $value)
+			foreach ($filter->getIncludePaths() as $key => $value)
 			{
 				$orExpr->add($builder->expr()->like('wr.path', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
+		}
+
+		if (!$filter->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('wr.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludePaths()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludePaths() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('wr.path', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
 		}
 
 		return $builder->getQuery();

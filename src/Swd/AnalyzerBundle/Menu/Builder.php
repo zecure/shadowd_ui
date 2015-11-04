@@ -63,6 +63,9 @@ class Builder extends ContainerAware
 			$management->addChild(
 				'<i class="menu-icons fa fa-square-o"></i>' . $this->container->get('translator')->trans('Whitelist'),
 				array('route' => 'swd_analyzer_whitelist_rules', 'extras' => array('safe_label' => true)));
+			$management->addChild(
+				'<i class="menu-icons fa fa-shield"></i>' . $this->container->get('translator')->trans('Integrity'),
+				array('route' => 'swd_analyzer_integrity_rules', 'extras' => array('safe_label' => true)));
 
 			if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
 			{

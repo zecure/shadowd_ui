@@ -38,40 +38,33 @@ class GeneratorController extends Controller
 		$form = $this->createForm(new GeneratorSettingsType(), $settings);
 		$form->handleRequest($this->get('request'));
 
-		/* Insert and redirect or show the form. */
 		if ($form->isValid())
 		{
-			// TODO
-
-			/*$learner = $this->get('generator_manager');
-			$learner->generateStatistics($settings);
-			$learner->generateRules($settings);
-			$counter = $learner->persistRules();
+			$generator = $this->get('generator_manager');
+			$generator->generateStatistics($settings);
+			$generator->generateRules($settings);
+			$counter = $generator->persistRules();
 
 			if ($counter === 0)
 			{
-				$this->get('session')->getFlashBag()->add('info', 'No new rules were added.');
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
 			}
 			elseif ($counter === 1)
 			{
-				$this->get('session')->getFlashBag()->add('info', 'One new rule was added.');
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
 			}
 			else
 			{
-				$this->get('session')->getFlashBag()->add('info', $counter . ' new rules were added.');
-			}*/
+				$this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
+			}
+		}
 
-			return $this->redirect($this->generateUrl('swd_analyzer_whitelist_rules'));
-		}
-		else
-		{
-			/* Render template. */
-			return $this->render(
-				'SwdAnalyzerBundle:Generator:index.html.twig',
-				array(
-					'form' => $form->createView()
-				)
-			);
-		}
+		/* Render template. */
+		return $this->render(
+			'SwdAnalyzerBundle:Generator:index.html.twig',
+			array(
+				'form' => $form->createView()
+			)
+		);
 	}
 }

@@ -267,7 +267,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 	public function findAllLearningBySettings(\Swd\AnalyzerBundle\Entity\GeneratorSettings $settings)
 	{
 		$builder = $this->createQueryBuilder('p')->leftJoin('p.request', 'r')
-			->where('r.learning = 1 AND p.criticalImpact = 0')
+			->where('r.learning = 1')
 			->andWhere('r.profile = :profile')->setParameter('profile', $settings->getProfile());
 
 		if (!$settings->getIncludeCallers()->isEmpty())
