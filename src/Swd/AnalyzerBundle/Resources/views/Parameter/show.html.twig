@@ -36,8 +36,8 @@
       </td>
       <td>
         {{ parameter.getValue }}
-        {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact'|trans) }} {% endif %}
-        {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule'|trans) }} {% endif %}
+        {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical'|trans) }} {% endif %}
+        {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
       </td>
     </tr>
   </tbody>

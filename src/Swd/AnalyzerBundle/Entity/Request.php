@@ -224,7 +224,7 @@ class Request
 		{
 			if ($parameter->getTotalRules() === 0)
 			{
-				$reasons[] = 'unknown';
+				$reasons[] = 'Unknown';
 				break;
 			}
 		}
@@ -234,7 +234,7 @@ class Request
 		{
 			if ($parameter->getBrokenRules()->count() > 0)
 			{
-				$reasons[] = 'anomaly';
+				$reasons[] = 'Anomaly';
 				break;
 			}
 		}

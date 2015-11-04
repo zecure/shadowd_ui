@@ -61,7 +61,7 @@
         </td>
         <td title="{{ parameter.getPath|truncate(250) }}">
           {{ parameter.getPath|truncate(50) }}
-          {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown|trans') }} {% endif %}
+          {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown'|trans) }} {% endif %}
         </td>
         <td class="filter-icons">
           <a href="{{ mergePath({'parameter_filter': {'includePaths': [parameter.getPath]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
@@ -69,8 +69,8 @@
         </td>
         <td title="{{ parameter.getValue|truncate(250) }}">
           {{ parameter.getValue|truncate(50) }}
-          {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact'|trans) }} {% endif %}
-          {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule'|trans) }} {% endif %}
+          {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical'|trans) }} {% endif %}
+          {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
         </td>
         <td class="filter-icons">
           <a href="{{ mergePath({'parameter_filter': {'includeValues': [parameter.getValue]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>

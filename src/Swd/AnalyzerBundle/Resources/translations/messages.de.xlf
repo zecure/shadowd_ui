@@ -135,8 +135,8 @@
                 <target>Unbekannt</target>
             </trans-unit>
             <trans-unit id="33">
-                <source>Critical impact</source>
-                <target>Kritischer Impakt</target>
+                <source>Critical</source>
+                <target>Kritisch</target>
             </trans-unit>
             <trans-unit id="34">
                 <source>Broken rule</source>
@@ -845,6 +845,10 @@
             <trans-unit id="210">
                 <source>Integrity Rule</source>
                 <target>Integritätsregel</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>Anomaly</source>
+                <target>Anomalie</target>
             </trans-unit>
         </body>
     </file>

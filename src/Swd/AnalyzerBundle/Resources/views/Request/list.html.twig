@@ -59,7 +59,7 @@
         </td>
         <td>
           {% for reason in request.getReasons %}
-            {{ label(reason) }}
+            {{ label(reason|trans) }}
           {% endfor %}
         </td>
         <td>{{ request.getParameters.count }}</td>
