@@ -92,10 +92,16 @@ class Request
 	 */
 	protected $parameters;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="IntegrityHash", mappedBy="hash")
+	 */
+	protected $hashes;
+
 
 	public function __construct()
 	{
 		$this->parameters = new ArrayCollection();
+		$this->hashes = new ArrayCollection();
 	}
 
 	public function getId()
@@ -178,6 +184,23 @@ class Request
 	public function getParameters()
 	{
 		return $this->parameters;
+	}
+
+	public function addHash(\Swd\AnalyzerBundle\Entity\IntegrityHash $hash)
+	{
+		$this->hashes[] = $hash;
+
+		return $this;
+	}
+
+	public function removeHash(\Swd\AnalyzerBundle\Entity\IntegrityHash $hash)
+	{
+		$this->hashes->removeElement($hash);
+	}
+
+	public function getHashes()
+	{
+		return $this->hashes;
 	}
 
 	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)

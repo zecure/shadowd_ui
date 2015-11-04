@@ -36,7 +36,7 @@ class IntegrityRuleFilterType extends AbstractType
 			->add('includeStatus', 'choice', array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
 			->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
 			->add('includeAlgorithms', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Algorithm'))
-			->add('includeHashes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Hash'))
+			->add('includeDigests', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Digest'))
 			->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('excludeRuleIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
@@ -44,7 +44,7 @@ class IntegrityRuleFilterType extends AbstractType
 			->add('excludeStatus', 'choice', array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
 			->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
 			->add('excludeAlgorithms', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Algorithm'))
-			->add('excludeHashes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Hash'))
+			->add('excludeDigests', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Digest'))
 			->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));

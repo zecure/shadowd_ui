@@ -18,28 +18,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Swd\AnalyzerBundle\Form\Type;
+namespace Swd\AnalyzerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class IntegrityRuleType extends AbstractType
+/**
+ * IntegrityHashRepository
+ */
+class IntegrityHashRepository extends EntityRepository
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('profile', null, array('property' => 'getIdAndName'))
-			->add('caller')
-			->add('algorithm')
-			->add('digest')
-			->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
-			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
-	}
-
-	public function getName()
-	{
-		return 'integrity_rule';
-	}
 }

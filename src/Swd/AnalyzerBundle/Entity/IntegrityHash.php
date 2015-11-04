@@ -21,15 +21,15 @@
 namespace Swd\AnalyzerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * IntegrityRule
+ * IntegrityHash
  *
- * @ORM\Table(name="integrity_rules")
- * @ORM\Entity(repositoryClass="Swd\AnalyzerBundle\Entity\IntegrityRuleRepository")
+ * @ORM\Table(name="integrity_hashes")
+ * @ORM\Entity(repositoryClass="Swd\AnalyzerBundle\Entity\IntegrityHashRepository")
  */
-class IntegrityRule
+class IntegrityHash
 {
 	/**
 	 * @var integer
@@ -41,29 +41,9 @@ class IntegrityRule
 	private $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Profile", inversedBy="integrityRules")
-	 * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
-	 * @ORM\OrderBy({"id" = "ASC"})
-	 *
-	 * @Assert\NotBlank()
-	 */
-	protected $profile;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="caller", type="text")
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $caller;
-
-	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="algorithm", type="text")
-	 *
-	 * @Assert\NotBlank()
 	 */
 	private $algorithm;
 
@@ -71,48 +51,19 @@ class IntegrityRule
 	 * @var string
 	 *
 	 * @ORM\Column(name="digest", type="text")
-	 *
-	 * @Assert\NotBlank()
 	 */
 	private $digest;
 
 	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date", type="datetime")
-	 **/
-	private $date;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="status", type="smallint")
-	 *
-	 * @Assert\NotBlank()
+	 * @ORM\ManyToOne(targetEntity="Request", inversedBy="hashes")
+	 * @ORM\JoinColumn(name="request_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	private $status;
+	protected $request;
 
-
-	public function __construct()
-	{
-		$this->date = new \DateTime();
-	}
 
 	public function getId()
 	{
 		return $this->id;
-	}
-
-	public function setCaller($caller)
-	{
-		$this->caller = $caller;
-
-		return $this;
-	}
-
-	public function getCaller()
-	{
-		return $this->caller;
 	}
 
 	public function setAlgorithm($algorithm)
@@ -139,39 +90,15 @@ class IntegrityRule
 		return $this->digest;
 	}
 
-	public function setDate($date)
+	public function setRequest(\Swd\AnalyzerBundle\Entity\Request $request = null)
 	{
-		$this->date = $date;
+		$this->request = $request;
 
 		return $this;
 	}
 
-	public function getDate()
+	public function getRequest()
 	{
-		return $this->date;
-	}
-
-	public function setStatus($status)
-	{
-		$this->status = $status;
-
-		return $this;
-	}
-
-	public function getStatus()
-	{
-		return $this->status;
-	}
-
-	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
-	{
-		$this->profile = $profile;
-
-		return $this;
-	}
-
-	public function getProfile()
-	{
-		return $this->profile;
+		return $this->request;
 	}
 }

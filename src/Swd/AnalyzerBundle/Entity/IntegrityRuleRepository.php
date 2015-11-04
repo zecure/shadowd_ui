@@ -79,13 +79,13 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere($orExpr);
 		}
 
-		if (!$filter->getIncludeHashes()->isEmpty())
+		if (!$filter->getIncludeDigests()->isEmpty())
 		{
 			$orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeHashes() as $key => $value)
+			foreach ($filter->getIncludeDigests() as $key => $value)
 			{
-				$orExpr->add($builder->expr()->like('ir.hash', $builder->expr()->literal($this->prepareWildcard($value))));
+				$orExpr->add($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value))));
 			}
 
 			$builder->andWhere($orExpr);
@@ -154,13 +154,13 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere($andExpr);
 		}
 
-		if (!$filter->getExcludeHashes()->isEmpty())
+		if (!$filter->getExcludeDigests()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeHashes() as $key => $value)
+			foreach ($filter->getExcludeDigests() as $key => $value)
 			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.hash', $builder->expr()->literal($this->prepareWildcard($value)))));
+				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value)))));
 			}
 
 			$builder->andWhere($andExpr);
@@ -188,7 +188,8 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 	{
 		$builder = $this->createQueryBuilder('ir')
 			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
-			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller());
+			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
+			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm());
 
 		return $builder->getQuery();
 	}

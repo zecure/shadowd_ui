@@ -210,7 +210,7 @@ class IntegrityController extends Controller
 					$ruleObj->setProfile($import->getProfile());
 					$ruleObj->setCaller(str_replace('{BASE}', $import->getBase(), $rule['caller']));
 					$ruleObj->setAlgorithm($rule['algorithm']);
-					$ruleObj->setHash($rule['hash']);
+					$ruleObj->setDigest($rule['digest']);
 
 					$em->persist($ruleObj);
 				}
@@ -261,7 +261,7 @@ class IntegrityController extends Controller
 			{
 				$ruleJson['caller'] = $rule->getCaller();
 				$ruleJson['algorithm'] = $rule->getAlgorithm();
-				$ruleJson['hash'] = $rule->getHash();
+				$ruleJson['digest'] = $rule->getDigest();
 
 				$rulesJson[] = $ruleJson;
 			}

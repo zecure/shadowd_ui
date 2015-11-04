@@ -60,7 +60,7 @@ class IntegrityRuleFilter
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $includeHashes;
+	private $includeDigests;
 
 	/**
 	 * @var \DateTime
@@ -100,7 +100,7 @@ class IntegrityRuleFilter
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $excludeHashes;
+	private $excludeDigests;
 
 	/**
 	 * @var \DateTime
@@ -119,12 +119,12 @@ class IntegrityRuleFilter
 		$this->includeProfileIds = new ArrayCollection();
 		$this->includeCallers = new ArrayCollection();
 		$this->includeAlgorithms = new ArrayCollection();
-		$this->includeHashes = new ArrayCollection();
+		$this->includeDigests = new ArrayCollection();
 		$this->excludeRuleIds = new ArrayCollection();
 		$this->excludeProfileIds = new ArrayCollection();
 		$this->excludeCallers = new ArrayCollection();
 		$this->excludeAlgorithms = new ArrayCollection();
-		$this->excludeHashes = new ArrayCollection();
+		$this->excludeDigests = new ArrayCollection();
 	}
 
 	public function getId()
@@ -216,16 +216,16 @@ class IntegrityRuleFilter
 		return $this->includeAlgorithms;
 	}
 
-	public function addIncludeHash($hash)
+	public function addIncludeDigest($digest)
 	{
-		$this->includeHashes[] = $hash;
+		$this->includeDigests[] = $digest;
 
 		return $this;
 	}
 
-	public function getIncludeHashes()
+	public function getIncludeDigests()
 	{
-		return $this->includeHashes;
+		return $this->includeDigests;
 	}
 
 	public function addExcludeRuleId($ruleId)
@@ -312,15 +312,15 @@ class IntegrityRuleFilter
 		return $this->excludeAlgorithms;
 	}
 
-	public function addExcludeHash($hash)
+	public function addExcludeDigest($digest)
 	{
-		$this->excludeHashes[] = $hash;
+		$this->excludeDigests[] = $digest;
 
 		return $this;
 	}
 
-	public function getExcludeHashes()
+	public function getExcludeDigests()
 	{
-		return $this->excludeHashes;
+		return $this->excludeDigests;
 	}
 }
