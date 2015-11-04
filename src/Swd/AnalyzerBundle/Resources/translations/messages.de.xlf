@@ -816,15 +816,15 @@
             </trans-unit>
             <trans-unit id="203">
                 <source>Integrity Rules Export</source>
-                <target></target>
+                <target>Export der integritäts Regeln</target>
             </trans-unit>
             <trans-unit id="204">
                 <source>Integrity Rules Import</source>
-                <target></target>
+                <target>Import der integritäts Regeln</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>Integrity Rules</source>
-                <target></target>
+                <target>Integritätsregeln</target>
             </trans-unit>
             <trans-unit id="206">
                 <source>Algorithm</source>
@@ -841,6 +841,10 @@
             <trans-unit id="209">
                 <source>Hashes</source>
                 <target>Prüfsummen</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>Integrity Rule</source>
+                <target>Integritätsregel</target>
             </trans-unit>
         </body>
     </file>
