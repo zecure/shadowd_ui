@@ -186,7 +186,7 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 
 	public function findAllByRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $rule)
 	{
-		$builder = $this->createQueryBuilder('wr')
+		$builder = $this->createQueryBuilder('ir')
 			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
 			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller());
 
@@ -195,7 +195,7 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 
 	public function findAllByExport(\Swd\AnalyzerBundle\Entity\IntegrityExport $filter)
 	{
-		$builder = $this->createQueryBuilder('wr')
+		$builder = $this->createQueryBuilder('ir')
 			->orderBy('ir.caller', 'ASC')
 			->where('ir.status = 1')
 			->andWhere('ir.profile = :profile')->setParameter('profile', $filter->getProfile());
