@@ -88,18 +88,35 @@ class Request
 	private $date;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="total_integrity_rules", type="integer")
+	 */
+	private $totalIntegrityRules;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="IntegrityRule")
+	 * @ORM\JoinTable(name="integrity_requests",
+	 *	  joinColumns={@ORM\JoinColumn(name="request_id", referencedColumnName="id")},
+	 *	  inverseJoinColumns={@ORM\JoinColumn(name="rule_id", referencedColumnName="id")}
+	 * )
+	 **/
+	private $brokenIntegrityRules;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="Parameter", mappedBy="request")
 	 */
 	protected $parameters;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="IntegrityHash", mappedBy="hash")
+	 * @ORM\OneToMany(targetEntity="Hash", mappedBy="hash")
 	 */
 	protected $hashes;
 
 
 	public function __construct()
 	{
+		$this->brokenIntegrityRules = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->parameters = new ArrayCollection();
 		$this->hashes = new ArrayCollection();
 	}
@@ -169,6 +186,35 @@ class Request
 		return $this->date;
 	}
 
+	public function setTotalIntegrityRules($totalRules)
+	{
+		$this->totalIntegrityRules = $totalRules;
+
+		return $this;
+	}
+
+	public function getTotalIntegrityRules()
+	{
+		return $this->totalIntegrityRules;
+	}
+
+	public function addBrokenIntegrityRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $brokenRules)
+	{
+		$this->brokenIntegrityRules[] = $brokenRules;
+
+		return $this;
+	}
+
+	public function removeBrokenIntegrityRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $brokenRules)
+	{
+		$this->brokenIntegrityRules->removeElement($brokenRules);
+	}
+
+	public function getBrokenIntegrityRules()
+	{
+		return $this->brokenIntegrityRules;
+	}
+
 	public function addParameter(\Swd\AnalyzerBundle\Entity\Parameter $parameters)
 	{
 		$this->parameters[] = $parameters;
@@ -186,14 +232,14 @@ class Request
 		return $this->parameters;
 	}
 
-	public function addHash(\Swd\AnalyzerBundle\Entity\IntegrityHash $hash)
+	public function addHash(\Swd\AnalyzerBundle\Entity\Hash $hash)
 	{
 		$this->hashes[] = $hash;
 
 		return $this;
 	}
 
-	public function removeHash(\Swd\AnalyzerBundle\Entity\IntegrityHash $hash)
+	public function removeHash(\Swd\AnalyzerBundle\Entity\Hash $hash)
 	{
 		$this->hashes->removeElement($hash);
 	}
@@ -222,7 +268,7 @@ class Request
 		/* Check if no whitelist rule. */
 		foreach ($this->getParameters() as $parameter)
 		{
-			if ($parameter->getTotalRules() === 0)
+			if ($parameter->getTotalWhitelistRules() === 0)
 			{
 				$reasons[] = 'Unknown';
 				break;
@@ -232,7 +278,7 @@ class Request
 		/* Check if broken whitelist rule. */
 		foreach ($this->getParameters() as $parameter)
 		{
-			if ($parameter->getBrokenRules()->count() > 0)
+			if ($parameter->getBrokenWhitelistRules()->count() > 0)
 			{
 				$reasons[] = 'Anomaly';
 				break;
@@ -250,7 +296,7 @@ class Request
 				continue;
 			}
 
-			foreach ($parameter->getMatchingFilters() as $filter)
+			foreach ($parameter->getMatchingBlacklistFilters() as $filter)
 			{
 				foreach ($filter->getTags() as $tag)
 				{

@@ -22,7 +22,7 @@
         <th></th>
         <th>{{ knp_pagination_sortable(requests, 'Client IP'|trans, 'r.clientIP') }}</th>
         <th></th>
-        <th>{% trans %}Summary{% endtrans %}</th>
+        <th>{% trans %}Overview{% endtrans %}</th>
         <th>{% trans %}# Parameters{% endtrans %}</th>
         <th class="icons"></th>
       </tr>
@@ -42,7 +42,11 @@
           <a href="{{ mergePath({'request_filter': {'excludeProfileIds': [request.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>{{ request.getDate|date('Y-m-d H:i'|trans) }}</td>
-        <td title="{{ request.getCaller }}">{{ request.getCaller|truncate(50) }}</td>
+        <td title="{{ request.getCaller }}">
+          {{ request.getCaller|truncate(50) }}
+          {% if (request.getTotalIntegrityRules == 0) %} {{ label_danger('Unknown'|trans) }} {% endif %}
+          {% if request.getBrokenIntegrityRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
+        </td>
         <td class="filter-icons">
           <a href="{{ mergePath({'request_filter': {'includeCallers': [request.getCaller]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'request_filter': {'excludeCallers': [request.getCaller]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>

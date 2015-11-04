@@ -24,12 +24,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * IntegrityHash
+ * Hash
  *
- * @ORM\Table(name="integrity_hashes")
- * @ORM\Entity(repositoryClass="Swd\AnalyzerBundle\Entity\IntegrityHashRepository")
+ * @ORM\Table(name="hashes")
+ * @ORM\Entity(repositoryClass="Swd\AnalyzerBundle\Entity\HashRepository")
  */
-class IntegrityHash
+class Hash
 {
 	/**
 	 * @var integer

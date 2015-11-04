@@ -103,7 +103,7 @@
                 <target>Klient IP</target>
             </trans-unit>
             <trans-unit id="25">
-                <source>Summary</source>
+                <source>Overview</source>
                 <target>Übersicht</target>
             </trans-unit>
             <trans-unit id="26">
@@ -148,7 +148,7 @@
             </trans-unit>
             <trans-unit id="36">
                 <source>Whitelist: Broken Rules</source>
-                <target>Ws. Liste: Verletzte Regeln</target>
+                <target>Weiße Liste: Verletzte Regeln</target>
             </trans-unit>
             <trans-unit id="37">
                 <source>Rule ID</source>
@@ -849,6 +849,18 @@
             <trans-unit id="211">
                 <source>Anomaly</source>
                 <target>Anomalie</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>Too short</source>
+                <target>Zu kurz</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>Too long</source>
+                <target>Zu lang</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>Integrity: Broken Rules</source>
+                <target>Integrität: Verletzte Regeln</target>
             </trans-unit>
         </body>
     </file>

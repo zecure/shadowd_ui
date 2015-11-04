@@ -23,8 +23,8 @@ namespace Swd\AnalyzerBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * IntegrityHashRepository
+ * HashRepository
  */
-class IntegrityHashRepository extends EntityRepository
+class HashRepository extends EntityRepository
 {
 }

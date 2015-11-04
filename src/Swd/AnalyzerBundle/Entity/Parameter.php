@@ -56,9 +56,9 @@ class Parameter
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="total_rules", type="integer")
+	 * @ORM\Column(name="total_whitelist_rules", type="integer")
 	 */
-	private $totalRules;
+	private $totalWhitelistRules;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="WhitelistRule")
@@ -67,7 +67,7 @@ class Parameter
 	 *	  inverseJoinColumns={@ORM\JoinColumn(name="rule_id", referencedColumnName="id")}
 	 * )
 	 **/
-	private $brokenRules;
+	private $brokenWhitelistRules;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="BlacklistFilter")
@@ -76,7 +76,7 @@ class Parameter
 	 *	  inverseJoinColumns={@ORM\JoinColumn(name="filter_id", referencedColumnName="id")}
 	 * )
 	 **/
-	private $matchingFilters;
+	private $matchingBlacklistFilters;
 
 	/**
 	 * @var integer
@@ -102,7 +102,7 @@ class Parameter
 	public function __construct()
 	{
 		$this->rules = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->brokenRules = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->brokenWhitelistRules = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	public function getId()
@@ -146,33 +146,33 @@ class Parameter
 		return $this->request;
 	}
 
-	public function addBrokenRule(\Swd\AnalyzerBundle\Entity\WhitelistRule $brokenRules)
+	public function addBrokenWhitelistRule(\Swd\AnalyzerBundle\Entity\WhitelistRule $brokenRules)
 	{
-		$this->brokenRules[] = $brokenRules;
+		$this->brokenWhitelistRules[] = $brokenRules;
 
 		return $this;
 	}
 
-	public function removeBrokenRule(\Swd\AnalyzerBundle\Entity\WhitelistRule $brokenRules)
+	public function removeBrokenWhitelistRule(\Swd\AnalyzerBundle\Entity\WhitelistRule $brokenRules)
 	{
-		$this->brokenRules->removeElement($brokenRules);
+		$this->brokenWhitelistRules->removeElement($brokenRules);
 	}
 
-	public function getBrokenRules()
+	public function getBrokenWhitelistRules()
 	{
-		return $this->brokenRules;
+		return $this->brokenWhitelistRules;
 	}
 
-	public function setTotalRules($totalRules)
+	public function setTotalWhitelistRules($totalRules)
 	{
-		$this->totalRules = $totalRules;
+		$this->totalWhitelistRules = $totalRules;
 
 		return $this;
 	}
 
-	public function getTotalRules()
+	public function getTotalWhitelistRules()
 	{
-		return $this->totalRules;
+		return $this->totalWhitelistRules;
 	}
 
 	public function setCriticalImpact($criticalImpact)
@@ -187,21 +187,21 @@ class Parameter
 		return $this->criticalImpact;
 	}
 
-	public function addMatchingFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $matchingFilters)
+	public function addMatchingBlacklistFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $matchingFilters)
 	{
-		$this->matchingFilters[] = $matchingFilters;
+		$this->matchingBlacklistFilters[] = $matchingFilters;
 
 		return $this;
 	}
 
-	public function removeMatchingFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $matchingFilters)
+	public function removeMatchingBlacklistFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $matchingFilters)
 	{
-		$this->matchingFilters->removeElement($matchingFilters);
+		$this->matchingBlacklistFilters->removeElement($matchingFilters);
 	}
 
-	public function getMatchingFilters()
+	public function getMatchingBlacklistFilters()
 	{
-		return $this->matchingFilters;
+		return $this->matchingBlacklistFilters;
 	}
 
 	public function setThreat($threat)
