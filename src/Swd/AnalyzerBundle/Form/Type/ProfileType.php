@@ -33,12 +33,14 @@ class ProfileType extends AbstractType
 			->add('serverIP', null, array('label' => 'Server IP'))
 			->add('name')
 			->add('key', 'password', array('attr' => array('autocomplete' => 'off')))
-			->add('learningEnabled', 'choice', array('label' => 'Learning', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
+			->add('mode', 'choice', array('choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
 			->add('whitelistEnabled', 'choice', array('label' => 'Whitelist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
 			->add('blacklistEnabled', 'choice', array('label' => 'Blacklist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
-			->add('threshold', null, array('label' => 'Blacklist threshold'))
-			->add('floodingTime', null, array('label' => 'Flooding time'))
-			->add('floodingThreshold', null, array('label' => 'Flooding threshold'))
+			->add('integrityEnabled', 'choice', array('label' => 'Integrity', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
+			->add('floodingEnabled', 'choice', array('label' => 'Flooding', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
+			->add('blacklistThreshold', null, array('label' => 'Global threshold'))
+			->add('floodingTime', null, array('label' => 'Timeframe'))
+			->add('floodingThreshold', null, array('label' => 'Threshold'))
 			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 

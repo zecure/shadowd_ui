@@ -64,14 +64,14 @@ class Request
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="learning", type="smallint")
+	 * @ORM\Column(name="mode", type="integer")
 	 *
 	 * @Assert\Range(
-	 *	  min = 0,
-	 *	  max = 1
+	 *	  min = 1,
+	 *	  max = 3
 	 * )
 	 */
-	private $learning;
+	private $mode;
 
 	/**
 	 * @var string
@@ -150,16 +150,16 @@ class Request
 		return $this->resource;
 	}
 
-	public function setLearning($learning)
+	public function setMode($mode)
 	{
-		$this->learning = $learning;
+		$this->mode = $mode;
 
 		return $this;
 	}
 
-	public function getLearning()
+	public function getMode()
 	{
-		return $this->learning;
+		return $this->mode;
 	}
 
 	public function setClientIP($clientIP)

@@ -176,7 +176,7 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 
 		if ($filter->hasExcludeConflict())
 		{
-			// TODO
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE wr.profile = x.profile AND wr.caller = x.caller AND wr.path = x.path AND (wr.minLength != x.minLength OR wr.maxLength != x.maxLength OR wr.filter != x.filter)) = 0');
 		}
 
 		return $builder->getQuery();

@@ -347,7 +347,7 @@
                 <target>Schwellwert sw. Liste</target>
             </trans-unit>
             <trans-unit id="86">
-                <source>Flooding time</source>
+                <source>Flooding timeframe</source>
                 <target>Zeitraum Flutung</target>
             </trans-unit>
             <trans-unit id="87">
@@ -515,12 +515,12 @@
                 <target>Lösche Parameter</target>
             </trans-unit>
             <trans-unit id="128">
-                <source>Enable learning</source>
-                <target>Aktiviere Lernen</target>
+                <source>Enable integrity</source>
+                <target>Aktiviere Integrität</target>
             </trans-unit>
             <trans-unit id="129">
-                <source>Disable learning</source>
-                <target>Deaktiviere Lernen</target>
+                <source>Disable integrity</source>
+                <target>Deaktiviere Integrität</target>
             </trans-unit>
             <trans-unit id="130">
                 <source>Enable whitelist</source>
@@ -795,8 +795,8 @@
                 <target>Alles</target>
             </trans-unit>
             <trans-unit id="198">
-                <source>Min.</source> <!-- Abbreviation of minutes -->
-                <target>Min.</target>
+                <source>Sec.</source> <!-- Abbreviation of seconds -->
+                <target>Sek.</target>
             </trans-unit>
             <trans-unit id="199">
                 <source>Max. length variance</source>
@@ -861,6 +861,38 @@
             <trans-unit id="214">
                 <source>Integrity: Broken Rules</source>
                 <target>Integrität: Verletzte Regeln</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>Global threshold</source>
+                <target>Globaler Schwellwert</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>Timeframe</source>
+                <target>Zeitraum</target>
+            </trans-unit>
+            <trans-unit id="217">
+                <source>Flooding</source>
+                <target>Flutung</target>
+            </trans-unit>
+            <trans-unit id="218">
+                <source>Protections</source>
+                <target>Schutzvorkehrungen</target>
+            </trans-unit>
+            <trans-unit id="219">
+                <source>Mode</source>
+                <target>Modus</target>
+            </trans-unit>
+            <trans-unit id="220">
+                <source>Passive</source>
+                <target>Passiv</target>
+            </trans-unit>
+            <trans-unit id="221">
+                <source>Enable flooding</source>
+                <target>Aktiviere Flutung</target>
+            </trans-unit>
+            <trans-unit id="222">
+                <source>Disable flooding</source>
+                <target>Deaktiviere Flutung</target>
             </trans-unit>
         </body>
     </file>

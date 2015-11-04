@@ -65,7 +65,10 @@ class HomeController extends Controller
 
 		foreach ($profiles as $profile)
 		{
-			$profile->setProductiveRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 0)->getSingleScalarResult());
+			$profile->setProductiveRequests(
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult()
+			);
 		}
 
 		/* Render template. */

@@ -30,12 +30,14 @@ class ProfileSelectorType extends AbstractType
 	{
 		$builder
 			->add('subaction', 'choice', array('choices' => array(
-				'enablelearning' => 'Enable learning',
-				'disablelearning' => 'Disable learning',
 				'enablewhitelist' => 'Enable whitelist',
 				'disablewhitelist' => 'Disable whitelist',
 				'enableblacklist' => 'Enable blacklist',
 				'disableblacklist' => 'Disable blacklist',
+				'enableintegrity' => 'Enable integrity',
+				'disableintegrity' => 'Disable integrity',
+				'enableflooding' => 'Enable flooding',
+				'disableflooding' => 'Disable flooding',
 				'deletelearning' => 'Delete learning requests',
 				'deleteproductive' => 'Delete productive requests',
 				'delete' => 'Delete profiles'

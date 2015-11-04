@@ -80,15 +80,14 @@ class Profile
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="learning_enabled", type="smallint")
+	 * @ORM\Column(name="mode", type="integer")
 	 *
 	 * @Assert\Range(
-	 *	  min = 0,
-	 *	  max = 1
+	 *	  min = 1,
+	 *	  max = 3
 	 * )
-	 * @Assert\NotBlank()
 	 */
-	private $learningEnabled;
+	private $mode;
 
 	/**
 	 * @var integer
@@ -119,7 +118,33 @@ class Profile
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="threshold", type="integer")
+	 * @ORM\Column(name="integrity_enabled", type="smallint")
+	 *
+	 * @Assert\Range(
+	 *	  min = 0,
+	 *	  max = 1
+	 * )
+	 * @Assert\NotBlank()
+	 */
+	private $integrityEnabled;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="flooding_enabled", type="smallint")
+	 *
+	 * @Assert\Range(
+	 *	  min = 0,
+	 *	  max = 1
+	 * )
+	 * @Assert\NotBlank()
+	 */
+	private $floodingEnabled;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="blacklist_threshold", type="integer")
 	 *
 	 * @Assert\Range(
 	 *	  min = 0,
@@ -127,12 +152,12 @@ class Profile
 	 * )
 	 * @Assert\NotBlank()
 	 */
-	private $threshold;
+	private $blacklistThreshold;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="flooding_time", type="integer")
+	 * @ORM\Column(name="flooding_timeframe", type="integer")
 	 *
 	 * @Assert\Range(
 	 *	  min = 1
@@ -180,16 +205,18 @@ class Profile
 	public function __construct()
 	{
 		$this->serverIP = '*';
-		$this->threshold = 10;
-		$this->floodingTime = 1;
+		$this->blacklistThreshold = 10;
+		$this->floodingTime = 60;
 		$this->floodingThreshold = 5;
 		$this->requests = new ArrayCollection();
 		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
 		$this->date = new \DateTime();
-		$this->learningEnabled = 0;
+		$this->mode = 2;
 		$this->whitelistEnabled = 0;
 		$this->blacklistEnabled = 1;
+		$this->integrityEnabled = 0;
+		$this->floodingEnabled = 1;
 	}
 
 	public function getId()
@@ -250,16 +277,16 @@ class Profile
 		return $this->key;
 	}
 
-	public function setLearningEnabled($learningEnabled)
+	public function setMode($mode)
 	{
-		$this->learningEnabled = $learningEnabled;
+		$this->mode = $mode;
 
 		return $this;
 	}
 
-	public function getLearningEnabled()
+	public function getMode()
 	{
-		return $this->learningEnabled;
+		return $this->mode;
 	}
 
 	public function setWhitelistEnabled($whitelistEnabled)
@@ -286,16 +313,40 @@ class Profile
 		return $this->blacklistEnabled;
 	}
 
-	public function setThreshold($threshold)
+	public function setIntegrityEnabled($integrityEnabled)
 	{
-		$this->threshold = $threshold;
+		$this->integrityEnabled = $integrityEnabled;
 
 		return $this;
 	}
 
-	public function getThreshold()
+	public function getIntegrityEnabled()
 	{
-		return $this->threshold;
+		return $this->integrityEnabled;
+	}
+
+	public function setFloodingEnabled($floodingEnabled)
+	{
+		$this->floodingEnabled = $floodingEnabled;
+
+		return $this;
+	}
+
+	public function getFloodingEnabled()
+	{
+		return $this->floodingEnabled;
+	}
+
+	public function setBlacklistThreshold($blacklistThreshold)
+	{
+		$this->blacklistThreshold = $blacklistThreshold;
+
+		return $this;
+	}
+
+	public function getBlacklistThreshold()
+	{
+		return $this->blacklistThreshold;
 	}
 
 	public function setFloodingTime($floodingTime)

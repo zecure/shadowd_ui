@@ -64,12 +64,6 @@ class ProfileController extends Controller
 
 				switch ($profileSelector->getSubaction())
 				{
-					case 'enablelearning':
-						$profile->setLearningEnabled(1);
-						break;
-					case 'disablelearning':
-						$profile->setLearningEnabled(0);
-						break;
 					case 'enablewhitelist':
 						$profile->setWhitelistEnabled(1);
 						break;
@@ -82,11 +76,24 @@ class ProfileController extends Controller
 					case 'disableblacklist':
 						$profile->setBlacklistEnabled(0);
 						break;
+					case 'enableintegrity':
+						$profile->setIntegrityEnabled(1);
+						break;
+					case 'disableintegrity':
+						$profile->setIntegrityEnabled(0);
+						break;
+					case 'enableflooding':
+						$profile->setFloodingEnabled(1);
+						break;
+					case 'disableflooding':
+						$profile->setFloodingEnabled(0);
+						break;
 					case 'deletelearning':
-						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndLearning($profile, 1)->getResult();
+						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndMode($profile, 3)->getResult();
 						break;
 					case 'deleteproductive':
-						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndLearning($profile, 0)->getResult();
+						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndMode($profile, 1)->getResult();
+						$em->getRepository('SwdAnalyzerBundle:Request')->deleteByProfileAndMode($profile, 2)->getResult();
 						break;
 					case 'delete':
 						$em->remove($profile);
@@ -118,8 +125,11 @@ class ProfileController extends Controller
 		/* Add information about existing learning cache. */
 		foreach ($pagination as $profile)
 		{
-			$profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 1)->getSingleScalarResult());
-			$profile->setProductiveRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndLearning($profile, 0)->getSingleScalarResult());
+			$profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 3)->getSingleScalarResult());
+			$profile->setProductiveRequests(
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult()
+			);
 		}
 
 		/* Render template. */

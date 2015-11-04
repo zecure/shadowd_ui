@@ -186,7 +186,7 @@ class RequestRepository extends EntityRepositoryTransformer
 	public function findByDate($date)
 	{
 		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = 0')
+			->where('r.mode != 3')
 			->andWhere('r.date > :date')->setParameter(':date', $date);
 
 		return $builder->getQuery();
@@ -201,21 +201,21 @@ class RequestRepository extends EntityRepositoryTransformer
 		return $builder->getQuery();
 	}
 
-	public function deleteByProfileAndLearning($profile, $learning)
+	public function deleteByProfileAndMode($profile, $mode)
 	{
 		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = :learning')->setParameter(':learning', $learning)
+			->where('r.mode = :mode')->setParameter(':mode', $mode)
 			->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
 			->delete();
 
 		return $builder->getQuery();
 	}
 
-	public function countByProfileAndLearning($profile, $learning)
+	public function countByProfileAndMode($profile, $mode)
 	{
 		$builder = $this->createQueryBuilder('r')
 			->select('count(r.id)')
-			->where('r.learning = :learning')->setParameter(':learning', $learning)
+			->where('r.mode = :mode')->setParameter(':mode', $mode)
 			->andWhere('r.profile = :profile')->setParameter(':profile', $profile);
 
 		return $builder->getQuery();

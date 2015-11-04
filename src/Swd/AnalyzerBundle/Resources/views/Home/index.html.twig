@@ -13,9 +13,11 @@
     <thead>
       <tr>
         <th>{% trans %}Profile{% endtrans %}</th>
-        <th>{% trans %}Learning{% endtrans %}</th>
+        <th>{% trans %}Mode{% endtrans %}</th>
         <th>{% trans %}Whitelist{% endtrans %}</th>
         <th>{% trans %}Blacklist{% endtrans %}</th>
+        <th>{% trans %}Integrity{% endtrans %}</th>
+        <th>{% trans %}Flooding{% endtrans %}</th>
         <th>{% trans %}# Attacks{% endtrans %}</th>
         <th>{% trans %}Last attack{% endtrans %}</th>
       </tr>
@@ -25,8 +27,9 @@
       <tr>
         <td>{{ profile.getName }}</td>
         <td>
-          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled'|trans) }}
-          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled'|trans) }}
+          {% if profile.getMode == 1 %} {{ label_success('Active'|trans) }}
+          {% elseif profile.getMode == 2 %} {{ label_danger('Passive'|trans) }}
+          {% elseif profile.getMode == 3 %} {{ label_danger('Learning'|trans) }}
           {% endif %}
         </td>
         <td>
@@ -37,6 +40,16 @@
         <td>
           {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
           {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getIntegrityEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getIntegrityEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getFloodingEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getFloodingEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
         <td>{{ profile.getProductiveRequests }}</td>

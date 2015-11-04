@@ -18,12 +18,14 @@
         <th></th>
         <th>{{ knp_pagination_sortable(profiles, 'Name'|trans, 'v.name') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(profiles, 'Blacklist threshold'|trans, 'v.threshold') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Flooding time'|trans, 'v.floodingTime') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Flooding threshold'|trans, 'v.floodingThreshold') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Learning'|trans, 'v.learningEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Mode'|trans, 'v.mode') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Whitelist'|trans, 'v.whitelistEnabled') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist'|trans, 'v.blacklistEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Integrity'|trans, 'v.integrityEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding'|trans, 'v.floodingEnabled') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist threshold'|trans, 'v.threshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding timeframe'|trans, 'v.floodingTime') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Flooding threshold'|trans, 'v.floodingThreshold') }}</th>
         <th>{% trans %}# Requests{% endtrans %}</th>
         {% if is_granted('ROLE_ADMIN') %}<th class="icons"></th>{% endif %}
       </tr>
@@ -48,20 +50,10 @@
           <a href="{{ mergePath({'profile_filter': {'includeNames': [profile.getName]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'profile_filter': {'excludeNames': [profile.getName]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ profile.getThreshold }}</td>
         <td>
-          {{ profile.getFloodingTime }}
-        </td>
-        <td>
-          {% if profile.getFloodingThreshold <= 0 %}
-            {{ label_warning('No limitation'|trans) }}
-          {% else %}
-            {{ profile.getFloodingThreshold }}
-          {% endif %}
-        </td>
-        <td>
-          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled'|trans) }}
-          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled'|trans) }}
+          {% if profile.getMode == 1 %} {{ label_success('Active'|trans) }}
+          {% elseif profile.getMode == 2 %} {{ label_danger('Passive'|trans) }}
+          {% elseif profile.getMode == 3 %} {{ label_danger('Learning'|trans) }}
           {% endif %}
         </td>
         <td>
@@ -72,6 +64,25 @@
         <td>
           {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
           {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getIntegrityEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getIntegrityEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getFloodingEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getFloodingEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>{{ profile.getBlacklistThreshold }}</td>
+        <td>{{ profile.getFloodingTime }}</td>
+        <td>
+          {% if profile.getFloodingThreshold <= 0 %}
+            {{ label_warning('No limitation'|trans) }}
+          {% else %}
+            {{ profile.getFloodingThreshold }}
           {% endif %}
         </td>
         <td>{{ profile.getLearningRequests }} / {{ profile.getProductiveRequests }}</td>
