@@ -43,17 +43,7 @@ class IntegrityExport
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $includePaths;
-
-	/**
-	 * @var \ArrayCollection
-	 */
 	private $includeCallers;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $excludePaths;
 
 	/**
 	 * @var \ArrayCollection
@@ -63,9 +53,7 @@ class IntegrityExport
 
 	public function __construct()
 	{
-		$this->includePaths = new ArrayCollection();
 		$this->includeCallers = new ArrayCollection();
-		$this->excludePaths = new ArrayCollection();
 		$this->excludeCallers = new ArrayCollection();
 	}
 
@@ -93,18 +81,6 @@ class IntegrityExport
 		return $this->base;
 	}
 
-	public function addIncludePath($path)
-	{
-		$this->includePaths[] = $path;
-
-		return $this;
-	}
-
-	public function getIncludePaths()
-	{
-		return $this->includePaths;
-	}
-
 	public function addIncludeCaller($caller)
 	{
 		$this->includeCallers[] = $caller;
@@ -120,18 +96,6 @@ class IntegrityExport
 	public function addExcludePath($path)
 	{
 		$this->excludePaths[] = $path;
-
-		return $this;
-	}
-
-	public function getExcludePaths()
-	{
-		return $this->excludePaths;
-	}
-
-	public function addExcludeCaller($caller)
-	{
-		$this->excludeCallers[] = $caller;
 
 		return $this;
 	}
