@@ -55,11 +55,6 @@ class IntegrityRuleFilter
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $includePaths;
-
-	/**
-	 * @var \ArrayCollection
-	 */
 	private $includeAlgorithms;
 
 	/**
@@ -100,11 +95,6 @@ class IntegrityRuleFilter
 	/**
 	 * @var \ArrayCollection
 	 */
-	private $excludePaths;
-
-	/**
-	 * @var \ArrayCollection
-	 */
 	private $excludeAlgorithms;
 
 	/**
@@ -128,13 +118,11 @@ class IntegrityRuleFilter
 		$this->includeRuleIds = new ArrayCollection();
 		$this->includeProfileIds = new ArrayCollection();
 		$this->includeCallers = new ArrayCollection();
-		$this->includePaths = new ArrayCollection();
 		$this->includeAlgorithms = new ArrayCollection();
 		$this->includeHashes = new ArrayCollection();
 		$this->excludeRuleIds = new ArrayCollection();
 		$this->excludeProfileIds = new ArrayCollection();
 		$this->excludeCallers = new ArrayCollection();
-		$this->excludePaths = new ArrayCollection();
 		$this->excludeAlgorithms = new ArrayCollection();
 		$this->excludeHashes = new ArrayCollection();
 	}
@@ -214,18 +202,6 @@ class IntegrityRuleFilter
 	public function getIncludeCallers()
 	{
 		return $this->includeCallers;
-	}
-
-	public function addIncludePath($path)
-	{
-		$this->includePaths[] = $path;
-
-		return $this;
-	}
-
-	public function getIncludePaths()
-	{
-		return $this->includePaths;
 	}
 
 	public function addIncludeAlgorithm($algorithm)
@@ -322,18 +298,6 @@ class IntegrityRuleFilter
 	public function getExcludeCallers()
 	{
 		return $this->excludeCallers;
-	}
-
-	public function addExcludePath($path)
-	{
-		$this->excludePaths[] = $path;
-
-		return $this;
-	}
-
-	public function getExcludePaths()
-	{
-		return $this->excludePaths;
 	}
 
 	public function addExcludeAlgorithm($algorithm)
