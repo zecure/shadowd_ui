@@ -692,11 +692,11 @@
             </trans-unit>
             <trans-unit id="172">
                 <source>The profile was added.</source>
-                <target>Das Profil wurde hinzugefügt</target>
+                <target>Das Profil wurde hinzugefügt.</target>
             </trans-unit>
             <trans-unit id="173">
                 <source>The profile was updated.</source>
-                <target>Das Profil wurde aktualisiert</target>
+                <target>Das Profil wurde aktualisiert.</target>
             </trans-unit>
             <trans-unit id="174">
                 <source>Unable to modify requests.</source>
@@ -816,11 +816,11 @@
             </trans-unit>
             <trans-unit id="203">
                 <source>Integrity Rules Export</source>
-                <target>Export der integritäts Regeln</target>
+                <target>Export der Integritätsregeln</target>
             </trans-unit>
             <trans-unit id="204">
                 <source>Integrity Rules Import</source>
-                <target>Import der integritäts Regeln</target>
+                <target>Import der Integritätsregeln</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>Integrity Rules</source>
