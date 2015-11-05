@@ -85,12 +85,12 @@ class ParameterFilter
 	/**
 	 * @var boolean
 	 */
-	private $includeNoRule;
+	private $includeNoWhitelistRule;
 
 	/**
 	 * @var boolean
 	 */
-	private $includeBrokenRule;
+	private $includeBrokenWhitelistRule;
 
 	/**
 	 * @var boolean
@@ -132,7 +132,6 @@ class ParameterFilter
 	 */
 	private $excludeDateEnd;
 
-
 	/**
 	 * @var \ArrayCollection
 	 */
@@ -151,12 +150,12 @@ class ParameterFilter
 	/**
 	 * @var boolean
 	 */
-	private $excludeNoRule;
+	private $excludeNoWhitelistRule;
 
 	/**
 	 * @var boolean
 	 */
-	private $excludeBrokenRule;
+	private $excludeBrokenWhitelistRule;
 
 	/**
 	 * @var boolean
@@ -308,28 +307,28 @@ class ParameterFilter
 		return $this->includeThreat;
 	}
 
-	public function setIncludeNoRule($noRule)
+	public function setIncludeNoWhitelistRule($noRule)
 	{
-		$this->includeNoRule = $noRule;
+		$this->includeNoWhitelistRule = $noRule;
 
 		return $this;
 	}
 
-	public function getIncludeNoRule()
+	public function getIncludeNoWhitelistRule()
 	{
-		return $this->includeNoRule;
+		return $this->includeNoWhitelistRule;
 	}
 
-	public function setIncludeBrokenRule($brokenRule)
+	public function setIncludeBrokenWhitelistRule($brokenRule)
 	{
-		$this->includeBrokenRule = $brokenRule;
+		$this->includeBrokenWhitelistRule = $brokenRule;
 
 		return $this;
 	}
 
-	public function getIncludeBrokenRule()
+	public function getIncludeBrokenWhitelistRule()
 	{
-		return $this->includeBrokenRule;
+		return $this->includeBrokenWhitelistRule;
 	}
 
 	public function setIncludeCriticalImpact($criticalImpact)
@@ -465,28 +464,28 @@ class ParameterFilter
 		return $this->excludeThreat;
 	}
 
-	public function setExcludeNoRule($noRule)
+	public function setExcludeNoWhitelistRule($noRule)
 	{
-		$this->excludeNoRule = $noRule;
+		$this->excludeNoWhitelistRule = $noRule;
 
 		return $this;
 	}
 
-	public function getExcludeNoRule()
+	public function getExcludeNoWhitelistRule()
 	{
-		return $this->excludeNoRule;
+		return $this->excludeNoWhitelistRule;
 	}
 
-	public function setExcludeBrokenRule($brokenRule)
+	public function setExcludeBrokenWhitelistRule($brokenRule)
 	{
-		$this->excludeBrokenRule = $brokenRule;
+		$this->excludeBrokenWhitelistRule = $brokenRule;
 
 		return $this;
 	}
 
-	public function getExcludeBrokenRule()
+	public function getExcludeBrokenWhitelistRule()
 	{
-		return $this->excludeBrokenRule;
+		return $this->excludeBrokenWhitelistRule;
 	}
 
 	public function setExcludeCriticalImpact($criticalImpact)

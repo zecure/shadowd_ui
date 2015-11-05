@@ -129,22 +129,22 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getIncludeThreat())
 		{
-			$builder->andWhere('p.threat = :includeThreat')->setParameter('includeThreat', '1');
+			$builder->andWhere('p.threat = 1');
 		}
 
-		if ($filter->getIncludeNoRule())
+		if ($filter->getIncludeNoWhitelistRule())
 		{
-			$builder->andWhere('p.totalWhitelistRules = :includeTotalWhitelistRules')->setParameter('includeTotalWhitelistRules', '0');
+			$builder->andWhere('p.totalWhitelistRules = 0');
 		}
 
-		if ($filter->getIncludeBrokenRule()) // TODO: umbenennen und neue Filter für Integrity hinzufügen
+		if ($filter->getIncludeBrokenWhitelistRule())
 		{
-			$builder->innerJoin('p.brokenWhitelistRules', 'b');
+			// TODO
 		}
 
 		if ($filter->getIncludeCriticalImpact())
 		{
-			$builder->andWhere('p.criticalImpact = :includeCriticalImpact')->setParameter('includeCriticalImpact', '1');
+			$builder->andWhere('p.criticalImpact = 1');
 		}
 
 		if (!$filter->getExcludeParameterIds()->isEmpty())
@@ -243,22 +243,22 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getExcludeThreat())
 		{
-			$builder->andWhere('p.threat != :excludeThreat')->setParameter('excludeThreat', '1');
+			$builder->andWhere('p.threat != 1');
 		}
 
-		if ($filter->getExcludeNoRule())
+		if ($filter->getExcludeNoWhitelistRule())
 		{
-			$builder->andWhere('p.totalRules != :excludeTotalRules')->setParameter('excludeTotalRules', '0');
+			$builder->andWhere('p.totalWhitelistRules != 0');
 		}
 
-		if ($filter->getExcludeBrokenRule())
+		if ($filter->getExcludeBrokenWhitelistRule())
 		{
 			// TODO
 		}
 
 		if ($filter->getExcludeCriticalImpact())
 		{
-			$builder->andWhere('p.criticalImpact != :excludeCriticalImpact')->setParameter('excludeCriticalImpact', '1');
+			$builder->andWhere('p.criticalImpact != 1');
 		}
 
 		return $builder->getQuery();

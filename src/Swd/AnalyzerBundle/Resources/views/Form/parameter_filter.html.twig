@@ -11,8 +11,8 @@
   {{ form_row(form.includePaths) }}
   {{ form_row(form.includeValues) }}
   {{ form_row(form.includeThreat) }}
-  {{ form_row(form.includeNoRule) }}
-  {{ form_row(form.includeBrokenRule) }}
+  {{ form_row(form.includeNoWhitelistRule) }}
+  {{ form_row(form.includeBrokenWhitelistRule) }}
   {{ form_row(form.includeCriticalImpact) }}
 {% endblock %}
 
@@ -28,7 +28,7 @@
   {{ form_row(form.excludePaths) }}
   {{ form_row(form.excludeValues) }}
   {{ form_row(form.excludeThreat) }}
-  {{ form_row(form.excludeNoRule) }}
-  {{ form_row(form.excludeBrokenRule) }}
+  {{ form_row(form.excludeNoWhitelistRule) }}
+  {{ form_row(form.excludeBrokenWhitelistRule) }}
   {{ form_row(form.excludeCriticalImpact) }}
 {% endblock %}

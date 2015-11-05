@@ -41,8 +41,8 @@ class ParameterFilterType extends AbstractType
 			->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
 			->add('includeValues', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Value'))
 			->add('includeThreat', 'checkbox', array('required' => false, 'label' => 'Is threat'))
-			->add('includeNoRule', 'checkbox', array('required' => false, 'label' => 'Has no rule'))
-			->add('includeBrokenRule', 'checkbox', array('required' => false, 'label' => 'Has broken rule'))
+			->add('includeNoWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has no whitelist rule'))
+			->add('includeBrokenWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has broken whitelist rule'))
 			->add('includeCriticalImpact', 'checkbox', array('required' => false, 'label' => 'Has critical impact'))
 			->add('excludeParameterIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Parameter ID'))
 			->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
@@ -54,8 +54,8 @@ class ParameterFilterType extends AbstractType
 			->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
 			->add('excludeValues', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Value'))
 			->add('excludeThreat', 'checkbox', array('required' => false, 'label' => 'Is threat'))
-			->add('excludeNoRule', 'checkbox', array('required' => false, 'label' => 'Has no rule'))
-			->add('excludeBrokenRule', 'checkbox', array('required' => false, 'label' => 'Has broken rule'))
+			->add('excludeNoWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has no whitelist rule'))
+			->add('excludeBrokenWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has broken whitelist rule'))
 			->add('excludeCriticalImpact', 'checkbox', array('required' => false, 'label' => 'Has critical impact'))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}

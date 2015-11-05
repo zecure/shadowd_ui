@@ -499,12 +499,12 @@
                 <target>Ist Gefahr</target>
             </trans-unit>
             <trans-unit id="124">
-                <source>Has no rule</source>
-                <target>Hat keine Regeln</target>
+                <source>Has no whitelist rule</source>
+                <target>Hat keine weiße Liste Regeln</target>
             </trans-unit>
             <trans-unit id="125">
-                <source>Has broken rule</source>
-                <target>Hat Regeln gebrochen</target>
+                <source>Has broken whitelist rule</source>
+                <target>Hat weiße Liste Regeln gebrochen</target>
             </trans-unit>
             <trans-unit id="126">
                 <source>Has critical impact</source>
