@@ -48,6 +48,11 @@ class ProfileFilter
 	private $includeNames;
 
 	/**
+	 * @var \ArrayCollection
+	 */
+	private $includeModes;
+
+	/**
 	 * @var \DateTime
 	 */
 	private $includeDateStart;
@@ -73,6 +78,11 @@ class ProfileFilter
 	private $excludeNames;
 
 	/**
+	 * @var \ArrayCollection
+	 */
+	private $excludeModes;
+
+	/**
 	 * @var \DateTime
 	 */
 	private $excludeDateStart;
@@ -88,9 +98,11 @@ class ProfileFilter
 		$this->includeProfileIds = new ArrayCollection();
 		$this->includeServerIPs = new ArrayCollection();
 		$this->includeNames = new ArrayCollection();
+		$this->includeModes = new ArrayCollection();
 		$this->excludeProfileIds = new ArrayCollection();
 		$this->excludeServerIPs = new ArrayCollection();
 		$this->excludeNames = new ArrayCollection();
+		$this->excludeModes = new ArrayCollection();
 	}
 
 	public function getId()
@@ -132,6 +144,18 @@ class ProfileFilter
 	public function getIncludeNames()
 	{
 		return $this->includeNames;
+	}
+
+	public function addIncludeMode($mode)
+	{
+		$this->includeModes[] = $mode;
+
+		return $this;
+	}
+
+	public function getIncludeModes()
+	{
+		return $this->includeModes;
 	}
 
 	public function setIncludeDateStart($dateStart)
@@ -192,6 +216,18 @@ class ProfileFilter
 	public function getExcludeNames()
 	{
 		return $this->excludeNames;
+	}
+
+	public function addExcludeMode($mode)
+	{
+		$this->excludeModes[] = $mode;
+
+		return $this;
+	}
+
+	public function getExcludeModes()
+	{
+		return $this->excludeModes;
 	}
 
 	public function setExcludeDateStart($dateStart)

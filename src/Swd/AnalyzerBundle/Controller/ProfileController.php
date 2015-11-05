@@ -127,8 +127,8 @@ class ProfileController extends Controller
 		{
 			$profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 3)->getSingleScalarResult());
 			$profile->setProductiveRequests(
-				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
-				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult()
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult() +
+				$em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult()
 			);
 		}
 

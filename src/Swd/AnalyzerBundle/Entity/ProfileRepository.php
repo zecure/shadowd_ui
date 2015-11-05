@@ -67,6 +67,18 @@ class ProfileRepository extends EntityRepositoryTransformer
 			$builder->andWhere($orExpr);
 		}
 
+		if (!$filter->getIncludeModes()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($filter->getIncludeModes() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->eq('v.mode', $builder->expr()->literal($value)));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
 		if ($filter->getIncludeDateStart())
 		{
 			$builder->andWhere('v.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
@@ -108,6 +120,18 @@ class ProfileRepository extends EntityRepositoryTransformer
 			foreach ($filter->getExcludeNames() as $key => $value)
 			{
 				$andExpr->add($builder->expr()->not($builder->expr()->like('v.name', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		if (!$filter->getExcludeModes()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($filter->getExcludeModes() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->eq('v.mode', $builder->expr()->literal($value))));
 			}
 
 			$builder->andWhere($andExpr);

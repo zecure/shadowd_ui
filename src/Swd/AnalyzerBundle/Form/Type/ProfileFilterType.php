@@ -34,11 +34,13 @@ class ProfileFilterType extends AbstractType
 			->add('includeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
 			->add('includeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
 			->add('includeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+			->add('includeModes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Mode'))
 			->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
 			->add('excludeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
 			->add('excludeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+			->add('excludeModes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Mode'))
 			->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));

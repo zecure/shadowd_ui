@@ -147,8 +147,7 @@ class Profile
 	 * @ORM\Column(name="blacklist_threshold", type="integer")
 	 *
 	 * @Assert\Range(
-	 *	  min = 0,
-	 *	  max = 100
+	 *	  min = 0
 	 * )
 	 * @Assert\NotBlank()
 	 */
@@ -171,6 +170,9 @@ class Profile
 	 *
 	 * @ORM\Column(name="flooding_threshold", type="integer")
 	 *
+	 * @Assert\Range(
+	 *	  min = 1
+	 * )
 	 * @Assert\NotBlank()
 	 */
 	private $floodingThreshold;
@@ -192,6 +194,11 @@ class Profile
 	protected $whitelistRules;
 
 	/**
+	 * @ORM\OneToMany(targetEntity="IntegrityRule", mappedBy="profile")
+	 */
+	protected $integrityRules;
+
+	/**
 	 * @var integer
 	 */
 	private $learningRequests;
@@ -211,6 +218,7 @@ class Profile
 		$this->requests = new ArrayCollection();
 		$this->blacklistRules = new ArrayCollection();
 		$this->whitelistRules = new ArrayCollection();
+		$this->integrityRules = new ArrayCollection();
 		$this->date = new \DateTime();
 		$this->mode = 2;
 		$this->whitelistEnabled = 0;
@@ -422,6 +430,23 @@ class Profile
 	public function getWhitelistRules()
 	{
 		return $this->whitelistRules;
+	}
+
+	public function addIntegrityRules(\Swd\AnalyzerBundle\Entity\IntegrityRule $integrityRule)
+	{
+		$this->integrityRules[] = $integrityRule;
+
+		return $this;
+	}
+
+	public function removeIntegrityRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $integrityRule)
+	{
+		$this->integrityRules->removeElement($integrityRule);
+	}
+
+	public function getIntegrityRules()
+	{
+		return $this->integrityRules;
 	}
 
 	public function setLearningRequests($learningRequests)

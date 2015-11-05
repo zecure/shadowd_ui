@@ -134,12 +134,12 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getIncludeNoRule())
 		{
-			$builder->andWhere('p.totalRules = :includeTotalRules')->setParameter('includeTotalRules', '0');
+			$builder->andWhere('p.totalWhitelistRules = :includeTotalWhitelistRules')->setParameter('includeTotalWhitelistRules', '0');
 		}
 
-		if ($filter->getIncludeBrokenRule())
+		if ($filter->getIncludeBrokenRule()) // TODO: umbenennen und neue Filter für Integrity hinzufügen
 		{
-			$builder->innerJoin('p.brokenRules', 'b');
+			$builder->innerJoin('p.brokenWhitelistRules', 'b');
 		}
 
 		if ($filter->getIncludeCriticalImpact())

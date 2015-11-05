@@ -109,7 +109,7 @@ class Request
 	protected $parameters;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Hash", mappedBy="hash")
+	 * @ORM\OneToMany(targetEntity="Hash", mappedBy="request")
 	 */
 	protected $hashes;
 
