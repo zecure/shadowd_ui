@@ -906,6 +906,10 @@
                 <source>Generate integrity rules</source>
                 <target>Generiere Integritätsregeln</target>
             </trans-unit>
+            <trans-unit id="226">
+                <source>Delete</source>
+                <target>Löschen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
