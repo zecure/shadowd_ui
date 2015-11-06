@@ -101,6 +101,9 @@ class ProfileController extends Controller
 				}
 			}
 
+			/* Update the modification date for security. */
+			$profile->setDate(new \DateTime());
+
 			/* Save all the changes to the database. */
 			$em->flush();
 

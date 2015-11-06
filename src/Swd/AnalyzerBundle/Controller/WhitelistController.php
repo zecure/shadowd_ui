@@ -82,6 +82,9 @@ class WhitelistController extends Controller
 				}
 			}
 
+			/* Update the modification date for security. */
+			$rule->setDate(new \DateTime());
+
 			/* Save all the changes to the database. */
 			$em->flush();
 

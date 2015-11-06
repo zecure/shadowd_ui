@@ -23,7 +23,7 @@ $(document).ready(function() {
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', true);
 				$("#generator_settings_unifyBlacklistCallers").prop('checked', false);
-				$("#generator_settings_enableIntegrity").prop('checked', false);
+				$("#generator_settings_enableIntegrity").prop('checked', true);
 
 				break;
 			case '2': // moderate security
