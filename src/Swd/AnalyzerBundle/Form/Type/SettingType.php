@@ -51,7 +51,6 @@ class SettingType extends AbstractType
 				'superhero' => 'Superhero',
 				'united' => 'United',
 				'yeti' => 'Yeti',
-				'1337h4x0r' => '1337h4x0r',
 			)))
 			->add('locale', 'choice', array('choices' => array(
 				'de' => 'Deutsch',
