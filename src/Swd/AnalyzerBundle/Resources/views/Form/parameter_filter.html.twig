@@ -13,6 +13,8 @@
   {{ form_row(form.includeThreat) }}
   {{ form_row(form.includeNoWhitelistRule) }}
   {{ form_row(form.includeBrokenWhitelistRule) }}
+  {{ form_row(form.includeNoIntegrityRule) }}
+  {{ form_row(form.includeBrokenIntegrityRule) }}
   {{ form_row(form.includeCriticalImpact) }}
 {% endblock %}
 
@@ -30,5 +32,7 @@
   {{ form_row(form.excludeThreat) }}
   {{ form_row(form.excludeNoWhitelistRule) }}
   {{ form_row(form.excludeBrokenWhitelistRule) }}
+  {{ form_row(form.excludeNoIntegrityRule) }}
+  {{ form_row(form.excludeBrokenIntegrityRule) }}
   {{ form_row(form.excludeCriticalImpact) }}
 {% endblock %}

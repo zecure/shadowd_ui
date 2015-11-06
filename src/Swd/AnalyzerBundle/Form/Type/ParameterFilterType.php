@@ -43,6 +43,8 @@ class ParameterFilterType extends AbstractType
 			->add('includeThreat', 'checkbox', array('required' => false, 'label' => 'Is threat'))
 			->add('includeNoWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has no whitelist rule'))
 			->add('includeBrokenWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has broken whitelist rule'))
+			->add('includeNoIntegrityRule', 'checkbox', array('required' => false, 'label' => 'Has no integrity rule'))
+			->add('includeBrokenIntegrityRule', 'checkbox', array('required' => false, 'label' => 'Has broken integrity rule'))
 			->add('includeCriticalImpact', 'checkbox', array('required' => false, 'label' => 'Has critical impact'))
 			->add('excludeParameterIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Parameter ID'))
 			->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
@@ -56,6 +58,8 @@ class ParameterFilterType extends AbstractType
 			->add('excludeThreat', 'checkbox', array('required' => false, 'label' => 'Is threat'))
 			->add('excludeNoWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has no whitelist rule'))
 			->add('excludeBrokenWhitelistRule', 'checkbox', array('required' => false, 'label' => 'Has broken whitelist rule'))
+			->add('excludeNoIntegrityRule', 'checkbox', array('required' => false, 'label' => 'Has no integrity rule'))
+			->add('excludeBrokenIntegrityRule', 'checkbox', array('required' => false, 'label' => 'Has broken integrity rule'))
 			->add('excludeCriticalImpact', 'checkbox', array('required' => false, 'label' => 'Has critical impact'))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}

@@ -894,6 +894,14 @@
                 <source>Disable flooding</source>
                 <target>Deaktiviere Flutung</target>
             </trans-unit>
+            <trans-unit id="223">
+                <source>Has no integrity rule</source>
+                <target>Hat keine Integritätsegeln</target>
+            </trans-unit>
+            <trans-unit id="224">
+                <source>Has broken integrity rule</source>
+                <target>Hat Integritätsegeln gebrochen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

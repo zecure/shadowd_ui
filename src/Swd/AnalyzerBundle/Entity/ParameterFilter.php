@@ -95,6 +95,16 @@ class ParameterFilter
 	/**
 	 * @var boolean
 	 */
+	private $includeNoIntegrityRule;
+
+	/**
+	 * @var boolean
+	 */
+	private $includeBrokenIntegrityRule;
+
+	/**
+	 * @var boolean
+	 */
 	private $includeCriticalImpact;
 
 	/**
@@ -156,6 +166,16 @@ class ParameterFilter
 	 * @var boolean
 	 */
 	private $excludeBrokenWhitelistRule;
+
+	/**
+	 * @var boolean
+	 */
+	private $excludeNoIntegrityRule;
+
+	/**
+	 * @var boolean
+	 */
+	private $excludeBrokenIntegrityRule;
 
 	/**
 	 * @var boolean
@@ -331,6 +351,30 @@ class ParameterFilter
 		return $this->includeBrokenWhitelistRule;
 	}
 
+	public function setIncludeNoIntegrityRule($noRule)
+	{
+		$this->includeNoIntegrityRule = $noRule;
+
+		return $this;
+	}
+
+	public function getIncludeNoIntegrityRule()
+	{
+		return $this->includeNoIntegrityRule;
+	}
+
+	public function setIncludeBrokenIntegrityRule($brokenRule)
+	{
+		$this->includeBrokenIntegrityRule = $brokenRule;
+
+		return $this;
+	}
+
+	public function getIncludeBrokenIntegrityRule()
+	{
+		return $this->includeBrokenIntegrityRule;
+	}
+
 	public function setIncludeCriticalImpact($criticalImpact)
 	{
 		$this->includeCriticalImpact = $criticalImpact;
@@ -486,6 +530,30 @@ class ParameterFilter
 	public function getExcludeBrokenWhitelistRule()
 	{
 		return $this->excludeBrokenWhitelistRule;
+	}
+
+	public function setExcludeNoIntegrityRule($noRule)
+	{
+		$this->excludeNoIntegrityRule = $noRule;
+
+		return $this;
+	}
+
+	public function getExcludeNoIntegrityRule()
+	{
+		return $this->excludeNoIntegrityRule;
+	}
+
+	public function setExcludeBrokenIntegrityRule($brokenRule)
+	{
+		$this->excludeBrokenIntegrityRule = $brokenRule;
+
+		return $this;
+	}
+
+	public function getExcludeBrokenIntegrityRule()
+	{
+		return $this->excludeBrokenIntegrityRule;
 	}
 
 	public function setExcludeCriticalImpact($criticalImpact)

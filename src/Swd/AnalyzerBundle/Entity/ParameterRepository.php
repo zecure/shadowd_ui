@@ -139,7 +139,17 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getIncludeBrokenWhitelistRule())
 		{
-			// TODO
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE x MEMBER OF p.brokenWhitelistRules) > 0');
+		}
+
+		if ($filter->getIncludeNoIntegrityRule())
+		{
+			$builder->andWhere('r.totalIntegrityRules = 0');
+		}
+
+		if ($filter->getIncludeBrokenIntegrityRule())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE x MEMBER OF r.brokenIntegrityRules) > 0');
 		}
 
 		if ($filter->getIncludeCriticalImpact())
@@ -243,7 +253,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getExcludeThreat())
 		{
-			$builder->andWhere('p.threat != 1');
+			$builder->andWhere('p.threat = 0');
 		}
 
 		if ($filter->getExcludeNoWhitelistRule())
@@ -253,12 +263,22 @@ class ParameterRepository extends EntityRepositoryTransformer
 
 		if ($filter->getExcludeBrokenWhitelistRule())
 		{
-			// TODO
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE x MEMBER OF p.brokenWhitelistRules) = 0');
+		}
+
+		if ($filter->getExcludeNoIntegrityRule())
+		{
+			$builder->andWhere('r.totalIntegrityRules != 0');
+		}
+
+		if ($filter->getExcludeBrokenIntegrityRule())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE x MEMBER OF r.brokenIntegrityRules) = 0');
 		}
 
 		if ($filter->getExcludeCriticalImpact())
 		{
-			$builder->andWhere('p.criticalImpact != 1');
+			$builder->andWhere('p.criticalImpact = 0');
 		}
 
 		return $builder->getQuery();
