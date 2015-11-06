@@ -62,7 +62,12 @@
           <a href="{{ mergePath({'integrity_rule_filter': {'includeAlgorithms': [rule.getAlgorithm]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'integrity_rule_filter': {'excludeAlgorithms': [rule.getAlgorithm]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
-        <td>{{ rule.getDigest }}</td>
+        <td>
+          {{ rule.getDigest }}
+          {% if rule.hasConflict %}
+            {{ label_danger('Conflict'|trans) }}
+          {% endif %}
+        </td>
         <td class="filter-icons">
           <a href="{{ mergePath({'integrity_rule_filter': {'includeDigests': [rule.getDigest]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
           <a href="{{ mergePath({'integrity_rule_filter': {'excludeDigests': [rule.getDigest]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>

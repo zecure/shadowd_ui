@@ -92,6 +92,11 @@ class IntegrityRule
 	 */
 	private $status;
 
+	/**
+	 * @var boolean
+	 */
+	private $conflict;
+
 
 	public function __construct()
 	{
@@ -173,5 +178,17 @@ class IntegrityRule
 	public function getProfile()
 	{
 		return $this->profile;
+	}
+
+	public function setConflict($conflict)
+	{
+		$this->conflict = $conflict;
+
+		return $this;
+	}
+
+	public function hasConflict()
+	{
+		return $this->conflict;
 	}
 }

@@ -106,6 +106,11 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere('ir.status = :includeStatus')->setParameter('includeStatus', $filter->getIncludeStatus());
 		}
 
+		if ($filter->hasIncludeConflict())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) > 0');
+		}
+
 		if (!$filter->getExcludeRuleIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
@@ -181,6 +186,11 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere('ir.status != :excludeStatus')->setParameter('excludeStatus', $filter->getExcludeStatus());
 		}
 
+		if ($filter->hasExcludeConflict())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) = 0');
+		}
+
 		return $builder->getQuery();
 	}
 
@@ -189,7 +199,20 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 		$builder = $this->createQueryBuilder('ir')
 			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
 			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
-			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm());
+			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
+			->andWhere('ir.digest = :digest')->setParameter('digest', $rule->getDigest());
+
+		return $builder->getQuery();
+	}
+
+	public function findConflict($rule)
+	{
+		$builder = $this->createQueryBuilder('ir')
+			->select('count(ir.id)')
+			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
+			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
+			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
+			->andWhere('ir.digest != :digest')->setParameter('digest', $rule->getDigest());
 
 		return $builder->getQuery();
 	}

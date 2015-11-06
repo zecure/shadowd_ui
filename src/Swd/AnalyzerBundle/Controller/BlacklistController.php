@@ -106,6 +106,12 @@ class BlacklistController extends Controller
 			array('defaultSortFieldName' => 'br.id', 'defaultSortDirection' => $this->getUser()->getSetting()->getSortOrderText())
 		);
 
+		/* Mark conflicts. */
+		foreach ($pagination as $rule)
+		{
+			$rule->setConflict($em->getRepository('SwdAnalyzerBundle:BlacklistRule')->findConflict($rule)->getSingleScalarResult());
+		}
+
 		/* Render template. */
 		return $this->render(
 			'SwdAnalyzerBundle:Blacklist:list.html.twig',

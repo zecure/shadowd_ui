@@ -94,6 +94,11 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere('br.status = :includeStatus')->setParameter('includeStatus', $filter->getIncludeStatus());
 		}
 
+		if ($filter->hasIncludeConflict())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule x WHERE br.profile = x.profile AND br.caller = x.caller AND br.path = x.path AND br.threshold != x.threshold) > 0');
+		}
+
 		if (!$filter->getExcludeRuleIds()->isEmpty())
 		{
 			$andExpr = $builder->expr()->andX();
@@ -145,18 +150,33 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 			$builder->andWhere('br.status != :excludeStatus')->setParameter('excludeStatus', $filter->getExcludeStatus());
 		}
 
+		if ($filter->hasExcludeConflict())
+		{
+			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule x WHERE br.profile = x.profile AND br.caller = x.caller AND br.path = x.path AND br.threshold != x.threshold) = 0');
+		}
+
 		return $builder->getQuery();
 	}
 
 	public function findAllByRule(\Swd\AnalyzerBundle\Entity\BlacklistRule $rule)
 	{
-		$builder = $this->createQueryBuilder('wr')
-			->andWhere('wr.profile = :profile')->setParameter('profile', $rule->getProfile())
-			->andWhere('wr.caller = :caller')->setParameter('caller', $rule->getCaller())
-			->andWhere('wr.path = :path')->setParameter('path', $rule->getPath())
-			->andWhere('wr.minLength = :minLength')->setParameter('minLength', $rule->getMinLength())
-			->andWhere('wr.maxLength = :maxLength')->setParameter('maxLength', $rule->getMaxLength())
-			->andWhere('wr.filter = :filter')->setParameter('filter', $rule->getFilter());
+		$builder = $this->createQueryBuilder('br')
+			->andWhere('br.profile = :profile')->setParameter('profile', $rule->getProfile())
+			->andWhere('br.caller = :caller')->setParameter('caller', $rule->getCaller())
+			->andWhere('br.path = :path')->setParameter('path', $rule->getPath())
+			->andWhere('br.threshold = :threshold')->setParameter('threshold', $rule->getThreshold());
+
+		return $builder->getQuery();
+	}
+
+	public function findConflict($rule)
+	{
+		$builder = $this->createQueryBuilder('br')
+			->select('count(br.id)')
+			->andWhere('br.profile = :profile')->setParameter('profile', $rule->getProfile())
+			->andWhere('br.caller = :caller')->setParameter('caller', $rule->getCaller())
+			->andWhere('br.path = :path')->setParameter('path', $rule->getPath())
+			->andWhere('br.threshold != :threshold')->setParameter('threshold', $rule->getThreshold());
 
 		return $builder->getQuery();
 	}

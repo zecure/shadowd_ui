@@ -73,6 +73,11 @@ class IntegrityRuleFilter
 	private $includeDateEnd;
 
 	/**
+	 * @var boolean
+	 */
+	private $includeConflict;
+
+	/**
 	 * @var \ArrayCollection
 	 */
 	private $excludeRuleIds;
@@ -111,6 +116,11 @@ class IntegrityRuleFilter
 	 * @var \DateTime
 	 */
 	private $excludeDateEnd;
+
+	/**
+	 * @var boolean
+	 */
+	private $excludeConflict;
 
 
 	public function __construct()
@@ -228,6 +238,18 @@ class IntegrityRuleFilter
 		return $this->includeDigests;
 	}
 
+	public function setIncludeConflict($conflict)
+	{
+		$this->includeConflict = $conflict;
+
+		return $this;
+	}
+
+	public function hasIncludeConflict()
+	{
+		return $this->includeConflict;
+	}
+
 	public function addExcludeRuleId($ruleId)
 	{
 		$this->excludeRuleIds[] = $ruleId;
@@ -322,5 +344,17 @@ class IntegrityRuleFilter
 	public function getExcludeDigests()
 	{
 		return $this->excludeDigests;
+	}
+
+	public function setExcludeConflict($conflict)
+	{
+		$this->excludeConflict = $conflict;
+
+		return $this;
+	}
+
+	public function hasExcludeConflict()
+	{
+		return $this->excludeConflict;
 	}
 }

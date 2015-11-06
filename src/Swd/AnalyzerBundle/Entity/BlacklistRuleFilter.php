@@ -68,6 +68,11 @@ class BlacklistRuleFilter
 	private $includeDateEnd;
 
 	/**
+	 * @var boolean
+	 */
+	private $includeConflict;
+
+	/**
 	 * @var \ArrayCollection
 	 */
 	private $excludeRuleIds;
@@ -101,6 +106,11 @@ class BlacklistRuleFilter
 	 * @var \DateTime
 	 */
 	private $excludeDateEnd;
+
+	/**
+	 * @var boolean
+	 */
+	private $excludeConflict;
 
 
 	public function __construct()
@@ -204,6 +214,18 @@ class BlacklistRuleFilter
 		return $this->includePaths;
 	}
 
+	public function setIncludeConflict($conflict)
+	{
+		$this->includeConflict = $conflict;
+
+		return $this;
+	}
+
+	public function hasIncludeConflict()
+	{
+		return $this->includeConflict;
+	}
+
 	public function addExcludeRuleId($ruleId)
 	{
 		$this->excludeRuleIds[] = $ruleId;
@@ -286,5 +308,17 @@ class BlacklistRuleFilter
 	public function getExcludePaths()
 	{
 		return $this->excludePaths;
+	}
+
+	public function setExcludeConflict($conflict)
+	{
+		$this->excludeConflict = $conflict;
+
+		return $this;
+	}
+
+	public function hasExcludeConflict()
+	{
+		return $this->excludeConflict;
 	}
 }

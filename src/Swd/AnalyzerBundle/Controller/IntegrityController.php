@@ -106,6 +106,12 @@ class IntegrityController extends Controller
 			array('defaultSortFieldName' => 'ir.id', 'defaultSortDirection' => $this->getUser()->getSetting()->getSortOrderText())
 		);
 
+		/* Mark conflicts. */
+		foreach ($pagination as $rule)
+		{
+			$rule->setConflict($em->getRepository('SwdAnalyzerBundle:IntegrityRule')->findConflict($rule)->getSingleScalarResult());
+		}
+
 		/* Render template. */
 		return $this->render(
 			'SwdAnalyzerBundle:Integrity:list.html.twig',

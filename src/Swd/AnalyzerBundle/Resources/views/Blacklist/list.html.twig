@@ -67,6 +67,9 @@
           {% else %}
             {{ rule.getThreshold }}
           {% endif %}
+          {% if rule.hasConflict %}
+            {{ label_danger('Conflict'|trans) }}
+          {% endif %}
         </td>
         {% if is_granted('ROLE_ADMIN') %}
         <td class="icons">

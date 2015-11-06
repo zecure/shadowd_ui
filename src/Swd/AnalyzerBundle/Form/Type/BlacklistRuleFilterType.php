@@ -38,6 +38,7 @@ class BlacklistRuleFilterType extends AbstractType
 			->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
 			->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+			->add('includeConflict', 'checkbox', array('required' => false, 'label' => 'Has conflict'))
 			->add('excludeRuleIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
 			->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
 			->add('excludeStatus', 'choice', array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
@@ -45,6 +46,7 @@ class BlacklistRuleFilterType extends AbstractType
 			->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
 			->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
 			->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+			->add('excludeConflict', 'checkbox', array('required' => false, 'label' => 'Has conflict'))
 			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
 	}
 
