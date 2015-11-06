@@ -60,6 +60,11 @@ class GeneratorSettings
 	private $enableBlacklist;
 
 	/**
+	 * @var boolean
+	 */
+	private $enableIntegrity;
+
+	/**
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
@@ -200,6 +205,18 @@ class GeneratorSettings
 	public function getEnableWhitelist()
 	{
 		return $this->enableWhitelist;
+	}
+
+	public function setEnableIntegrity($enableIntegrity)
+	{
+		$this->enableIntegrity = $enableIntegrity;
+
+		return $this;
+	}
+
+	public function getEnableIntegrity()
+	{
+		return $this->enableIntegrity;
 	}
 
 	public function setEnableBlacklist($enableBlacklist)

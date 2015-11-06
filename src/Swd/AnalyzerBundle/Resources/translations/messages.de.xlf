@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="11">
                 <source>Learn more</source>
-                <target>Mehr Informationen</target>
+                <target>Mehr erfahren</target>
             </trans-unit>
             <trans-unit id="12">
                 <source>Include</source>
@@ -901,6 +901,10 @@
             <trans-unit id="224">
                 <source>Has broken integrity rule</source>
                 <target>Hat Integritätsegeln gebrochen</target>
+            </trans-unit>
+            <trans-unit id="225">
+                <source>Generate integrity rules</source>
+                <target>Generiere Integritätsregeln</target>
             </trans-unit>
         </body>
     </file>

@@ -37,6 +37,7 @@ class GeneratorSettingsType extends AbstractType
 			->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
 			->add('enableWhitelist', 'checkbox', array('required' => false, 'label' => 'Generate whitelist rules'))
 			->add('enableBlacklist', 'checkbox', array('required' => false, 'label' => 'Generate blacklist rules'))
+			->add('enableIntegrity', 'checkbox', array('required' => false, 'label' => 'Generate integrity rules'))
 			->add('minUniqueVisitors', 'integer', array('label' => 'Min. unique visitors'))
 			->add('minFilterDominance', 'integer', array('label' => 'Min. filter dominance'))
 			->add('maxLengthVariance', 'integer', array('label' => 'Max. length variance'))

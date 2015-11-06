@@ -23,6 +23,7 @@ $(document).ready(function() {
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', true);
 				$("#generator_settings_unifyBlacklistCallers").prop('checked', false);
+				$("#generator_settings_enableIntegrity").prop('checked', false);
 
 				break;
 			case '2': // moderate security
@@ -35,6 +36,7 @@ $(document).ready(function() {
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', true);
 				$("#generator_settings_unifyBlacklistCallers").prop('checked', false);
+				$("#generator_settings_enableIntegrity").prop('checked', true);
 
 				break;
 			case '3': // high security
@@ -47,6 +49,7 @@ $(document).ready(function() {
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', false);
 				$("#generator_settings_unifyBlacklistCallers").prop('checked', false);
+				$("#generator_settings_enableIntegrity").prop('checked', true);
 
 				break;
 		} 
@@ -56,7 +59,8 @@ $(document).ready(function() {
 	+ "#generator_settings_minFilterDominance, #generator_settings_maxLengthVariance,"
 	+ "#generator_settings_unifyWhitelistArrays, #generator_settings_unifyWhitelistCallers,"
 	+ "#generator_settings_enableBlacklist, #generator_settings_minThresholdDominance,"
-	+ "#generator_settings_unifyBlacklistArrays, #generator_settings_unifyBlacklistCallers").change(function () {
+	+ "#generator_settings_unifyBlacklistArrays, #generator_settings_unifyBlacklistCallers,"
+	+ "#generator_settings_enableIntegrity").change(function () {
 		$("#generator_settings_predefined").val(4); // custom
 	});
 });
