@@ -53,6 +53,10 @@ class UserLocaleListener
 		if (null !== $user->getSetting()->getLocale())
 		{
 			$this->session->set('_locale', $user->getSetting()->getLocale());
+
+			/* Set locale also for this request to avoid bug when session expires. */
+			$request = $event->getRequest();
+			$request->setLocale($user->getSetting()->getLocale());
 		}
 	}
 }
