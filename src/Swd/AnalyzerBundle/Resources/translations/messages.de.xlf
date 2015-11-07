@@ -215,8 +215,8 @@
                 <target>Status</target>
             </trans-unit>
             <trans-unit id="53">
-                <source>Modified</source>
-                <target>Bearbeitet</target>
+                <source>Last modified</source>
+                <target>Zuletzt bearbeitet</target>
             </trans-unit>
             <trans-unit id="54">
                 <source>Threshold</source>
@@ -909,6 +909,14 @@
             <trans-unit id="226">
                 <source>Delete</source>
                 <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="227">
+                <source>Shadow Daemon -- Web Application Firewall</source>
+                <target>Shadow Daemon -- Web Application Firewall</target>
+            </trans-unit>
+            <trans-unit id="228">
+                <source>© %year% by %name%</source>
+                <target>© %year% bei %name%</target>
             </trans-unit>
         </body>
     </file>

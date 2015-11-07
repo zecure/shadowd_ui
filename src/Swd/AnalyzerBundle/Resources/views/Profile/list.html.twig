@@ -13,7 +13,7 @@
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
         <th>{{ knp_pagination_sortable(profiles, 'Profile ID'|trans, 'v.id') }}</th>
         <th></th>
-        <th>{{ knp_pagination_sortable(profiles, 'Modified'|trans, 'v.date') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Last modified'|trans, 'v.date') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Server IP'|trans, 'v.serverIP') }}</th>
         <th></th>
         <th>{{ knp_pagination_sortable(profiles, 'Name'|trans, 'v.name') }}</th>
