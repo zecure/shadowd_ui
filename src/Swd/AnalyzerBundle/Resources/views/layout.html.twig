@@ -8,7 +8,10 @@
       {% if not app.user or not app.user.getSetting.getTheme %}
       <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen" />
       {% else %}
-      <link href="{{ asset('css/themes/bootswatch/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      <link href="{{ asset('css/themes/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      {% endif %}
+      {% if app.user and app.user.getSetting.isLocaleRTL %}
+      <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet" media="screen" />
       {% endif %}
       <link href="{{ asset('css/bootstrap_form_2.css') }}" rel="stylesheet" media="screen" />
       <!-- Bootstrap Slider -->

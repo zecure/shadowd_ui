@@ -175,6 +175,17 @@ class Setting
 		return $this->locale;
 	}
 
+	public function isLocaleRTL()
+	{
+		if (!$this->locale)
+		{
+			return false;
+		}
+
+		$rtl = array('he');
+		return in_array($this->locale, $rtl);
+	}
+
 	public function setOpenFilter($openFilter)
 	{
 		$this->openFilter = $openFilter;
