@@ -55,6 +55,7 @@ class SettingType extends AbstractType
 			->add('locale', 'choice', array('choices' => array(
 				'de' => 'Deutsch',
 				'en' => 'English',
+				'zh_CN' => '中文（简体）',
 			)))
 			->add('oldPassword', 'password', array('required' => false, 'label' => 'Old password'))
 			->add('newPassword', 'repeated', array('required' => false, 'type' => 'password',
