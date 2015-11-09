@@ -1,0 +1,923 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="0">
+                <source>Y-m-d H:i</source>
+                <target>d.m.Y H:i</target>
+            </trans-unit>
+            <trans-unit id="1">
+                <source>Home</source>
+                <target>开始页面</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>User Interface</source>
+                <target>用户界面</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Profile</source>
+                <target>个性设置</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Learning</source>
+                <target>自学习</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Whitelist</source>
+                <target>白名单</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Blacklist</source>
+                <target>黑名单</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Last request</source>
+                <target>最后的请求</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Disabled</source>
+                <target>关闭</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Enabled</source>
+                <target>激活</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Did you know ... ?</source>
+                <target>你知道吗 ... ?</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Learn more</source>
+                <target>学习更多</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Include</source>
+                <target>包含</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Exclude</source>
+                <target>排除</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Toggle filters</source>
+                <target>切换过滤器</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Toggle navigation</source>
+                <target>切换导航方式</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Warning!</source>
+                <target>注意!</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>You do not have Javascript enabled and thus some functionality won't work.</source>
+                <target>你没有激活 JavaScript 支持，软件部分功能将无法正常工作。</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Requests</source>
+                <target>请求</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Request ID</source>
+                <target>请求 ID</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Profile ID</source>
+                <target>个性设置编号</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Date</source>
+                <target>日期</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Caller</source>
+                <target>调用者</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Resource</source>
+                <target>资源</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Client IP</source>
+                <target>客户端 IP</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Overview</source>
+                <target>全局</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source># Parameters</source>
+                <target># 参数</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Show details</source>
+                <target>显示更多细节</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Parameters</source>
+                <target>参数</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Parameter ID</source>
+                <target>参数编号</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Path</source>
+                <target>路径</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Value</source>
+                <target>数值</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Unknown</source>
+                <target>未知</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Critical</source>
+                <target>关键</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Broken rule</source>
+                <target>无法工作的规则</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Parameter</source>
+                <target>参数</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Whitelist: Broken Rules</source>
+                <target>白名单: 无法工作的规则</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Rule ID</source>
+                <target>规则编号</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Min. length</source>
+                <target>最小长度</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Max. length</source>
+                <target>最大长度</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Filter</source>
+                <target>过滤</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>No limitation</source>
+                <target>无限制</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>Too short</source>
+                <target>太短</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Adhered to</source>
+                <target>粘贴到</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>Match</source>
+                <target>匹配</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>No match</source>
+                <target>没有匹配</target>
+            </trans-unit>
+            <trans-unit id="46">
+                <source>Blacklist: Matching Filters</source>
+                <target>黑名单：匹配的过滤器</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>Filter ID</source>
+                <target>过滤器编号</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Impact</source>
+                <target>影响</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>Classification</source>
+                <target>分类</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Description</source>
+                <target>描述</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Blacklist Rules</source>
+                <target>黑名单规则</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>Status</source>
+                <target>状态</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Last modified</source>
+                <target>最后修改</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Threshold</source>
+                <target>门槛</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>Edit</source>
+                <target>编辑</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Active</source>
+                <target>激活</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>Inactive</source>
+                <target>未激活</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>Pending</source>
+                <target>待定</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>Blacklist Rule</source>
+                <target>黑名单规则</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>Blacklist Rules Export</source>
+                <target>导出黑名单规则</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>Last attack</source>
+                <target>最后的攻击</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source># Attacks</source>
+                <target># 攻击</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Blacklist Rules Import</source>
+                <target>导入黑名单规则n</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>The rules were updated.</source>
+                <target>规则已经被更新。</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>The rule was added.</source>
+                <target>规则已经八添加。</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Whitelist Rules</source>
+                <target>白名单规则</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Conflict</source>
+                <target>冲突</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Insecure</source>
+                <target>不安全的</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Secure</source>
+                <target>安全的</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Add</source>
+                <target>添加</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Import</source>
+                <target>导入</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Export</source>
+                <target>导出</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Generator</source>
+                <target>生成</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Whitelist Rule</source>
+                <target>白名单规则</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Caution!</source>
+                <target>请小心!</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>The rule was updated.</source>
+                <target>白名单规则已经被更新。</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>The rules were imported.</source>
+                <target>白名单规则已经被导入。</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Whitelist Rules Export</source>
+                <target>导出白名单规则。</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Whitelist Rules Import</source>
+                <target>导入白名单规则。</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Rules Generator</source>
+                <target>规则生成器</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Invalid file.</source>
+                <target>无效文件。</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Profiles</source>
+                <target>个性设置</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>Server IP</source>
+                <target>服务器 IP</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Name</source>
+                <target>名称</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Blacklist threshold</source>
+                <target>黑名单门槛</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>Flooding timeframe</source>
+                <target>泛洪时间窗口</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>Flooding threshold</source>
+                <target>泛洪门槛</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source># Requests</source>
+                <target># 请求</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>Users</source>
+                <target>用户</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>User ID</source>
+                <target>用户编号</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>Username</source>
+                <target>用户名</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>Role</source>
+                <target>角色</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>Admin</source>
+                <target>管理员</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>Settings</source>
+                <target>设置</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>Defaults</source>
+                <target>缺省值</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Password</source>
+                <target>密码</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Limit</source>
+                <target>限制</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>Execute</source>
+                <target>排除</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>Filter</source>
+                <target>过滤</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Reset</source>
+                <target>复位</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Clear</source>
+                <target>清除</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>From</source>
+                <target>从</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>To</source>
+                <target>到</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Year</source>
+                <target>年</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Month</source>
+                <target>月</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>Day</source>
+                <target>日</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Hour</source>
+                <target>小时</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Minute</source>
+                <target>分钟</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Save</source>
+                <target>保存</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Base</source>
+                <target>基础</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Paths</source>
+                <target>路径</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Callers</source>
+                <target>调用者</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>File</source>
+                <target>文件</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Activated</source>
+                <target>已激活的</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Deactivated</source>
+                <target>未激活的</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Activate rules</source>
+                <target>已激活的规则</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>Deactivate rules</source>
+                <target>未激活的规则</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Delete rules</source>
+                <target>删除规则</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Min. unique visitors</source>
+                <target>最少的独立访问者</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>Min. filter dominance</source>
+                <target>Min. filter dominance</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Unify arrays</source>
+                <target>Unify arrays</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>Is threat</source>
+                <target>是威胁</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>Has no whitelist rule</source>
+                <target>没有任何白名单规则</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>Has broken whitelist rule</source>
+                <target>违背了白名单规则en</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>Has critical impact</source>
+                <target>有严重影响</target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>Delete parameters</source>
+                <target>删除参数</target>
+            </trans-unit>
+            <trans-unit id="128">
+                <source>Enable integrity</source>
+                <target>启用完整性检查</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>Disable integrity</source>
+                <target>关闭完整性检查</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>Enable whitelist</source>
+                <target>启用白名单</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>Disable whitelist</source>
+                <target>关闭白名单</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>Enable blacklist</source>
+                <target>启用黑名单</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>Disable blacklist</source>
+                <target>关闭白名单</target>
+            </trans-unit>
+            <trans-unit id="134">
+                <source>Delete learning requests</source>
+                <target>删除自学习请求</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>Delete productive requests</source>
+                <target>删除生产环节请求</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>Delete profiles</source>
+                <target>删除个性化设置</target>
+            </trans-unit>
+            <trans-unit id="137">
+                <source>Key</source>
+                <target>索引</target>
+            </trans-unit>
+            <trans-unit id="138">
+                <source>Delete requests</source>
+                <target>删除请求</target>
+            </trans-unit>
+            <trans-unit id="139">
+                <source>Entries per page</source>
+                <target>每页条目数</target>
+            </trans-unit>
+            <trans-unit id="140">
+                <source>Descendent</source>
+                <target>降序</target>
+            </trans-unit>
+            <trans-unit id="141">
+                <source>Ascendent</source>
+                <target>升序</target>
+            </trans-unit>
+            <trans-unit id="142">
+                <source>Sort order</source>
+                <target>排列顺序</target>
+            </trans-unit>
+            <trans-unit id="143">
+                <source>Theme</source>
+                <target>主题</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>Old password</source>
+                <target>老密码</target>
+            </trans-unit>
+            <trans-unit id="145">
+                <source>New password</source>
+                <target>新密码</target>
+            </trans-unit>
+            <trans-unit id="146">
+                <source>Repeat password</source>
+                <target>重复输入密码</target>
+            </trans-unit>
+            <trans-unit id="147">
+                <source>Automatically open filter mask on new filter</source>
+                <target>自动打开新过滤器屏蔽</target>
+            </trans-unit>
+            <trans-unit id="148">
+                <source>Delete users</source>
+                <target>删除用户</target>
+            </trans-unit>
+            <trans-unit id="149">
+                <source>Demand password change on login</source>
+                <target>登录后需要修改密码</target>
+            </trans-unit>
+            <trans-unit id="150">
+                <source>Has conflict</source>
+                <target>存在冲突</target>
+            </trans-unit>
+            <trans-unit id="151">
+                <source>Previous</source>
+                <target>上一页</target>
+            </trans-unit>
+            <trans-unit id="152">
+                <source>Next</source>
+                <target>下一页</target>
+            </trans-unit>
+            <trans-unit id="153">
+                <source>First</source>
+                <target>第一页</target>
+            </trans-unit>
+            <trans-unit id="154">
+                <source>Last</source>
+                <target>最后一页</target>
+            </trans-unit>
+            <trans-unit id="155">
+                <source>Analysis</source>
+                <target>分析</target>
+            </trans-unit>
+            <trans-unit id="156">
+                <source>Management</source>
+                <target>管理</target>
+            </trans-unit>
+            <trans-unit id="157">
+                <source>Administration</source>
+                <target>特权管理</target>
+            </trans-unit>
+            <trans-unit id="158">
+                <source>Logout</source>
+                <target>退出</target>
+            </trans-unit>
+            <trans-unit id="159">
+                <source>Integrity</source>
+                <target>完整性</target>
+            </trans-unit>
+            <trans-unit id="160">
+                <source>Unify callers</source>
+                <target>统一调用者</target>
+            </trans-unit>
+            <trans-unit id="161">
+                <source>Predefined</source>
+                <target>预定义的</target>
+            </trans-unit>
+            <trans-unit id="162">
+                <source>Generate whitelist rules</source>
+                <target>生成白名单规则</target>
+            </trans-unit>
+            <trans-unit id="163">
+                <source>Generate blacklist rules</source>
+                <target>生成黑名单规则</target>
+            </trans-unit>
+            <trans-unit id="164">
+                <source>Min. threshold dominance</source>
+                <target>Min. threshold dominance</target>
+            </trans-unit>
+            <trans-unit id="165">
+                <source>Statistics</source>
+                <target>状态</target>
+            </trans-unit>
+            <trans-unit id="166">
+                <source>You are still using the default password. Please change it immediately.</source>
+                <target>您还在使用缺省密码。请立即修改。</target>
+            </trans-unit>
+            <trans-unit id="167">
+                <source>The parameters were updated.</source>
+                <target>参数已更新。</target>
+            </trans-unit>
+            <trans-unit id="168">
+                <source>Unable to modify rules.</source>
+                <target>无法修改规则。</target>
+            </trans-unit>
+            <trans-unit id="169">
+                <source>Unable to modify parameters.</source>
+                <target>无法修改参数。</target>
+            </trans-unit>
+            <trans-unit id="170">
+                <source>Unable to modify profiles.</source>
+                <target>无法修改个性化配置。</target>
+            </trans-unit>
+            <trans-unit id="171">
+                <source>The profiles were updated.</source>
+                <target>个性化配置已修改。</target>
+            </trans-unit>
+            <trans-unit id="172">
+                <source>The profile was added.</source>
+                <target>个性化配置已添加。</target>
+            </trans-unit>
+            <trans-unit id="173">
+                <source>The profile was updated.</source>
+                <target>个性化配置已修改。</target>
+            </trans-unit>
+            <trans-unit id="174">
+                <source>Unable to modify requests.</source>
+                <target>无法修改请求。</target>
+            </trans-unit>
+            <trans-unit id="175">
+                <source>The requests were updated.</source>
+                <target>请求已被更新。</target>
+            </trans-unit>
+            <trans-unit id="176">
+                <source>The new password can not be empty.</source>
+                <target>密码不能为空。</target>
+            </trans-unit>
+            <trans-unit id="177">
+                <source>The old password is not correct.</source>
+                <target>老密码不正确。</target>
+            </trans-unit>
+            <trans-unit id="178">
+                <source>The settings and password were updated.</source>
+                <target>设置和密码都已更新。</target>
+            </trans-unit>
+            <trans-unit id="179">
+                <source>The settings were updated.</source>
+                <target>设置已经更新。</target>
+            </trans-unit>
+            <trans-unit id="180">
+                <source>The users were updated.</source>
+                <target>用户已被更新。</target>
+            </trans-unit>
+            <trans-unit id="181">
+                <source>The user was added.</source>
+                <target>用户已被添加。</target>
+            </trans-unit>
+            <trans-unit id="182">
+                <source>The user was updated.</source>
+                <target>用户已被更新。</target>
+            </trans-unit>
+            <trans-unit id="183">
+                <source>Locale</source>
+                <target>本地化</target>
+            </trans-unit>
+            <trans-unit id="184">
+                <source>There are no tooltips :(</source>
+                <target>不存在任何提示 :(</target>
+            </trans-unit>
+            <trans-unit id="185">
+                <source>User</source>
+                <target>用户</target>
+            </trans-unit>
+            <trans-unit id="186">
+                <source>Low security</source>
+                <target>低安全性</target>
+            </trans-unit>
+            <trans-unit id="187">
+                <source>Moderate security</source>
+                <target>中安全性</target>
+            </trans-unit>
+            <trans-unit id="188">
+                <source>High security</source>
+                <target>高安全性</target>
+            </trans-unit>
+            <trans-unit id="189">
+                <source>Custom</source>
+                <target>用户自定义</target>
+            </trans-unit>
+            <trans-unit id="190">
+                <source>Generate</source>
+                <target>生成</target>
+            </trans-unit>
+            <trans-unit id="191">
+                <source>Numeric</source>
+                <target>数字</target>
+            </trans-unit>
+            <trans-unit id="192">
+                <source>Numeric (extended)</source>
+                <target>数字(扩展)</target>
+            </trans-unit>
+            <trans-unit id="193">
+                <source>Hexadecimal</source>
+                <target>十六进制</target>
+            </trans-unit>
+            <trans-unit id="194">
+                <source>Alphanumeric</source>
+                <target>字母数字</target>
+            </trans-unit>
+            <trans-unit id="195">
+                <source>Base64</source>
+                <target>Base64</target>
+            </trans-unit>
+            <trans-unit id="196">
+                <source>Special Characters</source>
+                <target>特殊字符</target>
+            </trans-unit>
+            <trans-unit id="197">
+                <source>Everything</source>
+                <target>全部</target>
+            </trans-unit>
+            <trans-unit id="198">
+                <source>Sec.</source> <!-- Abbreviation of seconds -->
+                <target>秒.</target>
+            </trans-unit>
+            <trans-unit id="199">
+                <source>Max. length variance</source>
+                <target>最大长度方差</target>
+            </trans-unit>
+            <trans-unit id="200">
+                <source>No new rules were added.</source>
+                <target>没有添加任何新规则。</target>
+            </trans-unit>
+            <trans-unit id="201">
+                <source>One new rule was added.</source>
+                <target>1 条新规则已经被添加。</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>%number% new rules were added.</source>
+                <target>%number% 条新规则已经被添加。</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>Integrity Rules Export</source>
+                <target>完整性规则导出</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Integrity Rules Import</source>
+                <target>完整性规则导入</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>Integrity Rules</source>
+                <target>完整性规则</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>Algorithm</source>
+                <target>算法</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>Algorithms</source>
+                <target>算法</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>Digest</source>
+                <target>摘要</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>Digests</source>
+                <target>摘要</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>Integrity Rule</source>
+                <target>完整性规则</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>Anomaly</source>
+                <target>混淆</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>Too short</source>
+                <target>太短</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>Too long</source>
+                <target>太长</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>Integrity: Broken Rules</source>
+                <target>完整性：规则损坏</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>Global threshold</source>
+                <target>全局门槛</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>Timeframe</source>
+                <target>时间窗口</target>
+            </trans-unit>
+            <trans-unit id="217">
+                <source>Flooding</source>
+                <target>泛洪</target>
+            </trans-unit>
+            <trans-unit id="218">
+                <source>Protections</source>
+                <target>保护</target>
+            </trans-unit>
+            <trans-unit id="219">
+                <source>Mode</source>
+                <target>模式</target>
+            </trans-unit>
+            <trans-unit id="220">
+                <source>Passive</source>
+                <target>被动</target>
+            </trans-unit>
+            <trans-unit id="221">
+                <source>Enable flooding</source>
+                <target>激活泛洪</target>
+            </trans-unit>
+            <trans-unit id="222">
+                <source>Disable flooding</source>
+                <target>关闭泛洪</target>
+            </trans-unit>
+            <trans-unit id="223">
+                <source>Has no integrity rule</source>
+                <target>没有完整性规则</target>
+            </trans-unit>
+            <trans-unit id="224">
+                <source>Has broken integrity rule</source>
+                <target>破坏了完整性规则</target>
+            </trans-unit>
+            <trans-unit id="225">
+                <source>Generate integrity rules</source>
+                <target>产生完整性规则</target>
+            </trans-unit>
+            <trans-unit id="226">
+                <source>Delete</source>
+                <target>删除n</target>
+            </trans-unit>
+            <trans-unit id="227">
+                <source>Shadow Daemon -- Web Application Firewall</source>
+                <target>Shadow Daemon -- Web Application Firewall</target>
+            </trans-unit>
+            <trans-unit id="228">
+                <source>© %year% by %name%</source>
+                <target>© %year% by %name%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
