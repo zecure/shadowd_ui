@@ -296,7 +296,7 @@
             </trans-unit>
             <trans-unit id="73">
                 <source>Generator</source>
-                <target>生成</target>
+                <target>生成器</target>
             </trans-unit>
             <trans-unit id="74">
                 <source>Whitelist Rule</source>
