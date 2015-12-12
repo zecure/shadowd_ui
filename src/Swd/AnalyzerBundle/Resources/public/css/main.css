@@ -117,3 +117,9 @@ th, td {
   margin-top: -15px;
   padding-bottom: 15px;
 }
+
+#logo {
+  position: relative;
+  bottom: -70px;
+  z-index: 500;
+}
