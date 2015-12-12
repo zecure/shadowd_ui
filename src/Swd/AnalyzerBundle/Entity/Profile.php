@@ -144,6 +144,19 @@ class Profile
 	/**
 	 * @var integer
 	 *
+	 * @ORM\Column(name="cache_outdated", type="smallint")
+	 *
+	 * @Assert\Range(
+	 *	  min = 0,
+	 *	  max = 1
+	 * )
+	 * @Assert\NotBlank()
+	 */
+	private $cacheOutdated;
+
+	/**
+	 * @var integer
+	 *
 	 * @ORM\Column(name="blacklist_threshold", type="integer")
 	 *
 	 * @Assert\Range(
@@ -225,6 +238,7 @@ class Profile
 		$this->blacklistEnabled = 1;
 		$this->integrityEnabled = 0;
 		$this->floodingEnabled = 1;
+		$this->cacheOutdated = 1;
 	}
 
 	public function getId()
@@ -343,6 +357,18 @@ class Profile
 	public function getFloodingEnabled()
 	{
 		return $this->floodingEnabled;
+	}
+
+	public function setCacheOutdated($cacheOutdated)
+	{
+		$this->cacheOutdated = $cacheOutdated;
+
+		return $this;
+	}
+
+	public function getCacheOutdated()
+	{
+		return $this->cacheOutdated;
 	}
 
 	public function setBlacklistThreshold($blacklistThreshold)

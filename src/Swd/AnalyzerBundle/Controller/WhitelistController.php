@@ -85,6 +85,9 @@ class WhitelistController extends Controller
 			/* Update the modification date for security. */
 			$rule->setDate(new \DateTime());
 
+			/* Mark the cache as outdated. */
+			$rule->getProfile()->setCacheOutdated(1);
+
 			/* Save all the changes to the database. */
 			$em->flush();
 
@@ -139,6 +142,8 @@ class WhitelistController extends Controller
 		/* Insert and redirect or show the form. */
 		if ($form->isValid())
 		{
+			$rule->getProfile()->setCacheOutdated(1);
+
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($rule);
 			$em->flush();
@@ -176,6 +181,7 @@ class WhitelistController extends Controller
 		if ($form->isValid())
 		{
 			$rule->setDate(new \DateTime());
+			$rule->getProfile()->setCacheOutdated(1);
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($rule);
@@ -211,6 +217,8 @@ class WhitelistController extends Controller
 
 			if ($rules)
 			{
+				$import->getProfile()->setCacheOutdated(1);
+
 				$em = $this->getDoctrine()->getManager();
 
 				foreach ($rules as $rule)
