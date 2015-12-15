@@ -120,6 +120,12 @@ th, td {
 
 #logo {
   position: relative;
-  bottom: -70px;
+  bottom: -75px;
   z-index: 500;
+}
+
+@media (max-width: 800px) {
+  #logo {
+    display: none;
+  }
 }
