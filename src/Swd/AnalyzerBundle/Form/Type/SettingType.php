@@ -34,7 +34,7 @@ class SettingType extends AbstractType
 			->add('sortOrder', 'choice', array('choices' => array('0' => 'Descendent', '1' => 'Ascendent'), 'label' => 'Sort order'))
 			->add('openFilter', 'checkbox', array('required' => false, 'label' => 'Automatically open filter mask on new filter'))
 			->add('theme', 'choice', array('choices' => array(
-				'0' => 'Default',
+				'0' => 'Plain',
 				'cerulean' => 'Cerulean',
 				'cosmo' => 'Cosmo',
 				'cyborg' => 'Cyborg',
