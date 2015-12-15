@@ -105,7 +105,7 @@ class Setting
 	{
 		$this->pageLimit = 50;
 		$this->sortOrder = 0;
-		$this->theme = 0;
+		$this->theme = 'united';
 		$this->locale = 'en';
 		$this->openFilter = false;
 	}
