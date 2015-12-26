@@ -88,7 +88,7 @@ class GeneratorSettings
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
-	 * @Assert\GreaterThan(
+	 * @Assert\GreaterThanOrEqual(
 	 *	 value = 0
 	 * )
 	 * @Assert\LessThanOrEqual(
@@ -101,7 +101,7 @@ class GeneratorSettings
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
-	 * @Assert\GreaterThan(
+	 * @Assert\GreaterThanOrEqual(
 	 *	 value = 0
 	 * )
 	 * @Assert\LessThanOrEqual(

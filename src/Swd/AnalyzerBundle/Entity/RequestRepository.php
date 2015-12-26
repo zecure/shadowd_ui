@@ -220,4 +220,37 @@ class RequestRepository extends EntityRepositoryTransformer
 
 		return $builder->getQuery();
 	}
+
+	public function findAllLearningBySettings(\Swd\AnalyzerBundle\Entity\GeneratorSettings $settings)
+	{
+		$builder = $this->createQueryBuilder('r')
+			->where('r.mode = 3')
+			->andWhere('r.profile = :profile')->setParameter('profile', $settings->getProfile());
+
+		if (!$settings->getIncludeCallers()->isEmpty())
+		{
+			$orExpr = $builder->expr()->orX();
+
+			foreach ($settings->getIncludeCallers() as $key => $value)
+			{
+				$orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+			}
+
+			$builder->andWhere($orExpr);
+		}
+
+		if (!$settings->getExcludeCallers()->isEmpty())
+		{
+			$andExpr = $builder->expr()->andX();
+
+			foreach ($settings->getExcludeCallers() as $key => $value)
+			{
+				$andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+			}
+
+			$builder->andWhere($andExpr);
+		}
+
+		return $builder->getQuery();
+	}
 }

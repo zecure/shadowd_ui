@@ -41,9 +41,8 @@ class GeneratorController extends Controller
 		if ($form->isValid())
 		{
 			$generator = $this->get('generator_manager');
-			$generator->generateStatistics($settings);
-			$generator->generateRules($settings);
-			$counter = $generator->persistRules();
+			$generator->start($settings);
+			$counter = $generator->save();
 
 			if ($counter === 0)
 			{

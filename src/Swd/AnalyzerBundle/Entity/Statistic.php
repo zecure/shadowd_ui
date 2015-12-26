@@ -21,9 +21,9 @@
 namespace Swd\AnalyzerBundle\Entity;
 
 /**
- * ParameterStatistic
+ * Statistic
  */
-class ParameterStatistic
+class Statistic
 {
 	/**
 	 * @var integer
@@ -58,7 +58,17 @@ class ParameterStatistic
 	/**
 	 * @var array
 	 */
-	private $filters;
+	private $totalImpacts;
+
+	/**
+	 * @var array
+	 */
+	private $whitelistFilters;
+
+	/**
+	 * @var array
+	 */
+	private $hashes;
 
 
 	public function increaseCounter($clientIp)
@@ -88,6 +98,18 @@ class ParameterStatistic
 		$this->lengthVariance = sqrt(((pow($this->lengthVariance, 2) * $this->counter) + pow(($length - $this->averageLength), 2)) / ($this->counter + 1));
 	}
 
+	public function addTotalImpact($totalImpact)
+	{
+		if (!isset($this->totalImpacts[$totalImpact]))
+		{
+			$this->totalImpacts[$totalImpact]['counter'] = 1;
+		}
+		else
+		{
+			$this->totalImpacts[$totalImpact]['counter']++;
+		}
+	}
+
 	public function getAverageLength()
 	{
 		return $this->averageLength;
@@ -108,32 +130,32 @@ class ParameterStatistic
 		return $this->maxLength;
 	}
 
-	public function addFilter($filter)
+	public function addWhitelistFilter($filter)
 	{
-		if (!isset($this->filters[$filter->getId()]))
+		if (!isset($this->whitelistFilters[$filter->getId()]))
 		{
-			$this->filters[$filter->getId()]['object'] = $filter;
-			$this->filters[$filter->getId()]['counter'] = 1;
+			$this->whitelistFilters[$filter->getId()]['object'] = $filter;
+			$this->whitelistFilters[$filter->getId()]['counter'] = 1;
 		}
 		else
 		{
-			$this->filters[$filter->getId()]['counter']++;
+			$this->whitelistFilters[$filter->getId()]['counter']++;
 		}
 	}
 
 	/**
 	 * Returns the the dominant filter or false if there is none. 
 	 */
-	public function getDominantFilter($minFilterDominance)
+	public function getDominantWhitelistFilter($minFilterDominance)
 	{
 		$sum = 0;
 
-		foreach ($this->filters as $filter)
+		foreach ($this->whitelistFilters as $filter)
 		{
 			$sum += $filter['counter'];
 		}
 
-		foreach ($this->filters as $filter)
+		foreach ($this->whitelistFilters as $filter)
 		{
 			if (($filter['counter'] / $sum) > ($minFilterDominance / 100))
 			{
@@ -142,5 +164,38 @@ class ParameterStatistic
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns the the dominant impact or false if there is none. 
+	 */
+	public function getDominantBlacklistImpact($minThresholdDominance)
+	{
+		$sum = 0;
+
+		foreach ($this->totalImpacts as $impact)
+		{
+			$sum += $impact['counter'];
+		}
+
+		foreach ($this->totalImpacts as $key => $impact)
+		{
+			if (($impact['counter'] / $sum) > ($minThresholdDominance / 100))
+			{
+				return $key;
+			}
+		}
+
+		return false;
+	}
+
+	public function addHash($algorithm, $digest)
+	{
+		$this->hashes[$algorithm] = $digest;
+	}
+
+	public function getHashes()
+	{
+		return $this->hashes;
 	}
 }

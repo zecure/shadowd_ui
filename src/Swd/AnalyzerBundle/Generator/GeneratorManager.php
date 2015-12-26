@@ -24,11 +24,14 @@ use Swd\AnalyzerBundle\Entity\WhitelistRule;
 use Swd\AnalyzerBundle\Entity\WhitelistFilter;
 use Swd\AnalyzerBundle\Entity\BlacklistRule;
 use Swd\AnalyzerBundle\Entity\BlacklistFilter;
+use Swd\AnalyzerBundle\Entity\IntegrityRule;
+use Swd\AnalyzerBundle\Entity\Hash;
 use Swd\AnalyzerBundle\Entity\Parameter;
-use Swd\AnalyzerBundle\Entity\ParameterStatistic;
+use Swd\AnalyzerBundle\Entity\Statistic;
 
 class GeneratorManager
 {
+	private $em;
 	private $filters;
 	private $statistics;
 	private $rules;
@@ -36,12 +39,16 @@ class GeneratorManager
 	public function __construct(\Doctrine\ORM\EntityManager $em)
 	{
 		$this->em = $em;
-		$this->filters = $this->em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->findAllOrderedByImpact()->getResult();
 	}
 
-	private function determineFilter($input)
+	private function determineWhitelistFilter($input)
 	{
-		foreach ($this->filters as $filter)
+		if (!isset($this->filters['whitelist']))
+		{
+			$this->filters['whitelist'] = $this->em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->findAllOrderedByImpact()->getResult();
+		}
+
+		foreach ($this->filters['whitelist'] as $filter)
 		{
 			/* Escape the delimiter. */
 			$rule = str_replace('~', '\~', $filter->getRule());
@@ -61,7 +68,7 @@ class GeneratorManager
 		return preg_split('/\\\\.(*SKIP)(*FAIL)|\|/s', $path);
 	}
 
-	public function unifyArray($path)
+	private function unifyArray($path)
 	{
 		$pathes = $this->splitPath($path);
 
@@ -79,7 +86,7 @@ class GeneratorManager
 		return implode('|', $pathes);
 	}
 
-	public function normalizeCaller($path, $caller)
+	private function normalizeCaller($path, $caller)
 	{
 		/* SERVER and COOKIE input should be valid for all callers. */
 		if (preg_match('/^(SERVER|COOKIE)\|/', $path))
@@ -92,69 +99,54 @@ class GeneratorManager
 		}
 	}
 
-	public function generateStatistics($settings)
+	private function generateWhitelistStatistics($settings)
 	{
-		/* Get all parameters that were recorded in learning mode and are not classified as blacklist threat. */
+		/* Get all parameters that were recorded in learning mode. */
 		$parameters = $this->em->getRepository('SwdAnalyzerBundle:Parameter')->findAllLearningBySettings($settings)->getResult();
 
 		foreach ($parameters as $parameter)
 		{
 			$request = $parameter->getRequest();
 
-			/* Determine caller and path for whitelist statistics. */
+			/* Determine caller and path for statistics. */
 			if ($settings->getUnifyWhitelistCallers())
 			{
-				$path['whitelist'] = '*';
+				$path = '*';
 			}
 			else
 			{
-				$path['whitelist'] = ($settings->getUnifyWhitelistArrays() ?
+				$path = ($settings->getUnifyWhitelistArrays() ?
 					$this->unifyArray($parameter->getPath()) :
 					$parameter->getPath()
 				);
 			}
 
-			$caller['whitelist'] = $this->normalizeCaller($path['whitelist'], $request->getCaller());
-
-			/* Determine caller and path for blacklist statistics. */
-			if ($settings->getUnifyBlacklistCallers())
-			{
-				$path['blacklist'] = '*';
-			}
-			else
-			{
-				$path['blacklist'] = ($settings->getUnifyBlacklistArrays() ?
-					$this->unifyArray($parameter->getPath()) :
-					$parameter->getPath()
-				);
-			}
-
-			$caller['blacklist'] = $this->normalizeCaller($path['blacklist'], $request->getCaller());
+			$caller = $this->normalizeCaller($path, $request->getCaller());
 
 			/* Get existing stat object for this (caller, path) or create a new one. */
-			$stats['whitelist'] = (isset($this->statistics[$caller][$path['whitelist']]) ?
-				$this->statistics[$caller][$path['whitelist']] :
-				new ParameterStatistic()
+			$stats = (isset($this->statistics['whitelist'][$caller][$path]) ?
+				$this->statistics['whitelist'][$caller][$path] :
+				new Statistic()
 			);
 
-			$stats['whitelist']->addLength(strlen($parameter->getValue()));
-			$stats['whitelist']->addFilter($this->determineFilter($parameter->getValue()));
+			$stats->addLength(strlen($parameter->getValue()));
+			$stats->addWhitelistFilter($this->determineWhitelistFilter($parameter->getValue()));
 
-			/* Increase the counters. This has to happen last. */
-			$stats['whitelist']->increaseCounter($request->getClientIP());
+			/* Increase the counter. This has to happen last. */
+			$stats->increaseCounter($request->getClientIP());
 
-			$this->statistics[$caller['whitelist']][$path['whitelist']] = $stats['whitelist'];
+			$this->statistics['whitelist'][$caller][$path] = $stats;
 		}
 	}
 
-	public function generateRules($settings)
+	private function generateWhitelistRules($settings)
 	{
-		if (!$this->statistics)
+		if (!$this->statistics['whitelist'])
 		{
 			return;
 		}
 
-		foreach ($this->statistics as $caller => $caller_value)
+		foreach ($this->statistics['whitelist'] as $caller => $caller_value)
 		{
 			foreach ($caller_value as $path => $stats)
 			{
@@ -197,7 +189,7 @@ class GeneratorManager
 				 * Next we determine the filter. If almost every request used the same filter we can take that filter.
 				 * If this is not the case and there is no clear "winner" we have to take the "everything" filter.
 				 */
-				$filter = $stats->getDominantFilter($settings->getMinFilterDominance());
+				$filter = $stats->getDominantWhitelistFilter($settings->getMinFilterDominance());
 
 				if ($filter === false)
 				{
@@ -210,40 +202,224 @@ class GeneratorManager
 				}
 
 				/* Save rule in class attribute. */
-				$this->rules[] = $rule;
+				$this->rules['whitelist'][] = $rule;
 			}
 		}
 	}
 
-	public function persistRules()
+	private function generateBlacklistStatistics($settings)
 	{
-		$counter = 0;
+		/* Get all parameters that were recorded in learning mode. */
+		$parameters = $this->em->getRepository('SwdAnalyzerBundle:Parameter')->findAllLearningBySettings($settings)->getResult();
 
-		if (!$this->rules)
+		foreach ($parameters as $parameter)
+		{
+			$request = $parameter->getRequest();
+
+			/* Determine caller and path for statistics. */
+			if ($settings->getUnifyBlacklistCallers())
+			{
+				$path = '*';
+			}
+			else
+			{
+				$path = ($settings->getUnifyBlacklistArrays() ?
+					$this->unifyArray($parameter->getPath()) :
+					$parameter->getPath()
+				);
+			}
+
+			$caller = $this->normalizeCaller($path, $request->getCaller());
+
+			/* Get existing stat object for this (caller, path) or create a new one. */
+			$stats = (isset($this->statistics['blacklist'][$caller][$path]) ?
+				$this->statistics['blacklist'][$caller][$path] :
+				new Statistic()
+			);
+
+			/* Calculate and add total impact. */
+			$totalImpact = 0;
+
+			$filters = $parameter->getMatchingBlacklistFilters();
+
+			foreach ($filters as $filter)
+			{
+				$totalImpact += $filter->getImpact();
+			}
+
+			$stats->addTotalImpact($totalImpact);
+
+			/* Increase the counter. */
+			$stats->increaseCounter($request->getClientIP());
+
+			$this->statistics['blacklist'][$caller][$path] = $stats;
+		}
+	}
+
+	private function generateBlacklistRules($settings)
+	{
+		if (!$this->statistics['blacklist'])
+		{
+			return;
+		}
+
+		foreach ($this->statistics['blacklist'] as $caller => $caller_value)
+		{
+			foreach ($caller_value as $path => $stats)
+			{
+				/* Ignore slips. */
+				if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
+				{
+					continue;
+				}
+
+				/* Find parameters that always seem to have the same total impact. */
+				$threshold = $stats->getDominantBlacklistImpact($settings->getMinThresholdDominance());
+
+				if ($threshold !== false)
+				{
+					/* Don't add rule if the threshold is below the global threshold. */
+					if ($threshold <= $settings->getProfile()->getBlacklistThreshold())
+					{
+						continue;
+					}
+
+					/* Create a new rule. */
+					$rule = new BlacklistRule();
+					$rule->setProfile($settings->getProfile());
+					$rule->setPath($path);
+					$rule->setCaller($caller);
+					$rule->setStatus($settings->getStatus());
+					$rule->setDate(new \DateTime());
+					$rule->setThreshold($threshold);
+
+					/* Save rule in class attribute. */
+					$this->rules['blacklist'][] = $rule;
+				}
+			}
+		}
+	}
+
+	private function generateIntegrityStatistics($settings)
+	{
+		/* Get all requests that were recorded in learning mode. */
+		$requests = $this->em->getRepository('SwdAnalyzerBundle:Request')->findAllLearningBySettings($settings)->getResult();
+
+		foreach ($requests as $request)
+		{
+			$caller = $request->getCaller();
+
+			/* Get existing stat object for this caller or create a new one. */
+			$stats = (isset($this->statistics['integrity'][$caller]) ?
+				$this->statistics['integrity'][$caller] :
+				new Statistic()
+			);
+
+			/* Add the hashes to the statistic object. */
+			$hashes = $request->getHashes();
+
+			foreach ($hashes as $hash)
+			{
+				$stats->addHash($hash->getAlgorithm(), $hash->getDigest());
+			}
+
+			/* Increase the counter. */
+			$stats->increaseCounter($request->getClientIP());
+
+			$this->statistics['integrity'][$caller] = $stats;
+		}
+	}
+
+	private function generateIntegritytRules($settings)
+	{
+		if (!$this->statistics['integrity'])
+		{
+			return;
+		}
+
+		foreach ($this->statistics['integrity'] as $caller => $stats)
+		{
+			/* Ignore slips. */
+			if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
+			{
+				continue;
+			}
+
+			$hashes = $stats->getHashes();
+
+			foreach ($hashes as $algorithm => $digest)
+			{
+				/* Create a new rule. */
+				$rule = new IntegrityRule();
+				$rule->setProfile($settings->getProfile());
+				$rule->setCaller($caller);
+				$rule->setStatus($settings->getStatus());
+				$rule->setDate(new \DateTime());
+				$rule->setAlgorithm($algorithm);
+				$rule->setDigest($digest);
+
+				/* Save rule in class attribute. */
+				$this->rules['integrity'][] = $rule;
+			}
+		}
+	}
+
+	public function start($settings)
+	{
+		if ($settings->getEnableWhitelist())
+		{
+			$this->generateWhitelistStatistics($settings);
+			$this->generateWhitelistRules($settings);
+		}
+
+		if ($settings->getEnableBlacklist())
+		{
+			$this->generateBlacklistStatistics($settings);
+			$this->generateBlacklistRules($settings);
+		}
+
+		if ($settings->getEnableIntegrity())
+		{
+			$this->generateIntegrityStatistics($settings);
+			$this->generateIntegritytRules($settings);
+		}
+	}
+
+	private function persistRules($id, $repo)
+	{
+		if (!isset($this->rules[$id]))
 		{
 			return 0;
 		}
 
-		foreach ($this->rules as $rule)
+		$counter = 0;
+
+		foreach ($this->rules[$id] as $rule)
 		{
 			/* Do not continue if the same rule is already in the database. */
-			$existingRules = $this->em->getRepository('SwdAnalyzerBundle:WhitelistRule')->findAllByRule($rule)->getResult();
+			$existingRules = $this->em->getRepository($repo)->findAllByRule($rule)->getResult();
 
 			if ($existingRules)
 			{
 				continue;
 			}
 
-			/* Persist the rule. */
+			/* Mark rule for storage. */
 			$this->em->persist($rule);
 
-			/* Increase counter for user feedback. */
 			$counter++;
 		}
 
-		/* Flush the objects (not down the toilet). */
+		/* Flush the objects so that they get stored in the database. */
 		$this->em->flush();
 
 		return $counter;
+	}
+
+	public function save()
+	{
+		return $this->persistRules('whitelist', 'SwdAnalyzerBundle:WhitelistRule')
+		 + $this->persistRules('blacklist', 'SwdAnalyzerBundle:BlacklistRule')
+		 + $this->persistRules('integrity', 'SwdAnalyzerBundle:IntegrityRule');
 	}
 }
