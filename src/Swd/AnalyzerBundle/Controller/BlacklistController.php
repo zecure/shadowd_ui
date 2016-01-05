@@ -297,7 +297,7 @@ class BlacklistController extends Controller
 
 			$disposition = $response->headers->makeDisposition(
 				ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-				date('Ymd_His') . '_shadowd_bl_rules.txt'
+				date('Ymd_His') . '_shadowd_blacklist.txt'
 			);
 
 			$response->headers->set('Content-Disposition', $disposition);

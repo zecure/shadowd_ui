@@ -305,7 +305,7 @@ class WhitelistController extends Controller
 
 			$disposition = $response->headers->makeDisposition(
 				ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-				date('Ymd_His') . '_shadowd_wl_rules.txt'
+				date('Ymd_His') . '_shadowd_whitelist.txt'
 			);
 
 			$response->headers->set('Content-Disposition', $disposition);

@@ -292,7 +292,7 @@ class IntegrityController extends Controller
 
 			$disposition = $response->headers->makeDisposition(
 				ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-				date('Ymd_His') . '_shadowd_in_rules.txt'
+				date('Ymd_His') . '_shadowd_integrity.txt'
 			);
 
 			$response->headers->set('Content-Disposition', $disposition);
