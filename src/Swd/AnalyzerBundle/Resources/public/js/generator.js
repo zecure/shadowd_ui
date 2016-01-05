@@ -14,11 +14,11 @@ $(document).ready(function() {
 	$("#generator_settings_predefined").change(function () {
 		switch ($(this).val()) {
 			case '1': // low security
-				$("#generator_settings_enableWhitelist").prop('checked', false);
-				$("#generator_settings_minFilterDominance").slider('setValue', 0).val(0);
+				$("#generator_settings_enableWhitelist").prop('checked', true);
+				$("#generator_settings_minFilterDominance").slider('setValue', 100).val(100);
 				$("#generator_settings_maxLengthVariance").val('0');
-				$("#generator_settings_unifyWhitelistArrays").prop('checked', false);
-				$("#generator_settings_unifyWhitelistCallers").prop('checked', false);
+				$("#generator_settings_unifyWhitelistArrays").prop('checked', true);
+				$("#generator_settings_unifyWhitelistCallers").prop('checked', true);
 				$("#generator_settings_enableBlacklist").prop('checked', true);
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90).val(90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', true);
@@ -28,10 +28,10 @@ $(document).ready(function() {
 				break;
 			case '2': // moderate security
 				$("#generator_settings_enableWhitelist").prop('checked', true);
-				$("#generator_settings_minFilterDominance").slider('setValue', 100).val(100);
-				$("#generator_settings_maxLengthVariance").val('0');
+				$("#generator_settings_minFilterDominance").slider('setValue', 99).val(99);
+				$("#generator_settings_maxLengthVariance").val('1');
 				$("#generator_settings_unifyWhitelistArrays").prop('checked', true);
-				$("#generator_settings_unifyWhitelistCallers").prop('checked', true);
+				$("#generator_settings_unifyWhitelistCallers").prop('checked', false);
 				$("#generator_settings_enableBlacklist").prop('checked', true);
 				$("#generator_settings_minThresholdDominance").slider('setValue', 90).val(90);
 				$("#generator_settings_unifyBlacklistArrays").prop('checked', true);
