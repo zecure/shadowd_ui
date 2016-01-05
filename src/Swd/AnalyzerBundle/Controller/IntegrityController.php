@@ -277,6 +277,12 @@ class IntegrityController extends Controller
 			foreach ($rules as $rule)
 			{
 				$ruleJson['caller'] = $rule->getCaller();
+
+				if ($export->getBase())
+				{
+					$ruleJson['caller'] = str_replace($export->getBase(), '{BASE}', $ruleJson['caller']);
+				}
+
 				$ruleJson['algorithm'] = $rule->getAlgorithm();
 				$ruleJson['digest'] = $rule->getDigest();
 
