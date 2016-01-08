@@ -5,10 +5,4 @@ parameters:
     database_name:     shadowd
     database_user:     shadowd
     database_password: ~
-
-    locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
-
-    debug_toolbar:          true
-    debug_redirects:        false
-    use_assetic_controller: true
