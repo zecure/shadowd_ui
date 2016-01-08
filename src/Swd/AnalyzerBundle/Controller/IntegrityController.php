@@ -221,13 +221,12 @@ class IntegrityController extends Controller
 
 				foreach ($rules as $rule)
 				{
-					$filterObj = $em->getRepository('SwdAnalyzerBundle:IntegrityFilter')->find($rule['filter']);
-
 					$ruleObj = new IntegrityRule();
 					$ruleObj->setProfile($import->getProfile());
 					$ruleObj->setCaller(str_replace('{BASE}', $import->getBase(), $rule['caller']));
 					$ruleObj->setAlgorithm($rule['algorithm']);
 					$ruleObj->setDigest($rule['digest']);
+					$ruleObj->setStatus(3);
 
 					$em->persist($ruleObj);
 				}
