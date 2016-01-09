@@ -157,7 +157,7 @@ class Statistic
 
         foreach ($this->whitelistFilters as $filter)
         {
-            if (($filter['counter'] / $sum) > ($minFilterDominance / 100))
+            if (($filter['counter'] / $sum) >= ($minFilterDominance / 100))
             {
                 return $filter['object'];
             }
@@ -180,7 +180,7 @@ class Statistic
 
         foreach ($this->totalImpacts as $key => $impact)
         {
-            if (($impact['counter'] / $sum) > ($minThresholdDominance / 100))
+            if (($impact['counter'] / $sum) >= ($minThresholdDominance / 100))
             {
                 return $key;
             }
