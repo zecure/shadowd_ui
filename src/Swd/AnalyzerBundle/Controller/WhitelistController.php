@@ -80,13 +80,13 @@ class WhitelistController extends Controller
                         $em->remove($rule);
                         break;
                 }
+
+                /* Update the modification date for security. */
+                $rule->setDate(new \DateTime());
+
+                /* Mark the cache as outdated. */
+                $rule->getProfile()->setCacheOutdated(1);
             }
-
-            /* Update the modification date for security. */
-            $rule->setDate(new \DateTime());
-
-            /* Mark the cache as outdated. */
-            $rule->getProfile()->setCacheOutdated(1);
 
             /* Save all the changes to the database. */
             $em->flush();

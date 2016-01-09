@@ -99,10 +99,10 @@ class ProfileController extends Controller
                         $em->remove($profile);
                         break;
                 }
-            }
 
-            /* Update the modification date for security. */
-            $profile->setDate(new \DateTime());
+                /* Update the modification date for security. */
+                $profile->setDate(new \DateTime());
+            }
 
             /* Save all the changes to the database. */
             $em->flush();
