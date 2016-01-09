@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,16 +27,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntityRepositoryTransformer extends EntityRepository
 {
-	public function prepareWildcard($input)
-	{
-		$parts = preg_split('/\\\\.(*SKIP)(*FAIL)|\*/s', $input);
-		$parts_escaped = array();
+    public function prepareWildcard($input)
+    {
+        $parts = preg_split('/\\\\.(*SKIP)(*FAIL)|\*/s', $input);
+        $parts_escaped = array();
 
-		foreach ($parts as $part)
-		{
-			$parts_escaped[] = str_replace(array('_', '%'), array('\\_', '\\%'), $part);
-		}
+        foreach ($parts as $part)
+        {
+            $parts_escaped[] = str_replace(array('_', '%'), array('\\_', '\\%'), $part);
+        }
 
-		return implode('%', $parts_escaped);
-	}
+        return implode('%', $parts_escaped);
+    }
 }

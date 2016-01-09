@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,110 +27,110 @@ use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
  */
 class UserRepository extends EntityRepositoryTransformer
 {
-	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\UserFilter $filter)
-	{
-		$builder = $this->createQueryBuilder('u');
+    public function findAllFiltered(\Swd\AnalyzerBundle\Entity\UserFilter $filter)
+    {
+        $builder = $this->createQueryBuilder('u');
 
-		if (!$filter->getIncludeUserIds()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeUserIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeUserIds() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->eq('u.id', $builder->expr()->literal($value)));
-			}
+            foreach ($filter->getIncludeUserIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('u.id', $builder->expr()->literal($value)));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeUsernames()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeUsernames()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeUsernames() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeUsernames() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeEmails()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeEmails()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeEmails() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeEmails() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if ($filter->getIncludeDateStart())
-		{
-			$builder->andWhere('u.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
-		}
+        if ($filter->getIncludeDateStart())
+        {
+            $builder->andWhere('u.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
+        }
 
-		if ($filter->getIncludeDateEnd())
-		{
-			$builder->andWhere('u.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
-		}
+        if ($filter->getIncludeDateEnd())
+        {
+            $builder->andWhere('u.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+        }
 
-		if (!$filter->getExcludeUserIds()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeUserIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeUserIds() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->eq('u.id', $builder->expr()->literal($value))));
-			}
+            foreach ($filter->getExcludeUserIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('u.id', $builder->expr()->literal($value))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeUsernames()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeUsernames()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeUsernames() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeUsernames() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeEmails()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeEmails()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeEmails() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeEmails() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if ($filter->getExcludeDateStart())
-		{
-			$builder->andWhere('u.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
-		}
+        if ($filter->getExcludeDateStart())
+        {
+            $builder->andWhere('u.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
+        }
 
-		if ($filter->getExcludeDateEnd())
-		{
-			$builder->andWhere('u.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
-		}
+        if ($filter->getExcludeDateEnd())
+        {
+            $builder->andWhere('u.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+        }
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 
-	public function findByEmail()
-	{
-		$builder = $this->createQueryBuilder('u')
-			->where('u.email IS NOT NULL');
+    public function findByEmail()
+    {
+        $builder = $this->createQueryBuilder('u')
+            ->where('u.email IS NOT NULL');
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 }

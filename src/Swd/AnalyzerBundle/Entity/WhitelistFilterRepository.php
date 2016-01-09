@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,20 +27,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class WhitelistFilterRepository extends EntityRepository
 {
-	public function findAllOrderedByImpact()
-	{
-		$builder = $this->createQueryBuilder('wf')
-			->orderBy('wf.impact', 'ASC');
+    public function findAllOrderedByImpact()
+    {
+        $builder = $this->createQueryBuilder('wf')
+            ->orderBy('wf.impact', 'ASC');
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 
-	public function findHighestImpact()
-	{
-		$builder = $this->createQueryBuilder('wf')
-			->orderBy('wf.impact', 'DESC')
-			->setMaxResults(1);
+    public function findHighestImpact()
+    {
+        $builder = $this->createQueryBuilder('wf')
+            ->orderBy('wf.impact', 'DESC')
+            ->setMaxResults(1);
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 }

@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -26,36 +26,36 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SecurityController extends Controller
 {
-	public function loginAction(Request $request)
-	{
-		$session = $request->getSession();
+    public function loginAction(Request $request)
+    {
+        $session = $request->getSession();
 
-		if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR))
-		{
-			$error = $request->attributes->get(
-				SecurityContextInterface::AUTHENTICATION_ERROR
-			);
-		}
-		elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR))
-		{
-			$error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-			$session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
-		}
-		else
-		{
-			$error = '';
-		}
+        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR))
+        {
+            $error = $request->attributes->get(
+                SecurityContextInterface::AUTHENTICATION_ERROR
+            );
+        }
+        elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR))
+        {
+            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+        }
+        else
+        {
+            $error = '';
+        }
 
-		$lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
-		return $this->render(
-			'SwdAnalyzerBundle:Security:login.html.twig',
-			array(
-				'last_username' => $lastUsername,
-				'error' => $error
-			)
-		);
-	}
+        return $this->render(
+            'SwdAnalyzerBundle:Security:login.html.twig',
+            array(
+                'last_username' => $lastUsername,
+                'error' => $error
+            )
+        );
+    }
 }
 
 ?>

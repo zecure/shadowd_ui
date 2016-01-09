@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -26,34 +26,34 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LocaleListener implements EventSubscriberInterface
 {
-	private $defaultLocale;
+    private $defaultLocale;
 
-	public function __construct($defaultLocale = 'en')
-	{
-		$this->defaultLocale = $defaultLocale;
-	}
+    public function __construct($defaultLocale = 'en')
+    {
+        $this->defaultLocale = $defaultLocale;
+    }
 
-	public function onKernelRequest(GetResponseEvent $event)
-	{
-		$request = $event->getRequest();
-		if (!$request->hasPreviousSession()) {
-			return;
-		}
+    public function onKernelRequest(GetResponseEvent $event)
+    {
+        $request = $event->getRequest();
+        if (!$request->hasPreviousSession()) {
+            return;
+        }
 
-		if ($locale = $request->attributes->get('_locale'))
-		{
-			$request->getSession()->set('_locale', $locale);
-		}
-		else
-		{
-			$request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
-		}
-	}
+        if ($locale = $request->attributes->get('_locale'))
+        {
+            $request->getSession()->set('_locale', $locale);
+        }
+        else
+        {
+            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
+        }
+    }
 
-	public static function getSubscribedEvents()
-	{
-		return array(
-			KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
-		);
-	}
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
+        );
+    }
 }

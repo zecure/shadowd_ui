@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,19 +27,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BlacklistImportType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
-				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
-			))
-			->add('base', null, array('required' => false))
-			->add('file', 'file')
-			->add('actions', 'form_actions', array('buttons' => array('import' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
+                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
+            ))
+            ->add('base', null, array('required' => false))
+            ->add('file', 'file')
+            ->add('actions', 'form_actions', array('buttons' => array('import' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+    }
 
-	public function getName()
-	{
-		return 'blacklist_import';
-	}
+    public function getName()
+    {
+        return 'blacklist_import';
+    }
 }

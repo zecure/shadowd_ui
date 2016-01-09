@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,227 +27,227 @@ use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
  */
 class IntegrityRuleRepository extends EntityRepositoryTransformer
 {
-	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\IntegrityRuleFilter $filter)
-	{
-		$builder = $this->createQueryBuilder('ir')->leftJoin('ir.profile', 'v');
+    public function findAllFiltered(\Swd\AnalyzerBundle\Entity\IntegrityRuleFilter $filter)
+    {
+        $builder = $this->createQueryBuilder('ir')->leftJoin('ir.profile', 'v');
 
-		if (!$filter->getIncludeRuleIds()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeRuleIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeRuleIds() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->eq('ir.id', $builder->expr()->literal($value)));
-			}
+            foreach ($filter->getIncludeRuleIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('ir.id', $builder->expr()->literal($value)));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeProfileIds()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeProfileIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeProfileIds() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
-			}
+            foreach ($filter->getIncludeProfileIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeCallers()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeCallers()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeCallers() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeCallers() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeAlgorithms()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeAlgorithms()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeAlgorithms() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('ir.algorithm', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeAlgorithms() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('ir.algorithm', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIncludeDigests()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeDigests()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeDigests() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeDigests() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if ($filter->getIncludeDateStart())
-		{
-			$builder->andWhere('ir.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
-		}
+        if ($filter->getIncludeDateStart())
+        {
+            $builder->andWhere('ir.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
+        }
 
-		if ($filter->getIncludeDateEnd())
-		{
-			$builder->andWhere('ir.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
-		}
+        if ($filter->getIncludeDateEnd())
+        {
+            $builder->andWhere('ir.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+        }
 
-		if ($filter->getIncludeStatus())
-		{
-			$builder->andWhere('ir.status = :includeStatus')->setParameter('includeStatus', $filter->getIncludeStatus());
-		}
+        if ($filter->getIncludeStatus())
+        {
+            $builder->andWhere('ir.status = :includeStatus')->setParameter('includeStatus', $filter->getIncludeStatus());
+        }
 
-		if ($filter->hasIncludeConflict())
-		{
-			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) > 0');
-		}
+        if ($filter->hasIncludeConflict())
+        {
+            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) > 0');
+        }
 
-		if (!$filter->getExcludeRuleIds()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeRuleIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeRuleIds() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->eq('ir.id', $builder->expr()->literal($value))));
-			}
+            foreach ($filter->getExcludeRuleIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('ir.id', $builder->expr()->literal($value))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeProfileIds()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeProfileIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeProfileIds() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
-			}
+            foreach ($filter->getExcludeProfileIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeCallers()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeCallers()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeCallers() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeCallers() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeAlgorithms()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeAlgorithms()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeAlgorithms() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.algorithm', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeAlgorithms() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('ir.algorithm', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if (!$filter->getExcludeDigests()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeDigests()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeDigests() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeDigests() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('ir.digest', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		if ($filter->getExcludeDateStart())
-		{
-			$builder->andWhere('ir.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
-		}
+        if ($filter->getExcludeDateStart())
+        {
+            $builder->andWhere('ir.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
+        }
 
-		if ($filter->getExcludeDateEnd())
-		{
-			$builder->andWhere('ir.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
-		}
+        if ($filter->getExcludeDateEnd())
+        {
+            $builder->andWhere('ir.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+        }
 
-		if ($filter->getExcludeStatus())
-		{
-			$builder->andWhere('ir.status != :excludeStatus')->setParameter('excludeStatus', $filter->getExcludeStatus());
-		}
+        if ($filter->getExcludeStatus())
+        {
+            $builder->andWhere('ir.status != :excludeStatus')->setParameter('excludeStatus', $filter->getExcludeStatus());
+        }
 
-		if ($filter->hasExcludeConflict())
-		{
-			$builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) = 0');
-		}
+        if ($filter->hasExcludeConflict())
+        {
+            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) = 0');
+        }
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 
-	public function findAllByRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $rule)
-	{
-		$builder = $this->createQueryBuilder('ir')
-			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
-			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
-			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
-			->andWhere('ir.digest = :digest')->setParameter('digest', $rule->getDigest());
+    public function findAllByRule(\Swd\AnalyzerBundle\Entity\IntegrityRule $rule)
+    {
+        $builder = $this->createQueryBuilder('ir')
+            ->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
+            ->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
+            ->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
+            ->andWhere('ir.digest = :digest')->setParameter('digest', $rule->getDigest());
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 
-	public function findConflict($rule)
-	{
-		$builder = $this->createQueryBuilder('ir')
-			->select('count(ir.id)')
-			->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
-			->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
-			->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
-			->andWhere('ir.digest != :digest')->setParameter('digest', $rule->getDigest());
+    public function findConflict($rule)
+    {
+        $builder = $this->createQueryBuilder('ir')
+            ->select('count(ir.id)')
+            ->andWhere('ir.profile = :profile')->setParameter('profile', $rule->getProfile())
+            ->andWhere('ir.caller = :caller')->setParameter('caller', $rule->getCaller())
+            ->andWhere('ir.algorithm = :algorithm')->setParameter('algorithm', $rule->getAlgorithm())
+            ->andWhere('ir.digest != :digest')->setParameter('digest', $rule->getDigest());
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 
-	public function findAllByExport(\Swd\AnalyzerBundle\Entity\IntegrityExport $filter)
-	{
-		$builder = $this->createQueryBuilder('ir')
-			->orderBy('ir.caller', 'ASC')
-			->where('ir.status = 1')
-			->andWhere('ir.profile = :profile')->setParameter('profile', $filter->getProfile());
+    public function findAllByExport(\Swd\AnalyzerBundle\Entity\IntegrityExport $filter)
+    {
+        $builder = $this->createQueryBuilder('ir')
+            ->orderBy('ir.caller', 'ASC')
+            ->where('ir.status = 1')
+            ->andWhere('ir.profile = :profile')->setParameter('profile', $filter->getProfile());
 
-		if (!$filter->getIncludeCallers()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+        if (!$filter->getIncludeCallers()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIncludeCallers() as $key => $value)
-			{
-				$orExpr->add($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value))));
-			}
+            foreach ($filter->getIncludeCallers() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			$builder->andWhere($orExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getExcludeCallers()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getExcludeCallers()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-			foreach ($filter->getExcludeCallers() as $key => $value)
-			{
-				$andExpr->add($builder->expr()->not($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
-			}
+            foreach ($filter->getExcludeCallers() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('ir.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($andExpr);
+        }
 
-		return $builder->getQuery();
-	}
+        return $builder->getQuery();
+    }
 }

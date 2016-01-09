@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -31,74 +31,74 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Hash
 {
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="algorithm", type="text")
-	 */
-	private $algorithm;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="algorithm", type="text")
+     */
+    private $algorithm;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="digest", type="text")
-	 */
-	private $digest;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="digest", type="text")
+     */
+    private $digest;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Request", inversedBy="hashes")
-	 * @ORM\JoinColumn(name="request_id", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	protected $request;
+    /**
+     * @ORM\ManyToOne(targetEntity="Request", inversedBy="hashes")
+     * @ORM\JoinColumn(name="request_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $request;
 
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setAlgorithm($algorithm)
-	{
-		$this->algorithm = $algorithm;
+    public function setAlgorithm($algorithm)
+    {
+        $this->algorithm = $algorithm;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getAlgorithm()
-	{
-		return $this->algorithm;
-	}
+    public function getAlgorithm()
+    {
+        return $this->algorithm;
+    }
 
-	public function setDigest($digest)
-	{
-		$this->digest = $digest;
+    public function setDigest($digest)
+    {
+        $this->digest = $digest;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDigest()
-	{
-		return $this->digest;
-	}
+    public function getDigest()
+    {
+        return $this->digest;
+    }
 
-	public function setRequest(\Swd\AnalyzerBundle\Entity\Request $request = null)
-	{
-		$this->request = $request;
+    public function setRequest(\Swd\AnalyzerBundle\Entity\Request $request = null)
+    {
+        $this->request = $request;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getRequest()
-	{
-		return $this->request;
-	}
+    public function getRequest()
+    {
+        return $this->request;
+    }
 }

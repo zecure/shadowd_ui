@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -30,50 +30,50 @@ use Swd\AnalyzerBundle\Entity\Setting;
 
 class RegisterCommand extends ContainerAwareCommand
 {
-	protected function configure()
-	{
-		$this
-			->setName('swd:register')
-			->setDescription('Register a new account.')
-			->addOption(
-				'name',
-				'N',
-				InputOption::VALUE_REQUIRED,
-				'Set the login name.'
-			)
-			->addOption(
-				'email',
-				'E',
-				InputOption::VALUE_OPTIONAL,
-				'Set the e-mail address.'
-			)
-			->addOption(
-				'admin',
-				'A',
-				InputOption::VALUE_NONE,
-				'If set the user will be an admin.'
-			);
-	}
+    protected function configure()
+    {
+        $this
+            ->setName('swd:register')
+            ->setDescription('Register a new account.')
+            ->addOption(
+                'name',
+                'N',
+                InputOption::VALUE_REQUIRED,
+                'Set the login name.'
+            )
+            ->addOption(
+                'email',
+                'E',
+                InputOption::VALUE_OPTIONAL,
+                'Set the e-mail address.'
+            )
+            ->addOption(
+                'admin',
+                'A',
+                InputOption::VALUE_NONE,
+                'If set the user will be an admin.'
+            );
+    }
 
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
-		$dialog = $this->getHelperSet()->get('dialog');
-		$password = $dialog->askHiddenResponse($output, 'Password: ');
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $dialog = $this->getHelperSet()->get('dialog');
+        $password = $dialog->askHiddenResponse($output, 'Password: ');
 
-		$user = new User();
-		$setting = new Setting();
-		$setting->setUser($user);
+        $user = new User();
+        $setting = new Setting();
+        $setting->setUser($user);
 
-		$user->setUsername($input->getOption('name'));
-		$user->setEmail($input->getOption('email'));
-		$user->setPassword($password);
-		$user->setRole($input->getOption('admin') ? 1 : 0);
+        $user->setUsername($input->getOption('name'));
+        $user->setEmail($input->getOption('email'));
+        $user->setPassword($password);
+        $user->setRole($input->getOption('admin') ? 1 : 0);
 
-		$em = $this->getContainer()->get('doctrine')->getManager();
-		$em->persist($user);
-		$em->persist($setting);
-		$em->flush();
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em->persist($user);
+        $em->persist($setting);
+        $em->flush();
 
-		$output->writeln('User created');
-	}
+        $output->writeln('User created');
+    }
 }

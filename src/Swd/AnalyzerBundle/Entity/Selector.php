@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,31 +27,31 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Selector
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var text
-	 */
-	private $subaction;
+    /**
+     * @var text
+     */
+    private $subaction;
 
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setSubaction($subaction)
-	{
-		$this->subaction = $subaction;
+    public function setSubaction($subaction)
+    {
+        $this->subaction = $subaction;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSubaction()
-	{
-		return $this->subaction;
-	}
+    public function getSubaction()
+    {
+        return $this->subaction;
+    }
 }

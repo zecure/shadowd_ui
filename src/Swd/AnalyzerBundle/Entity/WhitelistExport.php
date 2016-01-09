@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -28,116 +28,116 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class WhitelistExport
 {
-	/**
-	 * @var entity
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $profile;
+    /**
+     * @var entity
+     *
+     * @Assert\NotBlank()
+     */
+    private $profile;
 
-	/**
-	 * @var text
-	 */
-	private $base;
+    /**
+     * @var text
+     */
+    private $base;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $includePaths;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includePaths;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $includeCallers;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeCallers;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $excludePaths;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludePaths;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $excludeCallers;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeCallers;
 
 
-	public function __construct()
-	{
-		$this->includePaths = new ArrayCollection();
-		$this->includeCallers = new ArrayCollection();
-		$this->excludePaths = new ArrayCollection();
-		$this->excludeCallers = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->includePaths = new ArrayCollection();
+        $this->includeCallers = new ArrayCollection();
+        $this->excludePaths = new ArrayCollection();
+        $this->excludeCallers = new ArrayCollection();
+    }
 
-	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
-	{
-		$this->profile = $profile;
+    public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfile()
-	{
-		return $this->profile;
-	}
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 
-	public function setBase($base)
-	{
-		$this->base = $base;
+    public function setBase($base)
+    {
+        $this->base = $base;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getBase()
-	{
-		return $this->base;
-	}
+    public function getBase()
+    {
+        return $this->base;
+    }
 
-	public function addIncludePath($path)
-	{
-		$this->includePaths[] = $path;
+    public function addIncludePath($path)
+    {
+        $this->includePaths[] = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIncludePaths()
-	{
-		return $this->includePaths;
-	}
+    public function getIncludePaths()
+    {
+        return $this->includePaths;
+    }
 
-	public function addIncludeCaller($caller)
-	{
-		$this->includeCallers[] = $caller;
+    public function addIncludeCaller($caller)
+    {
+        $this->includeCallers[] = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIncludeCallers()
-	{
-		return $this->includeCallers;
-	}
+    public function getIncludeCallers()
+    {
+        return $this->includeCallers;
+    }
 
-	public function addExcludePath($path)
-	{
-		$this->excludePaths[] = $path;
+    public function addExcludePath($path)
+    {
+        $this->excludePaths[] = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getExcludePaths()
-	{
-		return $this->excludePaths;
-	}
+    public function getExcludePaths()
+    {
+        return $this->excludePaths;
+    }
 
-	public function addExcludeCaller($caller)
-	{
-		$this->excludeCallers[] = $caller;
+    public function addExcludeCaller($caller)
+    {
+        $this->excludeCallers[] = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getExcludeCallers()
-	{
-		return $this->excludeCallers;
-	}
+    public function getExcludeCallers()
+    {
+        return $this->excludeCallers;
+    }
 }

@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -32,205 +32,205 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Setting
 {
-	/**
-	 * @ORM\Column(type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	 * @ORM\Column(name="page_limit", type="integer")
-	 *
-	 * @Assert\Range(
-	 *	  min = 1,
-	 *	  max = 1000
-	 * )
-	 * @Assert\NotBlank()
-	 */
-	private $pageLimit;
+    /**
+     * @ORM\Column(name="page_limit", type="integer")
+     *
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 1000
+     * )
+     * @Assert\NotBlank()
+     */
+    private $pageLimit;
 
-	/**
-	 * @ORM\Column(name="sort_order", type="smallint")
-	 *
-	 * @Assert\Range(
-	 *	  min = 0,
-	 *	  max = 1
-	 * )
-	 * @Assert\NotBlank()
-	 */
-	private $sortOrder;
+    /**
+     * @ORM\Column(name="sort_order", type="smallint")
+     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1
+     * )
+     * @Assert\NotBlank()
+     */
+    private $sortOrder;
 
-	/**
-	 * @ORM\Column(type="text")
-	 *
+    /**
+     * @ORM\Column(type="text")
+     *
      * @Assert\Regex("/^\w+$/")
-	 */
-	private $theme;
+     */
+    private $theme;
 
-	/**
-	 * @ORM\Column(type="text")
-	 *
+    /**
+     * @ORM\Column(type="text")
+     *
      * @Assert\Regex("/^\w+$/")
      * @Assert\Length(
      *      min = 2,
      *      max = 10
      * )
-	 */
-	private $locale;
+     */
+    private $locale;
 
-	/**
-	 * @ORM\Column(name="open_filter", type="boolean")
-	 */
-	private $openFilter;
+    /**
+     * @ORM\Column(name="open_filter", type="boolean")
+     */
+    private $openFilter;
 
-	/**
-	 * @ORM\OneToOne(targetEntity="User", inversedBy="setting")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	private $user;
+    /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="setting")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
 
-	/**
-	 * @Assert\NotBlank(groups={"change_password"})
-	 */
-	private $oldPassword;
+    /**
+     * @Assert\NotBlank(groups={"change_password"})
+     */
+    private $oldPassword;
 
-	/**
-	 * @Assert\NotBlank(groups={"change_password"})
-	 * @Assert\Length(min=5, groups={"change_password"})
-	 */
-	private $newPassword;
+    /**
+     * @Assert\NotBlank(groups={"change_password"})
+     * @Assert\Length(min=5, groups={"change_password"})
+     */
+    private $newPassword;
 
-	public function __construct()
-	{
-		$this->pageLimit = 50;
-		$this->sortOrder = 0;
-		$this->theme = 'united';
-		$this->locale = 'en';
-		$this->openFilter = false;
-	}
+    public function __construct()
+    {
+        $this->pageLimit = 50;
+        $this->sortOrder = 0;
+        $this->theme = 'united';
+        $this->locale = 'en';
+        $this->openFilter = false;
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setPageLimit($pageLimit)
-	{
-		$this->pageLimit = $pageLimit;
+    public function setPageLimit($pageLimit)
+    {
+        $this->pageLimit = $pageLimit;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getPageLimit()
-	{
-		return $this->pageLimit;
-	}
+    public function getPageLimit()
+    {
+        return $this->pageLimit;
+    }
 
-	public function setSortOrder($sortOrder)
-	{
-		$this->sortOrder = $sortOrder;
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSortOrder()
-	{
-		return $this->sortOrder;
-	}
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
+    }
 
-	public function getSortOrderText()
-	{
-		if ($this->sortOrder == 1)
-		{
-			return 'asc';
-		}
-		else
-		{
-			return 'desc';
-		}
-	}
+    public function getSortOrderText()
+    {
+        if ($this->sortOrder == 1)
+        {
+            return 'asc';
+        }
+        else
+        {
+            return 'desc';
+        }
+    }
 
-	public function setTheme($theme)
-	{
-		$this->theme = $theme;
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getTheme()
-	{
-		return $this->theme;
-	}
+    public function getTheme()
+    {
+        return $this->theme;
+    }
 
-	public function setLocale($locale)
-	{
-		$this->locale = $locale;
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getLocale()
-	{
-		return $this->locale;
-	}
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 
-	public function isLocaleRTL()
-	{
-		if (!$this->locale)
-		{
-			return false;
-		}
+    public function isLocaleRTL()
+    {
+        if (!$this->locale)
+        {
+            return false;
+        }
 
-		$rtl = array('he');
-		return in_array($this->locale, $rtl);
-	}
+        $rtl = array('he');
+        return in_array($this->locale, $rtl);
+    }
 
-	public function setOpenFilter($openFilter)
-	{
-		$this->openFilter = $openFilter;
+    public function setOpenFilter($openFilter)
+    {
+        $this->openFilter = $openFilter;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getOpenFilter()
-	{
-		return $this->openFilter;
-	}
+    public function getOpenFilter()
+    {
+        return $this->openFilter;
+    }
 
-	public function setOldPassword($oldPassword)
-	{
-		$this->oldPassword = $oldPassword;
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getOldPassword()
-	{
-		return $this->oldPassword;
-	}
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
 
-	public function setNewPassword($newPassword)
-	{
-		$this->newPassword = $newPassword;
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getNewPassword()
-	{
-		return $this->newPassword;
-	}
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
 
-	public function setUser(\Swd\AnalyzerBundle\Entity\User $user = null)
-	{
-		$this->user = $user;
+    public function setUser(\Swd\AnalyzerBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getUser()
-	{
-		return $this->user;
-	}
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
