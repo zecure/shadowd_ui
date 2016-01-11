@@ -1,36 +1,14 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Whitelist Rule{% endblock %}
+{% block title %}{% trans %}Whitelist Rule{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Whitelist Rule</h1>
+  <h1>{% trans %}Whitelist Rule{% endtrans %}</h1>
 </div>
-<div class="col-md-8">
-  {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    {{ form_row(form.profile) }}
-    {{ form_row(form.caller) }}
-    {{ form_row(form.path) }}
-    {{ form_row(form.minLength) }}
-    {{ form_row(form.maxLength) }}
-    {{ form_row(form.filter) }}
-    {{ form_row(form.status) }}
-    {{ form_row(form.actions) }}
-  {{ form_end(form) }}
-</div>
-<div class="col-md-4 whitelist-rule-information">
-  {% if app.request.get('_route') == 'swd_analyzer_whitelist_edit_rule' %}
-    <div class="alert alert-warning">
-      <h4>Caution!</h4>
-      When editing whitelist rules keep in mind that there could be logged parameters that reference them. So in most cases it is better practice to disable and archive the old rule and add a new one instead. If you just want to fine tune a rule shortly after deployment or if there are no logged requests it is absolutely fine to edit it though.
-    </div>
-  {% endif %}
-  <div class="alert alert-info whitelist-rule-information">
-    Filters are ordered by dangerousness. The more characters are allowed the more insecure the rule gets. Still, fields with direct user input (f.i. search keywords or forum posts and titles) should be set to "everything" in almost any case to avoid false positives. The purpose of the whitelist is to protect the 95% of the user input that does not come directly from the user. The other 5% can only be protected by the blacklist alone.
-  </div>
+<div>
+  {{ form(form) }}
 </div>
 {% endblock %}

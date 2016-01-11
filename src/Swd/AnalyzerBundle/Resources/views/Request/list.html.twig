@@ -1,7 +1,7 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Requests{% endblock %}
+{% block title %}{% trans %}Requests{% endtrans %}{% endblock %}
 
 
 {% block body %}
@@ -11,13 +11,19 @@
     <thead>
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<th><input id="select-all" type="checkbox" /></th>{% endif %}
-        <th>{{ knp_pagination_sortable(requests, 'Request ID', 'r.id') }}</th>
-        <th>{{ knp_pagination_sortable(requests, 'Profile ID', 'v.id') }}</th>
-        <th>{{ knp_pagination_sortable(requests, 'Date', 'r.date') }}</th>
-        <th>{{ knp_pagination_sortable(requests, 'Caller', 'r.caller') }}</th>
-        <th>{{ knp_pagination_sortable(requests, 'Client IP', 'r.clientIP') }}</th>
-        <th>Summary</th>
-        <th># Parameters</th>
+        <th>{{ knp_pagination_sortable(requests, 'Request ID'|trans, 'r.id') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(requests, 'Profile ID'|trans, 'v.id') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(requests, 'Date'|trans, 'r.date') }}</th>
+        <th>{{ knp_pagination_sortable(requests, 'Caller'|trans, 'r.caller') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(requests, 'Resource'|trans, 'r.resource') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(requests, 'Client IP'|trans, 'r.clientIP') }}</th>
+        <th></th>
+        <th>{% trans %}Overview{% endtrans %}</th>
+        <th>{% trans %}# Parameters{% endtrans %}</th>
         <th class="icons"></th>
       </tr>
     </thead>
@@ -25,18 +31,47 @@
       {% for request in requests %}
       <tr>
         {% if is_granted('ROLE_ADMIN') %}<td><input name="selected[]" value="{{ request.getId }}" class="select-item" type="checkbox" /></td>{% endif %}
-        <td><a href="{{ mergePath({'request_filter': {'requestId': request.getId}}) }}">{{ request.getId }}</a></td>
-        <td><a href="{{ mergePath({'request_filter': {'profileId': request.getProfile.getId}}) }}">{{ request.getProfile.getId }} ({{ request.getProfile.getName }})</a></td>
-        <td>{{ request.getDate|date('Y-m-d H:i') }}</td>
-        <td title="{{ request.getCaller }}"><a href="{{ mergePath({'request_filter': {'searchCallers': [request.getCaller]}}) }}">{{ request.getCaller|truncate(50) }}</a></td>
-        <td><a href="{{ mergePath({'request_filter': {'searchClientIPs': [request.getClientIP]}}) }}">{{ request.getClientIP }}</a></td>
+        <td>{{ request.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'request_filter': {'includeRequestIds': [request.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'request_filter': {'excludeRequestIds': [request.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td>{{ request.getProfile.getId }} ({{ request.getProfile.getName }})</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'request_filter': {'includeProfileIds': [request.getProfile.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'request_filter': {'excludeProfileIds': [request.getProfile.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td>{{ request.getDate|date('Y-m-d H:i'|trans) }}</td>
+        <td title="{{ request.getCaller }}">
+          {{ request.getCaller|truncate(50) }}
+          {% if (request.getTotalIntegrityRules == 0) %} {{ label_danger('Unknown'|trans) }} {% endif %}
+          {% if request.getBrokenIntegrityRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
+        </td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'request_filter': {'includeCallers': [request.getCaller]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'request_filter': {'excludeCallers': [request.getCaller]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td title="{{ request.getResource }}">{{ request.getResource|truncate(50) }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'request_filter': {'includeResources': [request.getResource]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'request_filter': {'excludeResources': [request.getResource]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td>{{ request.getClientIP }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'request_filter': {'includeClientIPs': [request.getClientIP]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'request_filter': {'excludeClientIPs': [request.getClientIP]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
         <td>
           {% for reason in request.getReasons %}
-            {{ label(reason) }}
-          {% endfor %}</td>
+            {{ label(reason|trans) }}
+          {% endfor %}
         </td>
         <td>{{ request.getParameters.count }}</td>
-        <td class="icons"><a href="{{ path('swd_analyzer_parameters_list', {'parameter_filter[requestId]': request.getId}) }}{% if app.user.getSetting.getOpenFilter %}#filters{% endif %}"><img src="{{ asset('bundles/swdanalyzer/images/icons/magnifying-glass.svg') }}" title="Show details" /></a>
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_parameters_list', {'parameter_filter[includeRequestIds][]': request.getId}) }}{% if app.user.getSetting.getOpenFilter %}#filters{% endif %}">
+            <i class="fa fa-search" title="{% trans %}Show details{% endtrans %}"></i>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -44,7 +79,7 @@
   <div class="clearfix">
     {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
     <div class="page">
-      {{ knp_pagination_render(requests, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+      {{ knp_pagination_render(requests, "", {}, { "class": "pagination", "prev_label": "Previous"|trans, "next_label": "Next"|trans, "first_label": "First"|trans, "last_label": "Last"|trans}) }}
     </div>
   </div>
 {% if is_granted('ROLE_ADMIN') %}

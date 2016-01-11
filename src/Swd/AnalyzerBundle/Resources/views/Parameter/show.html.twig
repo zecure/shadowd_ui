@@ -1,24 +1,24 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Parameter{% endblock %}
+{% block title %}{% trans %}Parameter{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Parameter</h1>
+  <h1>{% trans %}Parameter{% endtrans %}</h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Parameter ID</th>
-      <th>Profile ID</th>
-      <th>Request ID</th>
-      <th>Date</th>
-      <th>Caller</th>
-      <th>Client IP</th>
-      <th>Path</th>
-      <th>Value</th>
+      <th>{% trans %}Parameter ID{% endtrans %}</th>
+      <th>{% trans %}Profile ID{% endtrans %}</th>
+      <th>{% trans %}Request ID{% endtrans %}</th>
+      <th>{% trans %}Date{% endtrans %}</th>
+      <th>{% trans %}Caller{% endtrans %}</th>
+      <th>{% trans %}Client IP{% endtrans %}</th>
+      <th>{% trans %}Path{% endtrans %}</th>
+      <th>{% trans %}Value{% endtrans %}</th>
       <th class="icons"></th>
     </tr>
   </thead>
@@ -28,84 +28,88 @@
       <td>{{ parameter.getRequest.getProfile.getId }} ({{ parameter.getRequest.getProfile.getName }})</td>
       <td>{{ parameter.getRequest.getId }}</td>
       <td>{{ parameter.getRequest.getDate|date('Y-m-d H:i') }}</td>
-      <td>{{ parameter.getRequest.getCaller }}</td>
+      <td>
+        {{ parameter.getRequest.getCaller }}
+        {% if (parameter.getRequest.getTotalIntegrityRules == 0) %} {{ label_danger('Unknown'|trans) }} {% endif %}
+        {% if parameter.getRequest.getBrokenIntegrityRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
+      </td>
       <td>{{ parameter.getRequest.getClientIP }}</td>
       <td>
         {{ parameter.getPath }}
-        {% if (parameter.getTotalRules == 0) %} {{ label_danger('Unknown') }} {% endif %}
+        {% if (parameter.getTotalWhitelistRules == 0) %} {{ label_danger('Unknown'|trans) }} {% endif %}
       </td>
       <td>
         {{ parameter.getValue }}
-        {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical impact') }} {% endif %}
-        {% if parameter.getBrokenRules.count > 0 %} {{ label_danger('Broken rule') }} {% endif %}
+        {% if parameter.getCriticalImpact == 1 %} {{ label_danger('Critical'|trans) }} {% endif %}
+        {% if parameter.getBrokenWhitelistRules.count > 0 %} {{ label_danger('Anomaly'|trans) }} {% endif %}
       </td>
     </tr>
   </tbody>
 </table>
-<div class="col-md-6">
-  {% if not parameter.getBrokenRules.empty %}
-    <h2>Whitelist: Broken Rules</h2>
+{% if not parameter.getBrokenWhitelistRules.empty %}
+  <div class="col-md-6">
+    <h2>{% trans %}Whitelist: Broken Rules{% endtrans %}</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Rule ID</th>
-          <th>Min. Length</th>
-          <th>Max. Length</th>
-          <th>Filter</th>
+          <th>{% trans %}Rule ID{% endtrans %}</th>
+          <th>{% trans %}Min. length{% endtrans %}</th>
+          <th>{% trans %}Max. length{% endtrans %}</th>
+          <th>{% trans %}Filter{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
-      {% for rule in parameter.getBrokenRules %}
+      {% for rule in parameter.getBrokenWhitelistRules %}
         <tr>
           <td>{{ rule.getId }}</td>
           <td>
             {% if rule.getMinLength < 0 %}
-              {{ label_warning('No limitation') }}
+              {{ label_warning('No limitation'|trans) }}
             {% else %}
               {{ rule.getMinLength }}
               {% if parameter.getValue|length < rule.getMinLength %}
-                {{ label_danger('Too short') }}
+                {{ label_danger('Too short'|trans) }}
               {% else %}
-                {{ label_success('Adhered to') }}
+                {{ label_success('Adhered to'|trans) }}
               {% endif %}
             {% endif %}
           </td>
           <td>
             {% if rule.getMaxLength < 0 %}
-              {{ label_warning('No limitation') }}
+              {{ label_warning('No limitation'|trans) }}
             {% else %}
               {{ rule.getMaxLength }}
               {% if parameter.getValue|length > rule.getMaxLength %}
-                {{ label_danger('Too long') }}
+                {{ label_danger('Too long'|trans) }}
               {% else %}
-                {{ label_success('Adhered to') }}
+                {{ label_success('Adhered to'|trans) }}
               {% endif %}
             {% endif %}
           </td>
           <td>
-            {{ rule.getFilter.getDescription }}
-            {% if (parameter.getValue matches '{' ~ rule.getFilter.getRule ~ '}') %} {{ label_success('Match') }} {% else %} {{ label_danger('No match') }} {% endif %}          
+            {{ rule.getFilter.getDescription|trans }}
+            {% if (parameter.getValue matches '{' ~ rule.getFilter.getRule ~ '}') %} {{ label_success('Match'|trans) }} {% else %} {{ label_danger('No match'|trans) }} {% endif %}          
           </td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
-  {% endif %}
-</div>
-<div class="col-md-6">
-  {% if not parameter.getMatchingFilters.empty %}
-    <h2>Blacklist: Matching Filters</h2>
+  </div>
+{% endif %}
+{% if not parameter.getMatchingBlacklistFilters.empty %}
+  <div class="col-md-6">
+    <h2>{% trans %}Blacklist: Matching Filters{% endtrans %}</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Filter ID</th>
-          <th>Impact</th>
-          <th>Classification</th>
-          <th>Description</th>
+          <th>{% trans %}Filter ID{% endtrans %}</th>
+          <th>{% trans %}Impact{% endtrans %}</th>
+          <th>{% trans %}Classification{% endtrans %}</th>
+          <th>{% trans %}Description{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
-        {% for filter in parameter.getMatchingFilters %}
+        {% for filter in parameter.getMatchingBlacklistFilters %}
           <tr>
             <td>{{ filter.getId }}</td>
             <td>{{ filter.getImpact }}</td>
@@ -118,7 +122,30 @@
           </tr>
         {% endfor %}
       </tbody>
-    </table>
-  {% endif %}
+  </table>
 </div>
+{% endif %}
+{% if not parameter.getRequest.getBrokenIntegrityRules.empty %}
+  <div class="col-md-6">
+    <h2>{% trans %}Integrity: Broken Rules{% endtrans %}</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{% trans %}Rule ID{% endtrans %}</th>
+          <th>{% trans %}Algorithm{% endtrans %}</th>
+          <th>{% trans %}Digest{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for rule in parameter.getRequest.getBrokenIntegrityRules %}
+        <tr>
+          <td>{{ rule.getId }}</td>
+          <td>{{ rule.getAlgorithm }}</td>
+          <td>{{ rule.getDigest }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endif %}
 {% endblock %}

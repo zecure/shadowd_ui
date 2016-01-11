@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,36 +27,57 @@ use Swd\AnalyzerBundle\Entity\Profile;
 
 class HomeController extends Controller
 {
-	private function randomLine($filename)
-	{
-		$lines = file($filename);
-		return $lines[array_rand($lines)];
-	}
+    private function randomLine($filename)
+    {
+        $lines = file($filename);
+        return $lines[array_rand($lines)];
+    }
 
-	public function indexAction()
-	{
-		if ($this->getUser()->getChangePassword())
-		{
-			$this->get('session')->getFlashBag()->add('alert', 'You are still using the default password. Please change it immediately.');
-			return $this->redirect($this->generateUrl('swd_analyzer_settings'));
-		}
+    public function indexAction()
+    {
+        if ($this->getUser()->getChangePassword())
+        {
+            $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('You are still using the default password. Please change it immediately.'));
+            return $this->redirect($this->generateUrl('swd_analyzer_settings'));
+        }
 
-		$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-		/* Get random tooltip. */
-		$path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/translations/tooltips.en.txt');
-		$tooltip = $this->randomLine($path);
+        /* Get random tooltip. */
+        try
+        {
+            $locale = $this->getUser()->getSetting()->getLocale();
 
-		/* Get profile data. */
-		$profiles = $em->getRepository('SwdAnalyzerBundle:Profile')->findAll();
+            if (!preg_match('/^\w+$/i', $locale)) {
+                $locale = 'en';
+            }
 
-		/* Render template. */
-		return $this->render(
-			'SwdAnalyzerBundle:Home:index.html.twig',
-			array(
-				'tooltip' => $tooltip,
-				'profiles' => $profiles
-			)
-		);
-	}
+            $path = $this->get('kernel')->locateResource('@SwdAnalyzerBundle/Resources/tooltips/tooltips.' . $locale . '.txt');
+            $tooltip = $this->randomLine($path);
+        }
+        catch (\InvalidArgumentException $e)
+        {
+            $tooltip = $this->get('translator')->trans('There are no tooltips :(');
+        }
+
+        /* Get profile data. */
+        $profiles = $em->getRepository('SwdAnalyzerBundle:Profile')->findAll();
+
+        foreach ($profiles as $profile)
+        {
+            $profile->setProductiveRequests(
+                $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
+                $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult()
+            );
+        }
+
+        /* Render template. */
+        return $this->render(
+            'SwdAnalyzerBundle:Home:index.html.twig',
+            array(
+                'tooltip' => $tooltip,
+                'profiles' => $profiles
+            )
+        );
+    }
 }

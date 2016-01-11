@@ -8,13 +8,18 @@
       {% if not app.user or not app.user.getSetting.getTheme %}
       <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen" />
       {% else %}
-      <link href="{{ asset('css/themes/bootswatch/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      <link href="{{ asset('css/themes/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      {% endif %}
+      {% if app.user and app.user.getSetting.isLocaleRTL %}
+      <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet" media="screen" />
       {% endif %}
       <link href="{{ asset('css/bootstrap_form_2.css') }}" rel="stylesheet" media="screen" />
       <!-- Bootstrap Slider -->
       <link href="{{ asset('css/bootstrap-slider.css') }}" rel="stylesheet" media="screen" />
       <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
       {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+      <!-- Font Awesome -->
+      <link href="{{ asset('bundles/swdanalyzer/css/font-awesome.min.css') }}" rel="stylesheet" />
       <!-- SwdAnalyzer -->
       <link href="{{ asset('bundles/swdanalyzer/css/main.css') }}" rel="stylesheet" />
     {% endblock %}
@@ -24,25 +29,22 @@
       <div>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
         </div>
         <div class="collapse navbar-collapse">
-          {{ knp_menu_render('SwdAnalyzerBundle:Builder:mainMenu', { 'style': 'navbar' }) }}
-          <div id="logo-container" class="navbar-right hidden-xs">
-            <a href="https://zecure.org/" class="brand"><img id="logo" src="{{ asset('bundles/swdanalyzer/images/logo.png') }}" title="Zecure Information Technologies" /></a>
-          </div>
+          {{ knp_menu_render('SwdAnalyzerBundle:Builder:mainMenu', { 'style': 'navbar', 'allow_safe_labels': 'true' }) }}
         </div>
       </div>
     </div>
     <div class="container">
       <noscript>
         <div class="alert alert-warning">
-          <h4>Warning!</h4>
-          You do not have Javascript enabled and thus some functionality won't work.
+          <h4>{% trans %}Warning!{% endtrans %}</h4>
+          {% trans %}You do not have Javascript enabled and thus some functionality won't work.{% endtrans %}
         </div>
       </noscript>
       {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
@@ -50,8 +52,8 @@
     </div>
     <div class="footer">
       <div class="container">
-        <span class="footer-title">Shadow Daemon -- Web Application Firewall</span>
-        <span class="footer-copyright">&#169; 2014-2015 by Hendrik Buchwald</span>
+        <span class="footer-title"><a href="https://shadowd.zecure.org/">{% trans %}Shadow Daemon -- Web Application Firewall{% endtrans %}</a></span>
+        <span class="footer-copyright">{% trans with {'%year%': '2014-2016', '%name%': 'Hendrik Buchwald'} %}© %year% by %name%{% endtrans %}</span>
       </div>
     </div>
     {% block javascripts %}

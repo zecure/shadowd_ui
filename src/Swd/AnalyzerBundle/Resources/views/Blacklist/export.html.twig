@@ -1,23 +1,31 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Blacklist Rules Export{% endblock %}
+{% block title %}{% trans %}Blacklist Rules Export{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Blacklist Rules Export</h1>
+  <h1>{% trans %}Blacklist Rules Export{% endtrans %}</h1>
 </div>
-<div class="col-md-8">
-  {{ form(form) }}
-</div>
-<div class="col-md-4">
-  <div class="alert alert-info">
-    The value of <em>base</em> in the caller will be replaced with <em>{BASE}</em>. You can use this to set the base path dynamically when you import the rules collection.<br /><br />
-    If you want to share your rules with others you should always use this, because it is unlikely that other people have installed the applications at the same location.
+<div class="export">
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.profile) }}
+    {{ form_row(form.base) }}
+  <div class="row include-exclude">
+    <div class="col-md-6">
+      <h2>{% trans %}Include{% endtrans %}</h2>
+    {{ form_row(form.includeCallers) }}
+    {{ form_row(form.includePaths) }}
+    </div>
+    <div class="col-md-6">
+      <h2>{% trans %}Exclude{% endtrans %}</h2>
+    {{ form_row(form.excludeCallers) }}
+    {{ form_row(form.excludePaths) }}
+    </div>
   </div>
-  <div class="alert alert-info">
-    Use <em>paths</em> and <em>callers</em> to specify which rules you want to export.
-  </div>
+    {{ form_row(form.actions) }}
+  {{ form_end(form) }}
 </div>
 {% endblock %}

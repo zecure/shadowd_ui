@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,19 +27,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('username')
-			->add('password', 'password', array('attr' => array('autocomplete' => 'off')))
-			->add('email', null, array('required' => false))
-			->add('role', 'choice', array('choices' => array('0' => 'User', '1' => 'Admin')))
-			->add('changePassword', 'checkbox', array('required' => false, 'label' => 'Demand password change on login'))
-			->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('username')
+            ->add('password', 'password', array('attr' => array('autocomplete' => 'off')))
+            ->add('email', null, array('required' => false))
+            ->add('role', 'choice', array('choices' => array('0' => 'User', '1' => 'Admin')))
+            ->add('changePassword', 'checkbox', array('required' => false, 'label' => 'Demand password change on login'))
+            ->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+    }
 
-	public function getName()
-	{
-		return 'user';
-	}
+    public function getName()
+    {
+        return 'user';
+    }
 }

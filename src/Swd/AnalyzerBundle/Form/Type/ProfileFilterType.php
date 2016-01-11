@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -26,36 +26,41 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProfileFilterType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->setMethod('GET')
-			->setAction('#')
-			->add('profileId', 'integer', array('required' => false, 'label'  => 'Profile ID'))
-			->add('searchServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
-			->add('searchNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
-			->add('dateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-			->add('dateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-			->add('ignoreServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
-			->add('ignoreNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
-			->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->setMethod('GET')
+            ->setAction('#')
+            ->add('includeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('includeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
+            ->add('includeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+            ->add('includeModes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Mode'))
+            ->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('excludeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
+            ->add('excludeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+            ->add('excludeModes', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Mode'))
+            ->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+    }
 
-	public function getName()
-	{
-		return 'profile_filter';
-	}
+    public function getName()
+    {
+        return 'profile_filter';
+    }
 
-	/**
-	 * CSRF protection is useless for searching and makes it impossible
-	 * to send urls with filters to other persons, so better disable it.
-	 */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(
-			array(
-				'csrf_protection' => false
-			)
-		);
-	}
+    /**
+     * CSRF protection is useless for searching and makes it impossible
+     * to send urls with filters to other persons, so better disable it.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'csrf_protection' => false
+            )
+        );
+    }
 }

@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -20,144 +20,237 @@
 
 namespace Swd\AnalyzerBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
 
 /**
  * RequestRepository
  */
-class RequestRepository extends EntityRepository
+class RequestRepository extends EntityRepositoryTransformer
 {
-	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\RequestFilter $filter)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->leftJoin('r.profile', 'v');
+    public function findAllFiltered(\Swd\AnalyzerBundle\Entity\RequestFilter $filter)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->leftJoin('r.profile', 'v');
 
-		/* Search. */
-		if ($filter->getRequestId())
-		{
-			$builder
-				->andWhere('r.id = :requestId')
-				->setParameter('requestId', $filter->getRequestId());
-		}
+        if (!$filter->getIncludeRequestIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-		if ($filter->getProfileId())
-		{
-			$builder
-				->andWhere('v.id = :profileId')
-				->setParameter('profileId', $filter->getProfileId());
-		}
+            foreach ($filter->getIncludeRequestIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('r.id', $builder->expr()->literal($value)));
+            }
 
-		if (!$filter->getSearchCallers()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+            $builder->andWhere($orExpr);
+        }
 
-			foreach ($filter->getSearchCallers() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("r.caller", $builder->expr()->literal($value)));
-			}
+        if (!$filter->getIncludeProfileIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			$builder->andWhere($orExpr);
-		}
+            foreach ($filter->getIncludeProfileIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
+            }
 
-		if (!$filter->getSearchClientIPs()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+            $builder->andWhere($orExpr);
+        }
 
-			foreach ($filter->getSearchClientIPs() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("r.clientIP", $builder->expr()->literal($value)));
-			}
+        if (!$filter->getIncludeCallers()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			$builder->andWhere($orExpr);
-		}
+            foreach ($filter->getIncludeCallers() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-		if ($filter->getDateStart())
-		{
-			$builder
-				->andWhere('r.date >= :dateStart')
-				->setParameter('dateStart', $filter->getDateStart());
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if ($filter->getDateEnd())
-		{
-			$builder
-				->andWhere('r.date <= :dateEnd')
-				->setParameter('dateEnd', $filter->getDateEnd());
-		}
+        if (!$filter->getIncludeResources()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-		/* Learning data. */
-		if ($filter->getLearning() !== null)
-		{
-			$builder->andWhere('r.learning = :learning')->setParameter('learning', $filter->getLearning());
-		}
+            foreach ($filter->getIncludeResources() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('r.resource', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-		/* Ignore. */
-		if (!$filter->getIgnoreCallers()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+            $builder->andWhere($orExpr);
+        }
 
-			foreach ($filter->getIgnoreCallers() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("r.caller", $builder->expr()->literal($value))));
-			}
+        if (!$filter->getIncludeClientIPs()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			$builder->andWhere($andExpr);
-		}
+            foreach ($filter->getIncludeClientIPs() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-		if (!$filter->getIgnoreClientIPs()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+            $builder->andWhere($orExpr);
+        }
 
-			foreach ($filter->getIgnoreClientIPs() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("r.clientIP", $builder->expr()->literal($value))));
-			}
+        if ($filter->getIncludeDateStart())
+        {
+            $builder
+                ->andWhere('r.date >= :includeDateStart')
+                ->setParameter('includeDateStart', $filter->getIncludeDateStart());
+        }
 
-			$builder->andWhere($andExpr);
-		}
-			
-		return $builder->getQuery();
-	}
+        if ($filter->getIncludeDateEnd())
+        {
+            $builder
+                ->andWhere('r.date <= :includeDateEnd')
+                ->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+        }
 
-	public function findByDate($date)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = 0')
-			->andWhere('r.date > :date')->setParameter(':date', $date);
+        if (!$filter->getExcludeRequestIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-		return $builder->getQuery();
-	}
+            foreach ($filter->getExcludeRequestIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('r.id', $builder->expr()->literal($value))));
+            }
 
-	public function deleteByDate($date)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->where('r.date < :date')->setParameter(':date', $date)
-			->delete();
+            $builder->andWhere($andExpr);
+        }
 
-		return $builder->getQuery();
-	}
+        if (!$filter->getExcludeProfileIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-	public function deleteByProfileAndLearning($profile, $learning)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->where('r.learning = :learning')->setParameter(':learning', $learning)
-			->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
-			->delete();
+            foreach ($filter->getExcludeProfileIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
+            }
 
-		return $builder->getQuery();
-	}
+            $builder->andWhere($andExpr);
+        }
 
-	public function countByProfileAndLearning($profile, $learning)
-	{
-		$builder = $this->createQueryBuilder('r')
-			->select('count(r.id)')
-			->where('r.learning = :learning')->setParameter(':learning', $learning)
-			->andWhere('r.profile = :profile')->setParameter(':profile', $profile);
+        if (!$filter->getExcludeCallers()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-		return $builder->getQuery();
-	}
+            foreach ($filter->getExcludeCallers() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if (!$filter->getExcludeResources()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($filter->getExcludeResources() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('r.resource', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if (!$filter->getExcludeClientIPs()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($filter->getExcludeClientIPs() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if ($filter->getExcludeDateStart())
+        {
+            $builder
+                ->andWhere('r.date < :excludeDateStart')
+                ->setParameter('includeDateStart', $filter->getExcludeDateStart());
+        }
+
+        if ($filter->getExcludeDateEnd())
+        {
+            $builder
+                ->andWhere('r.date > :excludeDateEnd')
+                ->setParameter('includeDateEnd', $filter->getExcludeDateEnd());
+        }
+            
+        return $builder->getQuery();
+    }
+
+    public function findByDate($date)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->where('r.mode != 3')
+            ->andWhere('r.date > :date')->setParameter(':date', $date);
+
+        return $builder->getQuery();
+    }
+
+    public function deleteByDate($date)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->where('r.date < :date')->setParameter(':date', $date)
+            ->delete();
+
+        return $builder->getQuery();
+    }
+
+    public function deleteByProfileAndMode($profile, $mode)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->where('r.mode = :mode')->setParameter(':mode', $mode)
+            ->andWhere('r.profile = :profile')->setParameter(':profile', $profile)
+            ->delete();
+
+        return $builder->getQuery();
+    }
+
+    public function countByProfileAndMode($profile, $mode)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->where('r.mode = :mode')->setParameter(':mode', $mode)
+            ->andWhere('r.profile = :profile')->setParameter(':profile', $profile);
+
+        return $builder->getQuery();
+    }
+
+    public function findAllLearningBySettings(\Swd\AnalyzerBundle\Entity\GeneratorSettings $settings)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->where('r.mode = 3')
+            ->andWhere('r.profile = :profile')->setParameter('profile', $settings->getProfile());
+
+        if (!$settings->getIncludeCallers()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
+
+            foreach ($settings->getIncludeCallers() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
+
+            $builder->andWhere($orExpr);
+        }
+
+        if (!$settings->getExcludeCallers()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($settings->getExcludeCallers() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        return $builder->getQuery();
+    }
 }

@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -31,147 +31,164 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BlacklistRule
 {
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Profile", inversedBy="blacklistRules")
-	 * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
-	 * @ORM\OrderBy({"id" = "ASC"})
-	 *
-	 * @Assert\NotBlank()
-	 */
-	protected $profile;
+    /**
+     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="blacklistRules")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     * @ORM\OrderBy({"id" = "ASC"})
+     *
+     * @Assert\NotBlank()
+     */
+    protected $profile;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="path", type="text")
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $path;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="text")
+     *
+     * @Assert\NotBlank()
+     */
+    private $path;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="caller", type="text")
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $caller;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="caller", type="text")
+     *
+     * @Assert\NotBlank()
+     */
+    private $caller;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="threshold", type="integer")
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $threshold;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="threshold", type="integer")
+     *
+     * @Assert\NotBlank()
+     */
+    private $threshold;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date", type="datetime")
-	 **/
-	private $date;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     **/
+    private $date;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="status", type="smallint")
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $status;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="smallint")
+     *
+     * @Assert\NotBlank()
+     */
+    private $status;
+
+    /**
+     * @var boolean
+     */
+    private $conflict;
 
 
-	public function __construct()
-	{
-		$this->date = new \DateTime();
-	}
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setPath($path)
-	{
-		$this->path = $path;
+    public function setPath($path)
+    {
+        $this->path = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getPath()
-	{
-		return $this->path;
-	}
+    public function getPath()
+    {
+        return $this->path;
+    }
 
-	public function setCaller($caller)
-	{
-		$this->caller = $caller;
+    public function setCaller($caller)
+    {
+        $this->caller = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getCaller()
-	{
-		return $this->caller;
-	}
+    public function getCaller()
+    {
+        return $this->caller;
+    }
 
-	public function setThreshold($threshold)
-	{
-		$this->threshold = $threshold;
+    public function setThreshold($threshold)
+    {
+        $this->threshold = $threshold;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getThreshold()
-	{
-		return $this->threshold;
-	}
+    public function getThreshold()
+    {
+        return $this->threshold;
+    }
 
-	public function setDate($date)
-	{
-		$this->date = $date;
+    public function setDate($date)
+    {
+        $this->date = $date;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDate()
-	{
-		return $this->date;
-	}
+    public function getDate()
+    {
+        return $this->date;
+    }
 
-	public function setStatus($status)
-	{
-		$this->status = $status;
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
-	{
-		$this->profile = $profile;
+    public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfile()
-	{
-		return $this->profile;
-	}
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    public function setConflict($conflict)
+    {
+        $this->conflict = $conflict;
+
+        return $this;
+    }
+
+    public function hasConflict()
+    {
+        return $this->conflict;
+    }
 }

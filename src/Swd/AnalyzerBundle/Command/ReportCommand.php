@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -30,69 +30,69 @@ use Swd\AnalyzerBundle\Entity\User;
 
 class ReportCommand extends ContainerAwareCommand
 {
-	protected function configure()
-	{
-		$this
-			->setName('swd:report')
-			->setDescription('Send a report about recent attacks via email.')
-			->addOption(
-				'time_frame',
-				't',
-				InputOption::VALUE_OPTIONAL,
-				'Set the time frame of the report.',
-				'-24 hours'
-			);
-	}
+    protected function configure()
+    {
+        $this
+            ->setName('swd:report')
+            ->setDescription('Send a report about recent attacks via email.')
+            ->addOption(
+                'time_frame',
+                't',
+                InputOption::VALUE_OPTIONAL,
+                'Set the time frame of the report.',
+                '-24 hours'
+            );
+    }
 
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
-		/* Get requests in the desired time frame. */
-		$em = $this->getContainer()->get('doctrine')->getManager();
-		$date = new \DateTime($input->getOption('time_frame'));
-		$requests = $em->getRepository('SwdAnalyzerBundle:Request')->findByDate($date)->getResult();
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        /* Get requests in the desired time frame. */
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $date = new \DateTime($input->getOption('time_frame'));
+        $requests = $em->getRepository('SwdAnalyzerBundle:Request')->findByDate($date)->getResult();
 
-		if (empty($requests))
-		{
-			if ($output->isVerbose())
-			{
-				$output->writeln('No requests found');
-			}
+        if (empty($requests))
+        {
+            if ($output->isVerbose())
+            {
+                $output->writeln('No requests found');
+            }
 
-			return;
-		}
+            return;
+        }
 
-		/* Send e-mails to all users that have specified an address. */
-		$users = $em->getRepository('SwdAnalyzerBundle:User')->findByEmail()->getResult();
+        /* Send e-mails to all users that have specified an address. */
+        $users = $em->getRepository('SwdAnalyzerBundle:User')->findByEmail()->getResult();
 
-		if (empty($users))
-		{
-			if ($output->isVerbose())
-			{
-				$output->writeln('No e-mail addresses found');
-			}
+        if (empty($users))
+        {
+            if ($output->isVerbose())
+            {
+                $output->writeln('No e-mail addresses found');
+            }
 
-			return;
-		}
+            return;
+        }
 
-		foreach ($users as $user)
-		{
-			if ($output->isVerbose())
-			{
-				$output->writeln('Send email to ' . $user->getEmail());
-			}
+        foreach ($users as $user)
+        {
+            if ($output->isVerbose())
+            {
+                $output->writeln('Send email to ' . $user->getEmail());
+            }
 
-			$message = \Swift_Message::newInstance()
-				->setSubject('Shadow Daemon Report')
-				->setFrom('noreply@zecure.org')
-				->setTo($user->getEmail())
-				->setBody(
-					$this->getContainer()->get('templating')->render(
-						'SwdAnalyzerBundle:Report:email.txt.twig',
-						array('requests' => $requests)
-					)
-				);
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Shadow Daemon Report')
+                ->setFrom('noreply@zecure.org')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->getContainer()->get('templating')->render(
+                        'SwdAnalyzerBundle:Report:email.txt.twig',
+                        array('requests' => $requests)
+                    )
+                );
 
-			$this->getContainer()->get('mailer')->send($message);
-		}
-	}
+            $this->getContainer()->get('mailer')->send($message);
+        }
+    }
 }

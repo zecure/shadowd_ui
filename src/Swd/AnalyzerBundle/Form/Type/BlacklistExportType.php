@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,20 +27,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BlacklistExportType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
-				'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
-			))
-			->add('base', null, array('required' => false))
-			->add('paths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true))
-			->add('callers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true))
-			->add('actions', 'form_actions', array('buttons' => array('export' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
+                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
+            ))
+            ->add('base', null, array('required' => false))
+            ->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('actions', 'form_actions', array('buttons' => array('export' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+    }
 
-	public function getName()
-	{
-		return 'blacklist_export';
-	}
+    public function getName()
+    {
+        return 'blacklist_export';
+    }
 }

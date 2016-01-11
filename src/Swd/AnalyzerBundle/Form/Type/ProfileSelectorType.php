@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -26,27 +26,29 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProfileSelectorType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('subaction', 'choice', array('choices' => array(
-				'enablelearning' => 'Enable Learning',
-				'disablelearning' => 'Disable Learning',
-				'enablewhitelist' => 'Enable Whitelist',
-				'disablewhitelist' => 'Disable Whitelist',
-				'enableblacklist' => 'Enable Blacklist',
-				'disableblacklist' => 'Disable Blacklist',
-				'deletelearning' => 'Delete "Learning" Requests',
-				'deleteproductive' => 'Delete "Productive" Requests',
-				'delete' => 'Delete Profiles'
-			)))
-			->add('actions', 'form_actions', array('buttons' => array('do' => array(
-				'type' => 'submit', 'options' => array('label' => 'Execute'))
-			)));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('subaction', 'choice', array('choices' => array(
+                'enablewhitelist' => 'Enable whitelist',
+                'disablewhitelist' => 'Disable whitelist',
+                'enableblacklist' => 'Enable blacklist',
+                'disableblacklist' => 'Disable blacklist',
+                'enableintegrity' => 'Enable integrity',
+                'disableintegrity' => 'Disable integrity',
+                'enableflooding' => 'Enable flooding',
+                'disableflooding' => 'Disable flooding',
+                'deletelearning' => 'Delete learning requests',
+                'deleteproductive' => 'Delete productive requests',
+                'delete' => 'Delete profiles'
+            )))
+            ->add('actions', 'form_actions', array('buttons' => array('do' => array(
+                'type' => 'submit', 'options' => array('label' => 'Execute'))
+            )));
+    }
 
-	public function getName()
-	{
-		return 'profile_selector';
-	}
+    public function getName()
+    {
+        return 'profile_selector';
+    }
 }

@@ -1,7 +1,7 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Users{% endblock %}
+{% block title %}{% trans %}Users{% endtrans %}{% endblock %}
 
 
 {% block body %}
@@ -11,11 +11,14 @@
     <thead>
       <tr>
         <th><input id="select-all" type="checkbox" /></th>
-        <th>{{ knp_pagination_sortable(users, 'User ID', 'u.id') }}</th>
-        <th>{{ knp_pagination_sortable(users, 'Modified', 'u.date') }}</th>
-        <th>{{ knp_pagination_sortable(users, 'Username', 'u.username') }}</th>
-        <th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
-        <th>{{ knp_pagination_sortable(users, 'Role', 'u.role') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'User ID'|trans, 'u.id') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(users, 'Last modified'|trans, 'u.date') }}</th>
+        <th>{{ knp_pagination_sortable(users, 'Username'|trans, 'u.username') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(users, 'Email'|trans, 'u.email') }}</th>
+        <th></th>
+        <th>{{ knp_pagination_sortable(users, 'Role'|trans, 'u.role') }}</th>
         <th class="icons"></th>
       </tr>
     </thead>
@@ -23,18 +26,34 @@
       {% for user in users %}
       <tr>
         <td><input name="selected[]" value="{{ user.getId }}" class="select-item" type="checkbox" /></td>
-        <td><a href="{{ mergePath({'user_filter': {'userId': user.getId}}) }}">{{ user.getId }}</a></td>
-        <td>{{ user.getDate|date('Y-m-d H:i') }}</td>
-        <td><a href="{{ mergePath({'user_filter': {'searchUsernames': [user.getUsername]}}) }}">{{ user.getUsername }}</a></td>
-        <td><a href="{{ mergePath({'user_filter': {'searchEmails': [user.getEmail]}}) }}">{{ user.getEmail }}</a></td>
+        <td>{{ user.getId }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeUserIds': [user.getId]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeUserIds': [user.getId]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td>{{ user.getDate|date('Y-m-d H:i'|trans) }}</td>
+        <td>{{ user.getUsername }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeUsernames': [user.getUsername]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeUsernames': [user.getUsername]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
+        <td>{{ user.getEmail }}</td>
+        <td class="filter-icons">
+          <a href="{{ mergePath({'user_filter': {'includeEmails': [user.getEmail]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'user_filter': {'excludeEmails': [user.getEmail]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+        </td>
         <td>
           {% if user.getRole == 0 %}
-            User
+            {% trans %}User{% endtrans %}
           {% elseif user.getRole == 1 %}
-            Admin
+            {% trans %}Admin{% endtrans %}
           {% endif %}
         </td>
-        <td class="icons"><a href="{{ path('swd_analyzer_user_edit', {'id': user.getId}) }}"><img src="{{ asset('bundles/swdanalyzer/images/icons/pencil.svg') }}" title="Edit user" /></a></td>
+        <td class="icons">
+          <a href="{{ path('swd_analyzer_user_edit', {'id': user.getId}) }}">
+            <i class="fa fa-pencil" title="{% trans %}Edit{% endtrans %}"></i>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -42,13 +61,13 @@
   <div class="clearfix">
     {% include 'SwdAnalyzerBundle:Pagination:limit.html.twig' %}
     <div class="page">
-      {{ knp_pagination_render(users, "", {}, { "class": "pagination", "prev_label": "Previous", "next_label": "Next", "first_label": "First", "last_label": "Last"}) }}
+      {{ knp_pagination_render(users, "", {}, { "class": "pagination", "prev_label": "Previous"|trans, "next_label": "Next"|trans, "first_label": "First"|trans, "last_label": "Last"|trans}) }}
     </div>
   </div>
   <div id="embedded-form-control">
     {{ form_row(embeddedForm.subaction) }}
     {{ form_row(embeddedForm.actions) }}
-    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_user_add') }}">Add</a>
+    <a class="btn btn-default" role="button" href="{{ path('swd_analyzer_user_add') }}">{% trans %}Add{% endtrans %}</a>
   </div>
 {{ form_end(embeddedForm) }}
 {% endblock %}

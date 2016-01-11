@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,124 +27,194 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class UserFilter
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchUsernames;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeUserIds;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchEmails;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeUsernames;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateStart;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeEmails;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateEnd;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateStart;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreUsernames;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateEnd;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreEmails;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeUserIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeUsernames;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeEmails;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateEnd;
 
 
-	public function __construct()
-	{
-		$this->searchUsernames = new ArrayCollection();
-		$this->ignoreUsernames = new ArrayCollection();
-		$this->searchEmails = new ArrayCollection();
-		$this->ignoreEmails = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->includeUserIds = new ArrayCollection();
+        $this->includeUsernames = new ArrayCollection();
+        $this->includeEmails = new ArrayCollection();
+        $this->excludeUserIds = new ArrayCollection();
+        $this->excludeUsernames = new ArrayCollection();
+        $this->excludeEmails = new ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setDateStart($dateStart)
-	{
-		$this->dateStart = $dateStart;
+    public function addIncludeUserId($userId)
+    {
+        $this->includeUserIds[] = $userId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateStart()
-	{
-		return $this->dateStart;
-	}
+    public function getIncludeUserIds()
+    {
+        return $this->includeUserIds;
+    }
 
-	public function setDateEnd($dateEnd)
-	{
-		$this->dateEnd = $dateEnd;
+    public function addIncludeUsername($username)
+    {
+        $this->includeUsernames[] = $username;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateEnd()
-	{
-		return $this->dateEnd;
-	}
+    public function getIncludeUsernames()
+    {
+        return $this->includeUsernames;
+    }
 
-	public function addSearchUsername($username)
-	{
-		$this->searchUsernames[] = $username;
+    public function addIncludeEmail($email)
+    {
+        $this->includeEmails[] = $email;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchUsernames()
-	{
-		return $this->searchUsernames;
-	}
+    public function getIncludeEmails()
+    {
+        return $this->includeEmails;
+    }
 
-	public function addSearchEmail($email)
-	{
-		$this->searchEmails[] = $email;
+    public function setIncludeDateStart($dateStart)
+    {
+        $this->includeDateStart = $dateStart;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchEmails()
-	{
-		return $this->searchEmails;
-	}
+    public function getIncludeDateStart()
+    {
+        return $this->includeDateStart;
+    }
 
-	public function addIgnoreUsername($username)
-	{
-		$this->ignoreUsernames[] = $username;
+    public function setIncludeDateEnd($dateEnd)
+    {
+        $this->includeDateEnd = $dateEnd;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreUsernames()
-	{
-		return $this->ignoreUsernames;
-	}
+    public function getIncludeDateEnd()
+    {
+        return $this->includeDateEnd;
+    }
 
-	public function addIgnoreEmail($email)
-	{
-		$this->ignoreEmails[] = $email;
+    public function addExcludeUserId($userId)
+    {
+        $this->excludeUserIds[] = $userId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreEmails()
-	{
-		return $this->ignoreEmails;
-	}
+    public function getExcludeUserIds()
+    {
+        return $this->excludeUserIds;
+    }
+
+    public function addExcludeUsername($username)
+    {
+        $this->excludeUsernames[] = $username;
+
+        return $this;
+    }
+
+    public function getExcludeUsernames()
+    {
+        return $this->excludeUsernames;
+    }
+
+    public function addExcludeEmail($email)
+    {
+        $this->excludeEmails[] = $email;
+
+        return $this;
+    }
+
+    public function getExcludeEmails()
+    {
+        return $this->excludeEmails;
+    }
+
+    public function setExcludeDateStart($dateStart)
+    {
+        $this->excludeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getExcludeDateStart()
+    {
+        return $this->excludeDateStart;
+    }
+
+    public function setExcludeDateEnd($dateEnd)
+    {
+        $this->excludeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getExcludeDateEnd()
+    {
+        return $this->excludeDateEnd;
+    }
 }

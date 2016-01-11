@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -20,91 +20,138 @@
 
 namespace Swd\AnalyzerBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use Swd\AnalyzerBundle\Entity\EntityRepositoryTransformer;
 
 /**
  * ProfileRepository
  */
-class ProfileRepository extends EntityRepository
+class ProfileRepository extends EntityRepositoryTransformer
 {
-	public function findAllFiltered(\Swd\AnalyzerBundle\Entity\ProfileFilter $filter)
-	{
-		$builder = $this->createQueryBuilder('v');
+    public function findAllFiltered(\Swd\AnalyzerBundle\Entity\ProfileFilter $filter)
+    {
+        $builder = $this->createQueryBuilder('v');
 
-		/* Search. */
-		if ($filter->getProfileId())
-		{
-			$builder->andWhere('v.id = :profileId')->setParameter('profileId', $filter->getProfileId());
-		}
+        if (!$filter->getIncludeProfileIds()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-		if (!$filter->getSearchServerIPs()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+            foreach ($filter->getIncludeProfileIds() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
+            }
 
-			foreach ($filter->getSearchServerIPs() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("v.serverIP", $builder->expr()->literal($value)));
-			}
+            $builder->andWhere($orExpr);
+        }
 
-			$builder->andWhere($orExpr);
-		}
+        if (!$filter->getIncludeServerIPs()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-		if (!$filter->getSearchNames()->isEmpty())
-		{
-			$orExpr = $builder->expr()->orX();
+            foreach ($filter->getIncludeServerIPs() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('v.serverIP', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-			foreach ($filter->getSearchNames() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$orExpr->add($builder->expr()->like("v.name", $builder->expr()->literal($value)));
-			}
+            $builder->andWhere($orExpr);
+        }
 
-			$builder->andWhere($orExpr);
-		}
+        if (!$filter->getIncludeNames()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-		if ($filter->getDateStart())
-		{
-			$builder->andWhere('v.date >= :dateStart')->setParameter('dateStart', $filter->getDateStart());
-		}
+            foreach ($filter->getIncludeNames() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->like('v.name', $builder->expr()->literal($this->prepareWildcard($value))));
+            }
 
-		if ($filter->getDateEnd())
-		{
-			$builder->andWhere('v.date <= :dateEnd')->setParameter('dateEnd', $filter->getDateEnd());
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		/* Ignore. */
-		if (!$filter->getIgnoreServerIPs()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if (!$filter->getIncludeModes()->isEmpty())
+        {
+            $orExpr = $builder->expr()->orX();
 
-			foreach ($filter->getIgnoreServerIPs() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("v.serverIP", $builder->expr()->literal($value))));
-			}
+            foreach ($filter->getIncludeModes() as $key => $value)
+            {
+                $orExpr->add($builder->expr()->eq('v.mode', $builder->expr()->literal($value)));
+            }
 
-			$builder->andWhere($andExpr);
-		}
+            $builder->andWhere($orExpr);
+        }
 
-		if (!$filter->getIgnoreNames()->isEmpty())
-		{
-			$andExpr = $builder->expr()->andX();
+        if ($filter->getIncludeDateStart())
+        {
+            $builder->andWhere('v.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
+        }
 
-			foreach ($filter->getIgnoreNames() as $key => $value)
-			{
-				$value = str_replace(array('_', '%', '*'), array('\\_', '\\%', '%'), $value);
-				$andExpr->add($builder->expr()->not($builder->expr()->like("v.name", $builder->expr()->literal($value))));
-			}
+        if ($filter->getIncludeDateEnd())
+        {
+            $builder->andWhere('v.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+        }
 
-			$builder->andWhere($andExpr);
-		}
+        if (!$filter->getExcludeProfileIds()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
 
-		return $builder->getQuery();
-	}
+            foreach ($filter->getExcludeProfileIds() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
+            }
 
-	public function findAll()
-	{
-		return $this->findBy(array(), array('id' => 'ASC'));
-	}
+            $builder->andWhere($andExpr);
+        }
+
+        if (!$filter->getExcludeServerIPs()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($filter->getExcludeServerIPs() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('v.serverIP', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if (!$filter->getExcludeNames()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($filter->getExcludeNames() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->like('v.name', $builder->expr()->literal($this->prepareWildcard($value)))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if (!$filter->getExcludeModes()->isEmpty())
+        {
+            $andExpr = $builder->expr()->andX();
+
+            foreach ($filter->getExcludeModes() as $key => $value)
+            {
+                $andExpr->add($builder->expr()->not($builder->expr()->eq('v.mode', $builder->expr()->literal($value))));
+            }
+
+            $builder->andWhere($andExpr);
+        }
+
+        if ($filter->getExcludeDateStart())
+        {
+            $builder->andWhere('v.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
+        }
+
+        if ($filter->getExcludeDateEnd())
+        {
+            $builder->andWhere('v.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
+        }
+
+        return $builder->getQuery();
+    }
+
+    public function findAll()
+    {
+        return $this->findBy(array(), array('id' => 'ASC'));
+    }
 }

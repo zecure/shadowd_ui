@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,166 +27,266 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class RequestFilter
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var integer
-	 */
-	private $requestId;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeRequestIds;
 
-	/**
-	 * @var integer
-	 */
-	private $profileId;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeProfileIds;
 
-	/**
-	 * @var smallint
-	 */
-	private $learning;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeCallers;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchCallers;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeResources;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchClientIPs;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeClientIPs;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateStart;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateStart;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateEnd;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateEnd;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeRequestIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeProfileIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeCallers;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeResources;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeClientIPs;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateEnd;
 
 
-	public function __construct()
-	{
-		$this->searchCallers = new ArrayCollection();
-		$this->searchClientIPs = new ArrayCollection();
-		$this->ignoreCallers = new ArrayCollection();
-		$this->ignoreClientIPs = new ArrayCollection();
-		$this->learning = 0;
-	}
+    public function __construct()
+    {
+        $this->includeRequestIds = new ArrayCollection();
+        $this->includeProfileIds = new ArrayCollection();
+        $this->includeCallers = new ArrayCollection();
+        $this->includeResources = new ArrayCollection();
+        $this->includeClientIPs = new ArrayCollection();
+        $this->excludeRequestIds = new ArrayCollection();
+        $this->excludeProfileIds = new ArrayCollection();
+        $this->excludeCallers = new ArrayCollection();
+        $this->excludeResources = new ArrayCollection();
+        $this->excludeClientIPs = new ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setRequestId($requestId)
-	{
-		$this->requestId = $requestId;
+    public function addIncludeRequestId($requestId)
+    {
+        $this->includeRequestIds[] = $requestId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getRequestId()
-	{
-		return $this->requestId;
-	}
+    public function getIncludeRequestIds()
+    {
+        return $this->includeRequestIds;
+    }
 
-	public function setProfileId($profileId)
-	{
-		$this->profileId = $profileId;
+    public function addIncludeProfileId($profileId)
+    {
+        $this->includeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfileId()
-	{
-		return $this->profileId;
-	}
+    public function getIncludeProfileIds()
+    {
+        return $this->includeProfileIds;
+    }
 
-	public function setLearning($learning)
-	{
-		$this->learning = $learning;
+    public function addIncludeCaller($caller)
+    {
+        $this->includeCallers[] = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getLearning()
-	{
-		return $this->learning;
-	}
+    public function getIncludeCallers()
+    {
+        return $this->includeCallers;
+    }
 
-	public function setDateStart($dateStart)
-	{
-		$this->dateStart = $dateStart;
+    public function addIncludeResource($resource)
+    {
+        $this->includeResources[] = $resource;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateStart()
-	{
-		return $this->dateStart;
-	}
+    public function getIncludeResources()
+    {
+        return $this->includeResources;
+    }
 
-	public function setDateEnd($dateEnd)
-	{
-		$this->dateEnd = $dateEnd;
+    public function addIncludeClientIP($clientIP)
+    {
+        $this->includeClientIPs[] = $clientIP;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateEnd()
-	{
-		return $this->dateEnd;
-	}
+    public function getIncludeClientIPs()
+    {
+        return $this->includeClientIPs;
+    }
 
-	public function addSearchCaller($caller)
-	{
-		$this->searchCallers[] = $caller;
+    public function setIncludeDateStart($dateStart)
+    {
+        $this->includeDateStart = $dateStart;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchCallers()
-	{
-		return $this->searchCallers;
-	}
+    public function getIncludeDateStart()
+    {
+        return $this->includeDateStart;
+    }
 
-	public function addSearchClientIP($clientIP)
-	{
-		$this->searchClientIPs[] = $clientIP;
+    public function setIncludeDateEnd($dateEnd)
+    {
+        $this->includeDateEnd = $dateEnd;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchClientIPs()
-	{
-		return $this->searchClientIPs;
-	}
+    public function getIncludeDateEnd()
+    {
+        return $this->includeDateEnd;
+    }
 
-	public function addIgnoreCaller($caller)
-	{
-		$this->ignoreCallers[] = $caller;
+    public function addExcludeRequestId($requestId)
+    {
+        $this->excludeRequestIds[] = $requestId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreCallers()
-	{
-		return $this->ignoreCallers;
-	}
+    public function getExcludeRequestIds()
+    {
+        return $this->excludeRequestIds;
+    }
 
-	public function addIgnoreClientIP($clientIP)
-	{
-		$this->ignoreClientIPs[] = $clientIP;
+    public function addExcludeProfileId($profileId)
+    {
+        $this->excludeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreClientIPs()
-	{
-		return $this->ignoreClientIPs;
-	}
+    public function getExcludeProfileIds()
+    {
+        return $this->excludeProfileIds;
+    }
+
+    public function addExcludeCaller($caller)
+    {
+        $this->excludeCallers[] = $caller;
+
+        return $this;
+    }
+
+    public function getExcludeCallers()
+    {
+        return $this->excludeCallers;
+    }
+
+    public function addExcludeResource($resource)
+    {
+        $this->excludeResources[] = $resource;
+
+        return $this;
+    }
+
+    public function getExcludeResources()
+    {
+        return $this->excludeResources;
+    }
+
+    public function addExcludeClientIP($clientIP)
+    {
+        $this->excludeClientIPs[] = $clientIP;
+
+        return $this;
+    }
+
+    public function getExcludeClientIPs()
+    {
+        return $this->excludeClientIPs;
+    }
+
+    public function setExcludeDateStart($dateStart)
+    {
+        $this->excludeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getExcludeDateStart()
+    {
+        return $this->excludeDateStart;
+    }
+
+    public function setExcludeDateEnd($dateEnd)
+    {
+        $this->excludeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getExcludeDateEnd()
+    {
+        return $this->excludeDateEnd;
+    }
 }

@@ -1,16 +1,18 @@
 {% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
 
-{% block search %}
-  {{ form_row(form.searchUsernames) }}
-  {{ form_row(form.searchEmails) }}
-  {{ form_row(form.dateStart) }}
-  {{ form_row(form.dateEnd) }}
+{% block include %}
+  {{ form_row(form.includeUserIds) }}
+  {{ form_row(form.includeUsernames) }}
+  {{ form_row(form.includeEmails) }}
+  {{ form_row(form.includeDateStart) }}
+  {{ form_row(form.includeDateEnd) }}
 {% endblock %}
 
 
-{% block ignore %}
-  {{ form_row(form.ignoreUsernames) }}
-  {{ form_row(form.ignoreEmails) }}
+{% block exclude %}
+  {{ form_row(form.excludeUserIds) }}
+  {{ form_row(form.excludeUsernames) }}
+  {{ form_row(form.excludeEmails) }}
+  {{ form_row(form.excludeDateStart) }}
+  {{ form_row(form.excludeDateEnd) }}
 {% endblock %}
-
-

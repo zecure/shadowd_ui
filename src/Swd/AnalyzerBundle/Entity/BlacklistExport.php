@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -28,80 +28,116 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class BlacklistExport
 {
-	/**
-	 * @var entity
-	 *
-	 * @Assert\NotBlank()
-	 */
-	private $profile;
+    /**
+     * @var entity
+     *
+     * @Assert\NotBlank()
+     */
+    private $profile;
 
-	/**
-	 * @var text
-	 */
-	private $base;
+    /**
+     * @var text
+     */
+    private $base;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $paths;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeCallers;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $callers;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includePaths;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeCallers;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludePaths;
 
 
-	public function __construct()
-	{
-		$this->paths = new ArrayCollection();
-		$this->callers = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->includeCallers = new ArrayCollection();
+        $this->includePaths = new ArrayCollection();
+        $this->excludeCallers = new ArrayCollection();
+        $this->excludePaths = new ArrayCollection();
+    }
 
-	public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
-	{
-		$this->profile = $profile;
+    public function setProfile(\Swd\AnalyzerBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfile()
-	{
-		return $this->profile;
-	}
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 
-	public function setBase($base)
-	{
-		$this->base = $base;
+    public function setBase($base)
+    {
+        $this->base = $base;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getBase()
-	{
-		return $this->base;
-	}
+    public function getBase()
+    {
+        return $this->base;
+    }
 
-	public function addPath($path)
-	{
-		$this->paths[] = $path;
+    public function addIncludeCaller($caller)
+    {
+        $this->includeCallers[] = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getPaths()
-	{
-		return $this->paths;
-	}
+    public function getIncludeCallers()
+    {
+        return $this->includeCallers;
+    }
 
-	public function addCaller($caller)
-	{
-		$this->callers[] = $caller;
+    public function addIncludePath($path)
+    {
+        $this->includePaths[] = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getCallers()
-	{
-		return $this->callers;
-	}
+    public function getIncludePaths()
+    {
+        return $this->includePaths;
+    }
+
+    public function addExcludeCaller($caller)
+    {
+        $this->excludeCallers[] = $caller;
+
+        return $this;
+    }
+
+    public function getExcludeCallers()
+    {
+        return $this->excludeCallers;
+    }
+
+    public function addExcludePath($path)
+    {
+        $this->excludePaths[] = $path;
+
+        return $this;
+    }
+
+    public function getExcludePaths()
+    {
+        return $this->excludePaths;
+    }
 }

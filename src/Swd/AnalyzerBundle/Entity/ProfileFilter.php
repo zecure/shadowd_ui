@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,141 +27,230 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ProfileFilter
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var integer
-	 */
-	private $profileId;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeProfileIds;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchServerIPs;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeServerIPs;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchNames;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeNames;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateStart;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeModes;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateEnd;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateStart;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreServerIPs;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateEnd;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreNames;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeProfileIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeServerIPs;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeNames;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeModes;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateEnd;
 
 
-	public function __construct()
-	{
-		$this->searchServerIPs = new ArrayCollection();
-		$this->searchNames = new ArrayCollection();
-		$this->ignoreServerIPs = new ArrayCollection();
-		$this->ignoreNames = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->includeProfileIds = new ArrayCollection();
+        $this->includeServerIPs = new ArrayCollection();
+        $this->includeNames = new ArrayCollection();
+        $this->includeModes = new ArrayCollection();
+        $this->excludeProfileIds = new ArrayCollection();
+        $this->excludeServerIPs = new ArrayCollection();
+        $this->excludeNames = new ArrayCollection();
+        $this->excludeModes = new ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setProfileId($profileId)
-	{
-		$this->profileId = $profileId;
+    public function addIncludeProfileId($profileId)
+    {
+        $this->includeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfileId()
-	{
-		return $this->profileId;
-	}
+    public function getIncludeProfileIds()
+    {
+        return $this->includeProfileIds;
+    }
 
-	public function setDateStart($dateStart)
-	{
-		$this->dateStart = $dateStart;
+    public function addIncludeServerIP($serverIP)
+    {
+        $this->includeServerIPs[] = $serverIP;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateStart()
-	{
-		return $this->dateStart;
-	}
+    public function getIncludeServerIPs()
+    {
+        return $this->includeServerIPs;
+    }
 
-	public function setDateEnd($dateEnd)
-	{
-		$this->dateEnd = $dateEnd;
+    public function addIncludeName($name)
+    {
+        $this->includeNames[] = $name;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateEnd()
-	{
-		return $this->dateEnd;
-	}
+    public function getIncludeNames()
+    {
+        return $this->includeNames;
+    }
 
-	public function addSearchServerIP($serverIP)
-	{
-		$this->searchServerIPs[] = $serverIP;
+    public function addIncludeMode($mode)
+    {
+        $this->includeModes[] = $mode;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchServerIPs()
-	{
-		return $this->searchServerIPs;
-	}
+    public function getIncludeModes()
+    {
+        return $this->includeModes;
+    }
 
-	public function addSearchName($name)
-	{
-		$this->searchNames[] = $name;
+    public function setIncludeDateStart($dateStart)
+    {
+        $this->includeDateStart = $dateStart;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchNames()
-	{
-		return $this->searchNames;
-	}
+    public function getIncludeDateStart()
+    {
+        return $this->includeDateStart;
+    }
 
-	public function addIgnoreServerIP($serverIP)
-	{
-		$this->ignoreServerIPs[] = $serverIP;
+    public function setIncludeDateEnd($dateEnd)
+    {
+        $this->includeDateEnd = $dateEnd;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreServerIPs()
-	{
-		return $this->ignoreServerIPs;
-	}
+    public function getIncludeDateEnd()
+    {
+        return $this->includeDateEnd;
+    }
 
-	public function addIgnoreName($name)
-	{
-		$this->ignoreNames[] = $name;
+    public function addExcludeProfileId($profileId)
+    {
+        $this->excludeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreNames()
-	{
-		return $this->ignoreNames;
-	}
+    public function getExcludeProfileIds()
+    {
+        return $this->excludeProfileIds;
+    }
+
+    public function addExcludeServerIP($serverIP)
+    {
+        $this->excludeServerIPs[] = $serverIP;
+
+        return $this;
+    }
+
+    public function getExcludeServerIPs()
+    {
+        return $this->excludeServerIPs;
+    }
+
+    public function addExcludeName($name)
+    {
+        $this->excludeNames[] = $name;
+
+        return $this;
+    }
+
+    public function getExcludeNames()
+    {
+        return $this->excludeNames;
+    }
+
+    public function addExcludeMode($mode)
+    {
+        $this->excludeModes[] = $mode;
+
+        return $this;
+    }
+
+    public function getExcludeModes()
+    {
+        return $this->excludeModes;
+    }
+
+    public function setExcludeDateStart($dateStart)
+    {
+        $this->excludeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getExcludeDateStart()
+    {
+        return $this->excludeDateStart;
+    }
+
+    public function setExcludeDateEnd($dateEnd)
+    {
+        $this->excludeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getExcludeDateEnd()
+    {
+        return $this->excludeDateEnd;
+    }
 }

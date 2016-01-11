@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,327 +27,544 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ParameterFilter
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
-
-	/**
-	 * @var integer
-	 */
-	private $parameterId;
-
-	/**
-	 * @var integer
-	 */
-	private $profileId;
-
-	/**
-	 * @var integer
-	 */
-	private $requestId;
-
-	/**
-	 * @var smallint
-	 */
-	private $learning;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchCallers;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchClientIPs;
-
-	/**
-	 * @var \DateTime
-	 */
-	private $dateStart;
-
-	/**
-	 * @var \DateTime
-	 */
-	private $dateEnd;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchPaths;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchValues;
-
-	/**
-	 * @var boolean
-	 */
-	private $threat;
-
-	/**
-	 * @var boolean
-	 */
-	private $noRule;
-
-	/**
-	 * @var boolean
-	 */
-	private $brokenRule;
-
-	/**
-	 * @var boolean
-	 */
-	private $criticalImpact;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreCallers;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreClientIPs;
-
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignorePaths;
-
-
-	public function __construct()
-	{
-		$this->searchCallers = new ArrayCollection();
-		$this->searchClientIPs = new ArrayCollection();
-		$this->searchPaths = new ArrayCollection();
-		$this->searchValues = new ArrayCollection();
-		$this->ignoreCallers = new ArrayCollection();
-		$this->ignoreClientIPs = new ArrayCollection();
-		$this->ignorePaths = new ArrayCollection();
-		$this->learning = 0;
-	}
-
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	public function setParameterId($parameterId)
-	{
-		$this->parameterId = $parameterId;
-
-		return $this;
-	}
-
-	public function getParameterId()
-	{
-		return $this->parameterId;
-	}
-
-	public function setProfileId($profileId)
-	{
-		$this->profileId = $profileId;
-
-		return $this;
-	}
-
-	public function getRequestId()
-	{
-		return $this->requestId;
-	}
-
-	public function setRequestId($requestId)
-	{
-		$this->requestId = $requestId;
-
-		return $this;
-	}
-
-	public function getProfileId()
-	{
-		return $this->profileId;
-	}
-
-	public function setLearning($learning)
-	{
-		$this->learning = $learning;
-
-		return $this;
-	}
-
-	public function getLearning()
-	{
-		return $this->learning;
-	}
-
-	public function setDateStart($dateStart)
-	{
-		$this->dateStart = $dateStart;
-
-		return $this;
-	}
-
-	public function getDateStart()
-	{
-		return $this->dateStart;
-	}
-
-	public function setDateEnd($dateEnd)
-	{
-		$this->dateEnd = $dateEnd;
-
-		return $this;
-	}
-
-	public function getDateEnd()
-	{
-		return $this->dateEnd;
-	}
-
-	public function setValue($value)
-	{
-		$this->value = $value;
-
-		return $this;
-	}
-
-	public function getValue()
-	{
-		return $this->value;
-	}
-
-	public function setThreat($threat)
-	{
-		$this->threat = $threat;
-
-		return $this;
-	}
-
-	public function getThreat()
-	{
-		return $this->threat;
-	}
-
-	public function setNoRule($noRule)
-	{
-		$this->noRule = $noRule;
-
-		return $this;
-	}
-
-	public function getNoRule()
-	{
-		return $this->noRule;
-	}
-
-	public function setBrokenRule($brokenRule)
-	{
-		$this->brokenRule = $brokenRule;
-
-		return $this;
-	}
-
-	public function getBrokenRule()
-	{
-		return $this->brokenRule;
-	}
-
-	public function setCriticalImpact($criticalImpact)
-	{
-		$this->criticalImpact = $criticalImpact;
-
-		return $this;
-	}
-
-	public function getCriticalImpact()
-	{
-		return $this->criticalImpact;
-	}
-
-	public function addSearchCaller($caller)
-	{
-		$this->searchCallers[] = $caller;
-
-		return $this;
-	}
-
-	public function getSearchCallers()
-	{
-		return $this->searchCallers;
-	}
-
-	public function addSearchClientIP($clientIP)
-	{
-		$this->searchClientIPs[] = $clientIP;
-
-		return $this;
-	}
-
-	public function getSearchClientIPs()
-	{
-		return $this->searchClientIPs;
-	}
-
-	public function addSearchPath($path)
-	{
-		$this->searchPaths[] = $path;
-
-		return $this;
-	}
-
-	public function getSearchPaths()
-	{
-		return $this->searchPaths;
-	}
-
-	public function addSearchValue($value)
-	{
-		$this->searchValues[] = $value;
-
-		return $this;
-	}
-
-	public function getSearchValues()
-	{
-		return $this->searchValues;
-	}
-
-	public function addIgnoreCaller($caller)
-	{
-		$this->ignoreCallers[] = $caller;
-
-		return $this;
-	}
-
-	public function getIgnoreCallers()
-	{
-		return $this->ignoreCallers;
-	}
-
-	public function addIgnoreClientIP($clientIP)
-	{
-		$this->ignoreClientIPs[] = $clientIP;
-
-		return $this;
-	}
-
-	public function getIgnoreClientIPs()
-	{
-		return $this->ignoreClientIPs;
-	}
-
-	public function addIgnorePath($path)
-	{
-		$this->ignorePaths[] = $path;
-
-		return $this;
-	}
-
-	public function getIgnorePaths()
-	{
-		return $this->ignorePaths;
-	}
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeParameterIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeProfileIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeRequestIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeCallers;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeClientIPs;
+
+    /**
+     * @var \DateTime
+     */
+    private $includeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $includeDateEnd;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includePaths;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeValues;
+
+    /**
+     * @var boolean
+     */
+    private $includeThreat;
+
+    /**
+     * @var boolean
+     */
+    private $includeNoWhitelistRule;
+
+    /**
+     * @var boolean
+     */
+    private $includeBrokenWhitelistRule;
+
+    /**
+     * @var boolean
+     */
+    private $includeNoIntegrityRule;
+
+    /**
+     * @var boolean
+     */
+    private $includeBrokenIntegrityRule;
+
+    /**
+     * @var boolean
+     */
+    private $includeCriticalImpact;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeParameterIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeProfileIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeRequestIds;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeCallers;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeClientIPs;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateEnd;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludePaths;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeValues;
+
+    /**
+     * @var boolean
+     */
+    private $excludeThreat;
+
+    /**
+     * @var boolean
+     */
+    private $excludeNoWhitelistRule;
+
+    /**
+     * @var boolean
+     */
+    private $excludeBrokenWhitelistRule;
+
+    /**
+     * @var boolean
+     */
+    private $excludeNoIntegrityRule;
+
+    /**
+     * @var boolean
+     */
+    private $excludeBrokenIntegrityRule;
+
+    /**
+     * @var boolean
+     */
+    private $excludeCriticalImpact;
+
+
+    public function __construct()
+    {
+        $this->includeParameterIds = new ArrayCollection();
+        $this->includeProfileIds = new ArrayCollection();
+        $this->includeRequestIds = new ArrayCollection();
+        $this->includeCallers = new ArrayCollection();
+        $this->includeClientIPs = new ArrayCollection();
+        $this->includePaths = new ArrayCollection();
+        $this->includeValues = new ArrayCollection();
+        $this->excludeParameterIds = new ArrayCollection();
+        $this->excludeProfileIds = new ArrayCollection();
+        $this->excludeRequestIds = new ArrayCollection();
+        $this->excludeCallers = new ArrayCollection();
+        $this->excludeClientIPs = new ArrayCollection();
+        $this->excludePaths = new ArrayCollection();
+        $this->excludeValues = new ArrayCollection();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function addIncludeParameterId($parameterId)
+    {
+        $this->includeParameterIds[] = $parameterId;
+
+        return $this;
+    }
+
+    public function getIncludeParameterIds()
+    {
+        return $this->includeParameterIds;
+    }
+
+    public function addIncludeProfileId($profileId)
+    {
+        $this->includeProfileIds[] = $profileId;
+
+        return $this;
+    }
+
+    public function getIncludeProfileIds()
+    {
+        return $this->includeProfileIds;
+    }
+
+    public function addIncludeRequestId($requestId)
+    {
+        $this->includeRequestIds[] = $requestId;
+
+        return $this;
+    }
+
+    public function getIncludeRequestIds()
+    {
+        return $this->includeRequestIds;
+    }
+
+    public function addIncludeCaller($caller)
+    {
+        $this->includeCallers[] = $caller;
+
+        return $this;
+    }
+
+    public function getIncludeCallers()
+    {
+        return $this->includeCallers;
+    }
+
+    public function addIncludeClientIP($clientIP)
+    {
+        $this->includeClientIPs[] = $clientIP;
+
+        return $this;
+    }
+
+    public function getIncludeClientIPs()
+    {
+        return $this->includeClientIPs;
+    }
+
+
+    public function setIncludeDateStart($dateStart)
+    {
+        $this->includeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getIncludeDateStart()
+    {
+        return $this->includeDateStart;
+    }
+
+    public function setIncludeDateEnd($dateEnd)
+    {
+        $this->includeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getIncludeDateEnd()
+    {
+        return $this->includeDateEnd;
+    }
+
+    public function addIncludePath($path)
+    {
+        $this->includePaths[] = $path;
+
+        return $this;
+    }
+
+    public function getIncludePaths()
+    {
+        return $this->includePaths;
+    }
+
+    public function addIncludeValue($value)
+    {
+        $this->includeValues[] = $value;
+
+        return $this;
+    }
+
+    public function getIncludeValues()
+    {
+        return $this->includeValues;
+    }
+
+    public function setIncludeThreat($threat)
+    {
+        $this->includeThreat = $threat;
+
+        return $this;
+    }
+
+    public function getIncludeThreat()
+    {
+        return $this->includeThreat;
+    }
+
+    public function setIncludeNoWhitelistRule($noRule)
+    {
+        $this->includeNoWhitelistRule = $noRule;
+
+        return $this;
+    }
+
+    public function getIncludeNoWhitelistRule()
+    {
+        return $this->includeNoWhitelistRule;
+    }
+
+    public function setIncludeBrokenWhitelistRule($brokenRule)
+    {
+        $this->includeBrokenWhitelistRule = $brokenRule;
+
+        return $this;
+    }
+
+    public function getIncludeBrokenWhitelistRule()
+    {
+        return $this->includeBrokenWhitelistRule;
+    }
+
+    public function setIncludeNoIntegrityRule($noRule)
+    {
+        $this->includeNoIntegrityRule = $noRule;
+
+        return $this;
+    }
+
+    public function getIncludeNoIntegrityRule()
+    {
+        return $this->includeNoIntegrityRule;
+    }
+
+    public function setIncludeBrokenIntegrityRule($brokenRule)
+    {
+        $this->includeBrokenIntegrityRule = $brokenRule;
+
+        return $this;
+    }
+
+    public function getIncludeBrokenIntegrityRule()
+    {
+        return $this->includeBrokenIntegrityRule;
+    }
+
+    public function setIncludeCriticalImpact($criticalImpact)
+    {
+        $this->includeCriticalImpact = $criticalImpact;
+
+        return $this;
+    }
+
+    public function getIncludeCriticalImpact()
+    {
+        return $this->includeCriticalImpact;
+    }
+
+    public function addExcludeParameterId($parameterId)
+    {
+        $this->excludeParameterIds[] = $parameterId;
+
+        return $this;
+    }
+
+    public function getExcludeParameterIds()
+    {
+        return $this->excludeParameterIds;
+    }
+
+    public function addExcludeProfileId($profileId)
+    {
+        $this->excludeProfileIds[] = $profileId;
+
+        return $this;
+    }
+
+    public function getExcludeProfileIds()
+    {
+        return $this->excludeProfileIds;
+    }
+
+    public function addExcludeRequestId($requestId)
+    {
+        $this->excludeRequestIds[] = $requestId;
+
+        return $this;
+    }
+
+    public function getExcludeRequestIds()
+    {
+        return $this->excludeRequestIds;
+    }
+
+    public function addExcludeCaller($caller)
+    {
+        $this->excludeCallers[] = $caller;
+
+        return $this;
+    }
+
+    public function getExcludeCallers()
+    {
+        return $this->excludeCallers;
+    }
+
+    public function addExcludeClientIP($clientIP)
+    {
+        $this->excludeClientIPs[] = $clientIP;
+
+        return $this;
+    }
+
+    public function getExcludeClientIPs()
+    {
+        return $this->excludeClientIPs;
+    }
+
+
+    public function setExcludeDateStart($dateStart)
+    {
+        $this->excludeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getExcludeDateStart()
+    {
+        return $this->excludeDateStart;
+    }
+
+    public function setExcludeDateEnd($dateEnd)
+    {
+        $this->excludeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getExcludeDateEnd()
+    {
+        return $this->excludeDateEnd;
+    }
+
+    public function addExcludePath($path)
+    {
+        $this->excludePaths[] = $path;
+
+        return $this;
+    }
+
+    public function getExcludePaths()
+    {
+        return $this->excludePaths;
+    }
+
+    public function addExcludeValue($value)
+    {
+        $this->excludeValues[] = $value;
+
+        return $this;
+    }
+
+    public function getExcludeValues()
+    {
+        return $this->excludeValues;
+    }
+
+    public function setExcludeThreat($threat)
+    {
+        $this->excludeThreat = $threat;
+
+        return $this;
+    }
+
+    public function getExcludeThreat()
+    {
+        return $this->excludeThreat;
+    }
+
+    public function setExcludeNoWhitelistRule($noRule)
+    {
+        $this->excludeNoWhitelistRule = $noRule;
+
+        return $this;
+    }
+
+    public function getExcludeNoWhitelistRule()
+    {
+        return $this->excludeNoWhitelistRule;
+    }
+
+    public function setExcludeBrokenWhitelistRule($brokenRule)
+    {
+        $this->excludeBrokenWhitelistRule = $brokenRule;
+
+        return $this;
+    }
+
+    public function getExcludeBrokenWhitelistRule()
+    {
+        return $this->excludeBrokenWhitelistRule;
+    }
+
+    public function setExcludeNoIntegrityRule($noRule)
+    {
+        $this->excludeNoIntegrityRule = $noRule;
+
+        return $this;
+    }
+
+    public function getExcludeNoIntegrityRule()
+    {
+        return $this->excludeNoIntegrityRule;
+    }
+
+    public function setExcludeBrokenIntegrityRule($brokenRule)
+    {
+        $this->excludeBrokenIntegrityRule = $brokenRule;
+
+        return $this;
+    }
+
+    public function getExcludeBrokenIntegrityRule()
+    {
+        return $this->excludeBrokenIntegrityRule;
+    }
+
+    public function setExcludeCriticalImpact($criticalImpact)
+    {
+        $this->excludeCriticalImpact = $criticalImpact;
+
+        return $this;
+    }
+
+    public function getExcludeCriticalImpact()
+    {
+        return $this->excludeCriticalImpact;
+    }
 }

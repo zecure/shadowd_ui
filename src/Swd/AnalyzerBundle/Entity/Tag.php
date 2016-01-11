@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -30,68 +30,68 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tag
 {
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="tag", type="text")
-	 */
-	private $tag;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag", type="text")
+     */
+    private $tag;
 
-	/**
-	 * @ORM\ManyToMany(targetEntity="BlacklistFilter")
-	 * @ORM\JoinTable(name="tags_filters",
-	 *	  joinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")},
-	 *	  inverseJoinColumns={@ORM\JoinColumn(name="filter_id", referencedColumnName="id")}
-	 * )
-	 **/
-	private $filters;
+    /**
+     * @ORM\ManyToMany(targetEntity="BlacklistFilter")
+     * @ORM\JoinTable(name="tags_filters",
+     *      joinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="filter_id", referencedColumnName="id")}
+     * )
+     **/
+    private $filters;
 
 
-	public function __construct()
-	{
-		$this->filters = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->filters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setTag($tag)
-	{
-		$this->tag = $tag;
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getTag()
-	{
-		return $this->tag;
-	}
+    public function getTag()
+    {
+        return $this->tag;
+    }
 
-	public function addFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $filters)
-	{
-		$this->filters[] = $filters;
+    public function addFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $filters)
+    {
+        $this->filters[] = $filters;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function removeFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $filters)
-	{
-		$this->filters->removeElement($filters);
-	}
+    public function removeFilter(\Swd\AnalyzerBundle\Entity\BlacklistFilter $filters)
+    {
+        $this->filters->removeElement($filters);
+    }
 
-	public function getFilters()
-	{
-		return $this->filters;
-	}
+    public function getFilters()
+    {
+        return $this->filters;
+    }
 }

@@ -1,17 +1,20 @@
 {% extends 'SwdAnalyzerBundle:Form:filter.html.twig' %}
 
-{% block search %}
-  {{ form_row(form.profileId) }}
-  {{ form_row(form.searchServerIPs) }}
-  {{ form_row(form.searchNames) }}
-  {{ form_row(form.dateStart) }}
-  {{ form_row(form.dateEnd) }}
+{% block include %}
+  {{ form_row(form.includeProfileIds) }}
+  {{ form_row(form.includeServerIPs) }}
+  {{ form_row(form.includeNames) }}
+  {{ form_row(form.includeModes) }}
+  {{ form_row(form.includeDateStart) }}
+  {{ form_row(form.includeDateEnd) }}
 {% endblock %}
 
 
-{% block ignore %}
-  {{ form_row(form.ignoreServerIPs) }}
-  {{ form_row(form.ignoreNames) }}
+{% block exclude %}
+  {{ form_row(form.excludeProfileIds) }}
+  {{ form_row(form.excludeServerIPs) }}
+  {{ form_row(form.excludeNames) }}
+  {{ form_row(form.excludeModes) }}
+  {{ form_row(form.excludeDateStart) }}
+  {{ form_row(form.excludeDateEnd) }}
 {% endblock %}
-
-

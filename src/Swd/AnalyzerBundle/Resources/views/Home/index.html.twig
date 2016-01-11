@@ -1,22 +1,25 @@
 {% extends 'SwdAnalyzerBundle::layout.html.twig' %}
 
 
-{% block title %}Home{% endblock %}
+{% block title %}{% trans %}Home{% endtrans %}{% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>Welcome to the “Shadow Daemon“ Administration Interface</h1>
+  <h1><b>Shadow Daemon</b> {% trans %}User Interface{% endtrans %}</h1>
 </div>
 <div class="col-md-7">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Profile</th>
-        <th>Learning</th>
-        <th>Whitelist</th>
-        <th>Blacklist</th>
-        <th>Last Request</th>
+        <th>{% trans %}Profile{% endtrans %}</th>
+        <th>{% trans %}Mode{% endtrans %}</th>
+        <th>{% trans %}Whitelist{% endtrans %}</th>
+        <th>{% trans %}Blacklist{% endtrans %}</th>
+        <th>{% trans %}Integrity{% endtrans %}</th>
+        <th>{% trans %}Flooding{% endtrans %}</th>
+        <th>{% trans %}# Attacks{% endtrans %}</th>
+        <th>{% trans %}Last attack{% endtrans %}</th>
       </tr>
     </thead>
     <tbody>
@@ -24,34 +27,52 @@
       <tr>
         <td>{{ profile.getName }}</td>
         <td>
-          {% if profile.getLearningEnabled == 0 %} {{ label_success('Disabled') }}
-          {% elseif profile.getLearningEnabled == 1 %} {{ label_danger('Enabled') }}
+          {% if profile.getMode == 1 %} {{ label_success('Active'|trans) }}
+          {% elseif profile.getMode == 2 %} {{ label_danger('Passive'|trans) }}
+          {% elseif profile.getMode == 3 %} {{ label_danger('Learning'|trans) }}
           {% endif %}
         </td>
         <td>
-          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled') }}
-          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getWhitelistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
         <td>
-          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled') }}
-          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled') }}
+          {% if profile.getBlacklistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getBlacklistEnabled == 1 %} {{ label_success('Enabled'|trans) }}
           {% endif %}
         </td>
-        {% set foo = profile.getRequests|last %}
-        <td>{% if foo %}{{ foo.getDate|date('Y-m-d H:i') }}{% endif %}</td>
+        <td>
+          {% if profile.getIntegrityEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getIntegrityEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getFloodingEnabled == 0 %} {{ label_danger('Disabled'|trans) }}
+          {% elseif profile.getFloodingEnabled == 1 %} {{ label_success('Enabled'|trans) }}
+          {% endif %}
+        </td>
+        <td>{{ profile.getProductiveRequests }}</td>
+        {% set lastRequest = profile.getRequests|last %}
+        <td>
+          {% if lastRequest %}
+            <a href="{{ path('swd_analyzer_requests_list', {'includeProfileIds': [profile.getId], 'sort': 'r.id', 'direction': 'desc'}) }}">
+              {{ lastRequest.getDate|date('Y-m-d H:i'|trans) }}
+            </a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
 <div class="col-md-1"></div>
-<div class="col-md-4">
-  <img style="margin-left: 5%" width="50%" src="{{ asset('bundles/swdanalyzer/images/icons/bug.svg') }}" />
+<div id="logo">
+  <img src="{{ asset('bundles/swdanalyzer/images/logo.png') }}" />
 </div>
 <div class="col-md-12 jumbotron">
-  <h2>Did you know ... ?</h2>
+  <h2>{% trans %}Did you know ... ?{% endtrans %}</h2>
   <p>{{ tooltip }}</p>
-  <p><a class="btn btn-primary btn-lg" role="button" href="https://shadowd.zecure.org/">Learn more &raquo;</a></p>
+  <p><a class="btn btn-primary btn-lg" role="button" href="https://shadowd.zecure.org/">{% trans %}Learn more{% endtrans %} &raquo;</a></p>
 </div>
 {% endblock %}

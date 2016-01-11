@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2015 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -27,192 +27,298 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class WhitelistRuleFilter
 {
-	/**
-	 * @var integer
-	 */
-	private $id;
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var integer
-	 */
-	private $ruleId;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeRuleIds;
 
-	/**
-	 * @var integer
-	 */
-	private $profileId;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeProfileIds;
 
-	/**
-	 * @var smallint
-	 */
-	private $status;
+    /**
+     * @var smallint
+     */
+    private $includeStatus;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchCallers;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includeCallers;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $searchPaths;
+    /**
+     * @var \ArrayCollection
+     */
+    private $includePaths;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateStart;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateStart;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $dateEnd;
+    /**
+     * @var \DateTime
+     */
+    private $includeDateEnd;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignoreCallers;
+    /**
+     * @var boolean
+     */
+    private $includeConflict;
 
-	/**
-	 * @var \ArrayCollection
-	 */
-	private $ignorePaths;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeRuleIds;
 
-	/**
-	 * @var boolean
-	 */
-	private $conflict;
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeProfileIds;
+
+    /**
+     * @var smallint
+     */
+    private $excludeStatus;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludeCallers;
+
+    /**
+     * @var \ArrayCollection
+     */
+    private $excludePaths;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateStart;
+
+    /**
+     * @var \DateTime
+     */
+    private $excludeDateEnd;
+
+    /**
+     * @var boolean
+     */
+    private $excludeConflict;
 
 
-	public function __construct()
-	{
-		$this->searchCallers = new ArrayCollection();
-		$this->searchPaths = new ArrayCollection();
-		$this->ignoreCallers = new ArrayCollection();
-		$this->ignorePaths = new ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->includeRuleIds = new ArrayCollection();
+        $this->includeProfileIds = new ArrayCollection();
+        $this->includeCallers = new ArrayCollection();
+        $this->includePaths = new ArrayCollection();
+        $this->excludeRuleIds = new ArrayCollection();
+        $this->excludeProfileIds = new ArrayCollection();
+        $this->excludeCallers = new ArrayCollection();
+        $this->excludePaths = new ArrayCollection();
+    }
 
-	public function getId()
-	{
-		return $this->id;
-	}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setRuleId($ruleId)
-	{
-		$this->ruleId = $ruleId;
+    public function addIncludeRuleId($ruleId)
+    {
+        $this->includeRuleIds[] = $ruleId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getRuleId()
-	{
-		return $this->ruleId;
-	}
+    public function getIncludeRuleIds()
+    {
+        return $this->includeRuleIds;
+    }
 
-	public function setProfileId($profileId)
-	{
-		$this->profileId = $profileId;
+    public function addIncludeProfileId($profileId)
+    {
+        $this->includeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getProfileId()
-	{
-		return $this->profileId;
-	}
+    public function getIncludeProfileIds()
+    {
+        return $this->includeProfileIds;
+    }
 
-	public function setStatus($status)
-	{
-		$this->status = $status;
+    public function setIncludeStatus($status)
+    {
+        $this->includeStatus = $status;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getIncludeStatus()
+    {
+        return $this->includeStatus;
+    }
 
-	public function setDateStart($dateStart)
-	{
-		$this->dateStart = $dateStart;
+    public function setIncludeDateStart($dateStart)
+    {
+        $this->includeDateStart = $dateStart;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateStart()
-	{
-		return $this->dateStart;
-	}
+    public function getIncludeDateStart()
+    {
+        return $this->includeDateStart;
+    }
 
-	public function setDateEnd($dateEnd)
-	{
-		$this->dateEnd = $dateEnd;
+    public function setIncludeDateEnd($dateEnd)
+    {
+        $this->includeDateEnd = $dateEnd;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getDateEnd()
-	{
-		return $this->dateEnd;
-	}
+    public function getIncludeDateEnd()
+    {
+        return $this->includeDateEnd;
+    }
 
-	public function addSearchCaller($caller)
-	{
-		$this->searchCallers[] = $caller;
+    public function addIncludeCaller($caller)
+    {
+        $this->includeCallers[] = $caller;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchCallers()
-	{
-		return $this->searchCallers;
-	}
+    public function getIncludeCallers()
+    {
+        return $this->includeCallers;
+    }
 
-	public function addSearchPath($path)
-	{
-		$this->searchPaths[] = $path;
+    public function addIncludePath($path)
+    {
+        $this->includePaths[] = $path;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSearchPaths()
-	{
-		return $this->searchPaths;
-	}
+    public function getIncludePaths()
+    {
+        return $this->includePaths;
+    }
 
-	public function addIgnoreCaller($caller)
-	{
-		$this->ignoreCallers[] = $caller;
+    public function setIncludeConflict($conflict)
+    {
+        $this->includeConflict = $conflict;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnoreCallers()
-	{
-		return $this->ignoreCallers;
-	}
+    public function hasIncludeConflict()
+    {
+        return $this->includeConflict;
+    }
 
-	public function addIgnorePath($path)
-	{
-		$this->ignorePaths[] = $path;
+    public function addExcludeRuleId($ruleId)
+    {
+        $this->excludeRuleIds[] = $ruleId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getIgnorePaths()
-	{
-		return $this->ignorePaths;
-	}
+    public function getExcludeRuleIds()
+    {
+        return $this->excludeRuleIds;
+    }
 
-	public function setConflict($conflict)
-	{
-		$this->conflict = $conflict;
+    public function addExcludeProfileId($profileId)
+    {
+        $this->excludeProfileIds[] = $profileId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function hasConflict()
-	{
-		return $this->conflict;
-	}
+    public function getExcludeProfileIds()
+    {
+        return $this->excludeProfileIds;
+    }
+
+    public function setExcludeStatus($status)
+    {
+        $this->excludeStatus = $status;
+
+        return $this;
+    }
+
+    public function getExcludeStatus()
+    {
+        return $this->excludeStatus;
+    }
+
+    public function setExcludeDateStart($dateStart)
+    {
+        $this->excludeDateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getExcludeDateStart()
+    {
+        return $this->excludeDateStart;
+    }
+
+    public function setExcludeDateEnd($dateEnd)
+    {
+        $this->excludeDateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getExcludeDateEnd()
+    {
+        return $this->excludeDateEnd;
+    }
+
+    public function addExcludeCaller($caller)
+    {
+        $this->excludeCallers[] = $caller;
+
+        return $this;
+    }
+
+    public function getExcludeCallers()
+    {
+        return $this->excludeCallers;
+    }
+
+    public function addExcludePath($path)
+    {
+        $this->excludePaths[] = $path;
+
+        return $this;
+    }
+
+    public function getExcludePaths()
+    {
+        return $this->excludePaths;
+    }
+
+    public function setExcludeConflict($conflict)
+    {
+        $this->excludeConflict = $conflict;
+
+        return $this;
+    }
+
+    public function hasExcludeConflict()
+    {
+        return $this->excludeConflict;
+    }
 }
