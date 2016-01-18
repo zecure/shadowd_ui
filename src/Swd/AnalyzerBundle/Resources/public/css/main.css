@@ -118,6 +118,10 @@ th, td {
   padding-bottom: 15px;
 }
 
+#table-home {
+  z-index: 501;
+}
+
 #logo {
   position: relative;
   bottom: -75px;
