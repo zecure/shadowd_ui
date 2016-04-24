@@ -273,7 +273,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
         if ($filter->getExcludeBrokenIntegrityRule())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule e_ir WHERE e_ir MEMBER OF r.brokenIntegrityRules) = 0');
+            $builder->andWhere('(SELECT COUNT(e_ir.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule e_ir WHERE e_ir MEMBER OF r.brokenIntegrityRules) = 0');
         }
 
         if ($filter->getExcludeCriticalImpact())
