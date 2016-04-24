@@ -108,7 +108,7 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasIncludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) > 0');
+            $builder->andWhere('(SELECT COUNT(i_ir.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule i_ir WHERE ir.profile = i_ir.profile AND ir.caller = i_ir.caller AND ir.algorithm = i_ir.algorithm AND ir.digest != i_ir.digest) > 0');
         }
 
         if (!$filter->getExcludeRuleIds()->isEmpty())
@@ -188,7 +188,7 @@ class IntegrityRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasExcludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE ir.profile = x.profile AND ir.caller = x.caller AND ir.algorithm = x.algorithm AND ir.digest != x.digest) = 0');
+            $builder->andWhere('(SELECT COUNT(e_ir.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule e_ir WHERE ir.profile = e_ir.profile AND ir.caller = e_ir.caller AND ir.algorithm = e_ir.algorithm AND ir.digest != e_ir.digest) = 0');
         }
 
         return $builder->getQuery();

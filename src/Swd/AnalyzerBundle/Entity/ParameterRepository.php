@@ -139,7 +139,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
         if ($filter->getIncludeBrokenWhitelistRule())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE x MEMBER OF p.brokenWhitelistRules) > 0');
+            $builder->andWhere('(SELECT COUNT(i_wr.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule i_wr WHERE i_wr MEMBER OF p.brokenWhitelistRules) > 0');
         }
 
         if ($filter->getIncludeNoIntegrityRule())
@@ -149,7 +149,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
         if ($filter->getIncludeBrokenIntegrityRule())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE x MEMBER OF r.brokenIntegrityRules) > 0');
+            $builder->andWhere('(SELECT COUNT(i_ir.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule i_ir WHERE i_ir MEMBER OF r.brokenIntegrityRules) > 0');
         }
 
         if ($filter->getIncludeCriticalImpact())
@@ -263,7 +263,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
         if ($filter->getExcludeBrokenWhitelistRule())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE x MEMBER OF p.brokenWhitelistRules) = 0');
+            $builder->andWhere('(SELECT COUNT(e_wr.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule e_wr WHERE e_wr MEMBER OF p.brokenWhitelistRules) = 0');
         }
 
         if ($filter->getExcludeNoIntegrityRule())
@@ -273,7 +273,7 @@ class ParameterRepository extends EntityRepositoryTransformer
 
         if ($filter->getExcludeBrokenIntegrityRule())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule x WHERE x MEMBER OF r.brokenIntegrityRules) = 0');
+            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\IntegrityRule e_ir WHERE e_ir MEMBER OF r.brokenIntegrityRules) = 0');
         }
 
         if ($filter->getExcludeCriticalImpact())
