@@ -205,7 +205,7 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
         {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getPaths() as $key => $value)
+            foreach ($filter->getIncludePaths() as $key => $value)
             {
                 $orExpr->add($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value))));
             }
