@@ -94,16 +94,12 @@ class RequestRepository extends EntityRepositoryTransformer
 
         if ($filter->getIncludeDateStart())
         {
-            $builder
-                ->andWhere('r.date >= :includeDateStart')
-                ->setParameter('includeDateStart', $filter->getIncludeDateStart());
+            $builder->andWhere('r.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
         }
 
         if ($filter->getIncludeDateEnd())
         {
-            $builder
-                ->andWhere('r.date <= :includeDateEnd')
-                ->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
+            $builder->andWhere('r.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
         }
 
         if (!$filter->getExcludeRequestIds()->isEmpty())
@@ -168,16 +164,12 @@ class RequestRepository extends EntityRepositoryTransformer
 
         if ($filter->getExcludeDateStart())
         {
-            $builder
-                ->andWhere('r.date < :excludeDateStart')
-                ->setParameter('includeDateStart', $filter->getExcludeDateStart());
+            $builder->andWhere('r.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
         }
 
         if ($filter->getExcludeDateEnd())
         {
-            $builder
-                ->andWhere('r.date > :excludeDateEnd')
-                ->setParameter('includeDateEnd', $filter->getExcludeDateEnd());
+            $builder->andWhere('r.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
         }
             
         return $builder->getQuery();

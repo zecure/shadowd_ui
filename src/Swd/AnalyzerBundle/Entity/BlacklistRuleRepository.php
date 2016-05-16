@@ -96,7 +96,7 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasIncludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule x WHERE br.profile = x.profile AND br.caller = x.caller AND br.path = x.path AND br.threshold != x.threshold) > 0');
+            $builder->andWhere('(SELECT COUNT(i_br.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule i_br WHERE br.profile = i_br.profile AND br.caller = i_br.caller AND br.path = i_br.path AND br.threshold != i_br.threshold) > 0');
         }
 
         if (!$filter->getExcludeRuleIds()->isEmpty())
@@ -152,7 +152,7 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasExcludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule x WHERE br.profile = x.profile AND br.caller = x.caller AND br.path = x.path AND br.threshold != x.threshold) = 0');
+            $builder->andWhere('(SELECT COUNT(e_br.id) FROM Swd\AnalyzerBundle\Entity\BlacklistRule e_br WHERE br.profile = e_br.profile AND br.caller = e_br.caller AND br.path = e_br.path AND br.threshold != e_br.threshold) = 0');
         }
 
         return $builder->getQuery();
@@ -205,7 +205,7 @@ class BlacklistRuleRepository extends EntityRepositoryTransformer
         {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getPaths() as $key => $value)
+            foreach ($filter->getIncludePaths() as $key => $value)
             {
                 $orExpr->add($builder->expr()->like('br.path', $builder->expr()->literal($this->prepareWildcard($value))));
             }

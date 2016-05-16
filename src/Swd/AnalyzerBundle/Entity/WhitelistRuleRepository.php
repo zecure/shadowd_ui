@@ -108,7 +108,7 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasIncludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE wr.profile = x.profile AND wr.caller = x.caller AND wr.path = x.path AND (wr.minLength != x.minLength OR wr.maxLength != x.maxLength OR wr.filter != x.filter)) > 0');
+            $builder->andWhere('(SELECT COUNT(i_wr.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule i_wr WHERE wr.profile = i_wr.profile AND wr.caller = i_wr.caller AND wr.path = i_wr.path AND (wr.minLength != i_wr.minLength OR wr.maxLength != i_wr.maxLength OR wr.filter != i_wr.filter)) > 0');
         }
 
         if (!$filter->getExcludeRuleIds()->isEmpty())
@@ -176,7 +176,7 @@ class WhitelistRuleRepository extends EntityRepositoryTransformer
 
         if ($filter->hasExcludeConflict())
         {
-            $builder->andWhere('(SELECT COUNT(x.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule x WHERE wr.profile = x.profile AND wr.caller = x.caller AND wr.path = x.path AND (wr.minLength != x.minLength OR wr.maxLength != x.maxLength OR wr.filter != x.filter)) = 0');
+            $builder->andWhere('(SELECT COUNT(e_wr.id) FROM Swd\AnalyzerBundle\Entity\WhitelistRule e_wr WHERE wr.profile = e_wr.profile AND wr.caller = e_wr.caller AND wr.path = e_wr.path AND (wr.minLength != e_wr.minLength OR wr.maxLength != e_wr.maxLength OR wr.filter != e_wr.filter)) = 0');
         }
 
         return $builder->getQuery();

@@ -24,7 +24,7 @@
         <th>{{ knp_pagination_sortable(profiles, 'Blacklist'|trans, 'v.blacklistEnabled') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Integrity'|trans, 'v.integrityEnabled') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding'|trans, 'v.floodingEnabled') }}</th>
-        <th>{{ knp_pagination_sortable(profiles, 'Blacklist threshold'|trans, 'v.threshold') }}</th>
+        <th>{{ knp_pagination_sortable(profiles, 'Blacklist threshold'|trans, 'v.blacklistThreshold') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding timeframe'|trans, 'v.floodingTime') }}</th>
         <th>{{ knp_pagination_sortable(profiles, 'Flooding threshold'|trans, 'v.floodingThreshold') }}</th>
         <th>{% trans %}# Requests{% endtrans %}</th>
@@ -58,8 +58,8 @@
           {% endif %}
         </td>
         <td class="filter-icons">
-          <a href="{{ mergePath({'profile_filter': {'includeModes': [profile.getMode]}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
-          <a href="{{ mergePath({'profile_filter': {'excludeModes': [profile.getMode]}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'includeMode': profile.getMode}}) }}"><i class="fa fa-plus-square" title="{% trans %}Include{% endtrans %}"></i></a>
+          <a href="{{ mergePath({'profile_filter': {'excludeMode': profile.getMode}}) }}"><i class="fa fa-minus-square" title="{% trans %}Exclude{% endtrans %}"></i></a>
         </td>
         <td>
           {% if profile.getWhitelistEnabled == 0 %} {{ label_danger('Disabled'|trans) }}

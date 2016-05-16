@@ -63,7 +63,9 @@ class UserController extends Controller
                 switch ($userSelector->getSubaction())
                 {
                     case 'delete':
-                        $em->remove($user->getSetting());
+                        if ($user->getSetting()) {
+                            $em->remove($user->getSetting());
+                        }
                         $em->remove($user);
                         break;
                 }
