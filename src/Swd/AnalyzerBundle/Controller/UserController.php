@@ -42,7 +42,12 @@ class UserController extends Controller
         /* Handle filter form. */
         $filter = new UserFilter();
         $form = $this->createForm(new UserFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+
+        if ($this->get('request')->getMethod() === 'GET') {
+            $form->handleRequest($this->get('request'));
+        } else {
+            $form->submit($this->get('request')->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $userSelector = new Selector();

@@ -36,7 +36,12 @@ class ParameterController extends Controller
         /* Handle filter form. */
         $filter = new ParameterFilter();
         $form = $this->createForm(new ParameterFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+
+        if ($this->get('request')->getMethod() === 'GET') {
+            $form->handleRequest($this->get('request'));
+        } else {
+            $form->submit($this->get('request')->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $parameterSelector = new Selector();

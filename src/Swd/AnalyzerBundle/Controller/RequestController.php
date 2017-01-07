@@ -35,7 +35,12 @@ class RequestController extends Controller
         /* Handle filter form. */
         $filter = new RequestFilter();
         $form = $this->createForm(new RequestFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+
+        if ($this->get('request')->getMethod() === 'GET') {
+            $form->handleRequest($this->get('request'));
+        } else {
+            $form->submit($this->get('request')->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $requestSelector = new Selector();
