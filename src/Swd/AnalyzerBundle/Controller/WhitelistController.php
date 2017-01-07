@@ -44,7 +44,12 @@ class WhitelistController extends Controller
         /* Handle filter form. */
         $filter = new WhitelistRuleFilter();
         $form = $this->createForm(new WhitelistRuleFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+
+        if ($this->get('request')->getMethod() === 'GET') {
+            $form->handleRequest($this->get('request'));
+        } else {
+            $form->submit($this->get('request')->query->get($form->getName()));
+        }
 
         /* Handle the form that is embedded in the table. */
         $ruleSelector = new Selector();
