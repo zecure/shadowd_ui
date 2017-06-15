@@ -1,19 +1,32 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "zecure/shadowd_ui",
+    "license": "GPLv2",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "authors": [
+        {
+            "name": "Hendrik Buchwald",
+            "email": "hb@zecure.org",
+            "homepage": "https://zecure.org"
+        }
+    ],
+    "description": "The Shadow Daemon user interface",
     "autoload": {
-        "psr-0": { "": "src/", "SymfonyStandard": "app/" }
+        "psr-4": {
+            "": "src/"
+        },
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
     },
     "repositories": [
         {
             "type": "package",
             "package": {
                 "name": "jquery/jquery",
-                "version": "1.10.2",
+                "version": "3.2.1",
                 "dist": {
-                    "url": "https://code.jquery.com/jquery-1.10.2.js",
+                    "url": "https://code.jquery.com/jquery-3.2.1.min.js",
                     "type": "file"
                 }
             }
@@ -21,26 +34,27 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.*",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle": "~1.2",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "sensio/distribution-bundle": "~3.0",
+        "symfony/symfony": "2.8.*",
+        "doctrine/orm": "~2.5",
+        "doctrine/doctrine-bundle": "~1.6",
+        "twig/twig": "^1.0",
+        "twig/extensions": "~1.5",
+        "symfony/assetic-bundle": "~2.8",
+        "symfony/monolog-bundle": "~3.1",
+        "symfony/swiftmailer-bundle": "~3.0",
+        "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "~3.0",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "knplabs/knp-menu": "~2.0",
-        "knplabs/knp-menu-bundle": "~2.0",
-        "knplabs/knp-paginator-bundle": "~2.4",
-        "braincrafted/bootstrap-bundle": "~2.0",
-        "twbs/bootstrap": "3.0.*",
-        "jquery/jquery":  "1.10.*",
-        "ircmaxell/password-compat": "~1.0.2"
+        "incenteev/composer-parameter-handler": "~2.1",
+        "knplabs/knp-menu": "~2.2",
+        "knplabs/knp-menu-bundle": "~2.1",
+        "knplabs/knp-paginator-bundle": "~2.6",
+        "braincrafted/bootstrap-bundle": "~2.2",
+        "twbs/bootstrap": "~3.3",
+        "jquery/jquery":  "~3.2",
+        "ircmaxell/password-compat": "~1.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~3.1"
     },
     "scripts": {
         "post-root-package-install": [

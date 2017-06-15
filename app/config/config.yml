@@ -48,10 +48,6 @@ assetic:
             apply_to: "\.less$"
         cssrewrite: ~
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport:  mail
-
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -69,10 +65,6 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-
-# Bootstrap Configuration
-braincrafted_bootstrap:
-    less_filter: less
 
 # Paginator Configuration
 knp_paginator:

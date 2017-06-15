@@ -33,7 +33,7 @@ class MergePathExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array('mergePath' => new \Twig_Function_Method($this, 'mergePath'));
+        return array('mergePath' => new \Twig_SimpleFunction('mergePath', array($this, 'mergePath')));
     }
 
     private function getUser()
