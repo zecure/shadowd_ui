@@ -29,6 +29,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class SettingType extends AbstractType
@@ -64,8 +66,8 @@ class SettingType extends AbstractType
                 'nl' => 'Nederlands',
                 'zh_CN' => '中文（简体）',
             )))
-            ->add('oldPassword', 'password', array('required' => false, 'label' => 'Old password'))
-            ->add('newPassword', 'repeated', array('required' => false, 'type' => 'password',
+            ->add('oldPassword', PasswordType::class, array('required' => false, 'label' => 'Old password'))
+            ->add('newPassword', RepeatedType::class, array('required' => false, 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'first_options'  => array('label' => 'New password'),
                 'second_options' => array('label' => 'Repeat password'),
