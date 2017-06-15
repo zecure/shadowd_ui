@@ -24,6 +24,11 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class WhitelistRuleType extends AbstractType
 {
@@ -35,11 +40,11 @@ class WhitelistRuleType extends AbstractType
             ->add('path')
             ->add('minLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Min. length'))
             ->add('maxLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Max. length'))
-            ->add('filter', 'entity', array('property' => 'getDescription', 'class' => 'SwdAnalyzerBundle:WhitelistFilter',
+            ->add('filter', EntityType::class, array('property' => 'getDescription', 'class' => 'SwdAnalyzerBundle:WhitelistFilter',
                 'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('wf')->orderBy('wf.impact', 'ASC'); }
             ))
-            ->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
-            ->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('status', ChoiceType::class, array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()

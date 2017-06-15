@@ -22,7 +22,12 @@ namespace Swd\AnalyzerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class UserFilterType extends AbstractType
 {
@@ -31,17 +36,17 @@ class UserFilterType extends AbstractType
         $builder
             ->setMethod('GET')
             ->setAction('#')
-            ->add('includeUserIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
-            ->add('includeUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
-            ->add('includeEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
-            ->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeUserIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
-            ->add('excludeUsernames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
-            ->add('excludeEmails', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
-            ->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('includeUserIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
+            ->add('includeUsernames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
+            ->add('includeEmails', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
+            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeUserIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
+            ->add('excludeUsernames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
+            ->add('excludeEmails', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
+            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()
@@ -53,7 +58,7 @@ class UserFilterType extends AbstractType
      * CSRF protection is useless for searching and makes it impossible
      * to send urls with filters to other persons, so better disable it.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

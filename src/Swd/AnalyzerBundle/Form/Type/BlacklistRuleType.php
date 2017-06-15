@@ -24,6 +24,10 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class BlacklistRuleType extends AbstractType
 {
@@ -34,8 +38,8 @@ class BlacklistRuleType extends AbstractType
             ->add('caller')
             ->add('path')
             ->add('threshold', null, array('required' => false, 'empty_data' => '-1'))
-            ->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
-            ->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('status', ChoiceType::class, array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()

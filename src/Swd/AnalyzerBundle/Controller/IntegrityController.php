@@ -22,6 +22,7 @@ namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Swd\AnalyzerBundle\Form\Type\IntegrityRuleFilterType;
@@ -37,34 +38,34 @@ use Swd\AnalyzerBundle\Form\Type\IntegrityExportType;
 
 class IntegrityController extends Controller
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new IntegrityRuleFilter();
-        $form = $this->createForm(new IntegrityRuleFilterType(), $filter);
+        $form = $this->createForm(IntegrityRuleFilterType::class, $filter);
 
-        if ($this->get('request')->getMethod() === 'GET') {
-            $form->handleRequest($this->get('request'));
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
         } else {
-            $form->submit($this->get('request')->query->get($form->getName()));
+            $form->submit($request->query->get($form->getName()));
         }
 
         /* Handle the form that is embedded in the table. */
         $ruleSelector = new Selector();
-        $embeddedForm = $this->createForm(new IntegrityRuleSelectorType(), $ruleSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(IntegrityRuleSelectorType::class, $ruleSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
+        if ($embeddedForm->isValid() && $request->get('selected'))
         {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
             {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
             }
 
-            foreach ($this->get('request')->get('selected') as $id)
+            foreach ($request->get('selected') as $id)
             {
                 $rule = $em->getRepository('SwdAnalyzerBundle:IntegrityRule')->find($id);
 
@@ -103,8 +104,8 @@ class IntegrityController extends Controller
         $query = $em->getRepository('SwdAnalyzerBundle:IntegrityRule')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -135,12 +136,12 @@ class IntegrityController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $rule = new IntegrityRule();
-        $form = $this->createForm(new IntegrityRuleType(), $rule);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(IntegrityRuleType::class, $rule);
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -166,7 +167,7 @@ class IntegrityController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get rule from database. */
         $rule = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:IntegrityRule')->find($id);
@@ -177,8 +178,8 @@ class IntegrityController extends Controller
         }
 
         /* Handle form. */
-        $form = $this->createForm(new IntegrityRuleType(), $rule);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(IntegrityRuleType::class, $rule);
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
         if ($form->isValid())
@@ -205,12 +206,12 @@ class IntegrityController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function importAction()
+    public function importAction(Request $request)
     {
         /* Handle form. */
         $import = new IntegrityImport();
-        $form = $this->createForm(new IntegrityImportType(), $import);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(IntegrityImportType::class, $import);
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -262,12 +263,12 @@ class IntegrityController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function exportAction()
+    public function exportAction(Request $request)
     {
         /* Handle form. */
         $export = new IntegrityExport();
-        $form = $this->createForm(new IntegrityExportType(), $export);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(IntegrityExportType::class, $export);
+        $form->handleRequest($request);
 
         /* Start download or show form. */
         if ($form->isValid())

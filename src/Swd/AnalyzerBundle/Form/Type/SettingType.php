@@ -23,17 +23,23 @@ namespace Swd\AnalyzerBundle\Form\Type;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class SettingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pageLimit', 'integer', array('label' => 'Entries per page'))
-            ->add('sortOrder', 'choice', array('choices' => array('0' => 'Descendent', '1' => 'Ascendent'), 'label' => 'Sort order'))
-            ->add('openFilter', 'checkbox', array('required' => false, 'label' => 'Automatically open filter mask on new filter'))
-            ->add('theme', 'choice', array('choices' => array(
+            ->add('pageLimit', IntegerType::class, array('label' => 'Entries per page'))
+            ->add('sortOrder', ChoiceType::class, array('choices' => array('0' => 'Descendent', '1' => 'Ascendent'), 'label' => 'Sort order'))
+            ->add('openFilter', CheckboxType::class, array('required' => false, 'label' => 'Automatically open filter mask on new filter'))
+            ->add('theme', ChoiceType::class, array('choices' => array(
                 '0' => 'Plain',
                 'cerulean' => 'Cerulean',
                 'cosmo' => 'Cosmo',
@@ -52,7 +58,7 @@ class SettingType extends AbstractType
                 'united' => 'United',
                 'yeti' => 'Yeti',
             )))
-            ->add('locale', 'choice', array('choices' => array(
+            ->add('locale', ChoiceType::class, array('choices' => array(
                 'de' => 'Deutsch',
                 'en' => 'English',
                 'nl' => 'Nederlands',
@@ -64,10 +70,10 @@ class SettingType extends AbstractType
                 'first_options'  => array('label' => 'New password'),
                 'second_options' => array('label' => 'Repeat password'),
             ))
-            ->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'csrf_protection' => true,

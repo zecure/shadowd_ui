@@ -24,33 +24,41 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class GeneratorSettingsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
+            ->add('profile', EntityType::class, array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
                 'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
             ))
-            ->add('predefined', 'choice', array('choices' => array('1' => 'Low security', '2' => 'Moderate security', '3' => 'High security', '4' => 'Custom')))
-            ->add('status', 'choice', array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
-            ->add('enableWhitelist', 'checkbox', array('required' => false, 'label' => 'Generate whitelist rules'))
-            ->add('enableBlacklist', 'checkbox', array('required' => false, 'label' => 'Generate blacklist rules'))
-            ->add('enableIntegrity', 'checkbox', array('required' => false, 'label' => 'Generate integrity rules'))
-            ->add('minUniqueVisitors', 'integer', array('label' => 'Min. unique visitors'))
-            ->add('minFilterDominance', 'integer', array('label' => 'Min. filter dominance'))
-            ->add('maxLengthVariance', 'integer', array('label' => 'Max. length variance'))
-            ->add('minThresholdDominance', 'integer', array('label' => 'Min. threshold dominance'))
-            ->add('unifyWhitelistArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
-            ->add('unifyWhitelistCallers', 'checkbox', array('required' => false, 'label' => 'Unify callers'))
-            ->add('unifyBlacklistArrays', 'checkbox', array('required' => false, 'label' => 'Unify arrays'))
-            ->add('unifyBlacklistCallers', 'checkbox', array('required' => false, 'label' => 'Unify callers'))
-            ->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-            ->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-            ->add('actions', 'form_actions', array('buttons' => array('generate' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('predefined', ChoiceType::class, array('choices' => array('1' => 'Low security', '2' => 'Moderate security', '3' => 'High security', '4' => 'Custom')))
+            ->add('status', ChoiceType::class, array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
+            ->add('enableWhitelist', CheckboxType::class, array('required' => false, 'label' => 'Generate whitelist rules'))
+            ->add('enableBlacklist', CheckboxType::class, array('required' => false, 'label' => 'Generate blacklist rules'))
+            ->add('enableIntegrity', CheckboxType::class, array('required' => false, 'label' => 'Generate integrity rules'))
+            ->add('minUniqueVisitors', IntegerType::class, array('label' => 'Min. unique visitors'))
+            ->add('minFilterDominance', IntegerType::class, array('label' => 'Min. filter dominance'))
+            ->add('maxLengthVariance', IntegerType::class, array('label' => 'Max. length variance'))
+            ->add('minThresholdDominance', IntegerType::class, array('label' => 'Min. threshold dominance'))
+            ->add('unifyWhitelistArrays', CheckboxType::class, array('required' => false, 'label' => 'Unify arrays'))
+            ->add('unifyWhitelistCallers', CheckboxType::class, array('required' => false, 'label' => 'Unify callers'))
+            ->add('unifyBlacklistArrays', CheckboxType::class, array('required' => false, 'label' => 'Unify arrays'))
+            ->add('unifyBlacklistCallers', CheckboxType::class, array('required' => false, 'label' => 'Unify callers'))
+            ->add('includeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('includePaths', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('excludeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('excludePaths', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('actions', FormActionsType::class, array('buttons' => array('generate' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()

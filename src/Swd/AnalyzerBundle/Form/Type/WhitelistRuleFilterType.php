@@ -22,7 +22,14 @@ namespace Swd\AnalyzerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class WhitelistRuleFilterType extends AbstractType
 {
@@ -31,23 +38,23 @@ class WhitelistRuleFilterType extends AbstractType
         $builder
             ->setMethod('GET')
             ->setAction('#')
-            ->add('includeRuleIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
-            ->add('includeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('includeStatus', 'choice', array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
-            ->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('includePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-            ->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeConflict', 'checkbox', array('required' => false, 'label' => 'Has conflict'))
-            ->add('excludeRuleIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
-            ->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('excludeStatus', 'choice', array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
-            ->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('excludePaths', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
-            ->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeConflict', 'checkbox', array('required' => false, 'label' => 'Has conflict'))
-            ->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('includeRuleIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
+            ->add('includeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('includeStatus', ChoiceType::class, array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
+            ->add('includeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('includePaths', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeConflict', CheckboxType::class, array('required' => false, 'label' => 'Has conflict'))
+            ->add('excludeRuleIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Rule ID'))
+            ->add('excludeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('excludeStatus', ChoiceType::class, array('required' => false, 'label' => 'Status', 'choices' => array('1' => 'Active', '2' => 'Inactive', '3' => 'Pending')))
+            ->add('excludeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('excludePaths', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Path'))
+            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeConflict', CheckboxType::class, array('required' => false, 'label' => 'Has conflict'))
+            ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()
@@ -59,7 +66,7 @@ class WhitelistRuleFilterType extends AbstractType
      * CSRF protection is useless for searching and makes it impossible
      * to send urls with filters to other persons, so better disable it.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

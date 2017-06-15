@@ -38,7 +38,7 @@ class MergePathExtension extends \Twig_Extension
 
     private function getUser()
     {
-        return $this->container->get('security.context')->getToken()->getUser();
+        return $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
     private function array_merge_recursive(array &$array1, array &$array2)

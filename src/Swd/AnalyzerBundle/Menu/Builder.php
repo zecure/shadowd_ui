@@ -21,16 +21,19 @@
 namespace Swd\AnalyzerBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
-class Builder extends ContainerAware
+class Builder implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     public function mainMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
 
-        if ($this->container->get('security.context')->isGranted('ROLE_USER'))
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_USER'))
         {
             $menu->addChild(
                 '<i class="menu-icons fa fa-home"></i>' . $this->container->get('translator')->trans('Home'),
@@ -67,7 +70,7 @@ class Builder extends ContainerAware
                 '<i class="menu-icons fa fa-shield"></i>' . $this->container->get('translator')->trans('Integrity'),
                 array('route' => 'swd_analyzer_integrity_rules', 'extras' => array('safe_label' => true)));
 
-            if ($this->container->get('security.context')->isGranted('ROLE_ADMIN'))
+            if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
             {
                 $administration = $menu->addChild(
                     '<i class="menu-icons fa fa-university"></i>' . $this->container->get('translator')->trans('Administration'),

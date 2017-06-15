@@ -22,7 +22,12 @@ namespace Swd\AnalyzerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class RequestFilterType extends AbstractType
 {
@@ -31,21 +36,21 @@ class RequestFilterType extends AbstractType
         $builder
             ->setMethod('GET')
             ->setAction('#')
-            ->add('includeRequestIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Request ID'))
-            ->add('includeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('includeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('includeResources', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
-            ->add('includeClientIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
-            ->add('includeDateStart', 'datetime', array('required' => false, 'label' => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeDateEnd', 'datetime', array('required' => false, 'label' => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeRequestIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Request ID'))
-            ->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('excludeCallers', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
-            ->add('excludeResources', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
-            ->add('excludeClientIPs','bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
-            ->add('excludeDateStart', 'datetime', array('required' => false, 'label' => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeDateEnd', 'datetime', array('required' => false, 'label' => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('includeRequestIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Request ID'))
+            ->add('includeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('includeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('includeResources', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
+            ->add('includeClientIPs', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
+            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label' => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label' => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeRequestIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Request ID'))
+            ->add('excludeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('excludeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
+            ->add('excludeResources', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
+            ->add('excludeClientIPs',BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
+            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label' => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label' => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()
@@ -57,7 +62,7 @@ class RequestFilterType extends AbstractType
      * CSRF protection is useless for searching and makes it impossible
      * to send urls with filters to other persons, so better disable it.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

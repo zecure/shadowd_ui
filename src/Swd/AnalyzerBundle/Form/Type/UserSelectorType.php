@@ -23,15 +23,18 @@ namespace Swd\AnalyzerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class UserSelectorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subaction', 'choice', array('choices' => array('delete' => 'Delete users')))
-            ->add('actions', 'form_actions', array('buttons' => array('do' => array(
-                'type' => 'submit', 'options' => array('label' => 'Execute'))
+            ->add('subaction', ChoiceType::class, array('choices' => array('delete' => 'Delete users')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('do' => array(
+                'type' => SubmitType::class, 'options' => array('label' => 'Execute'))
             )));
     }
 

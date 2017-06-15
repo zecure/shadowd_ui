@@ -22,7 +22,13 @@ namespace Swd\AnalyzerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class ProfileFilterType extends AbstractType
 {
@@ -31,19 +37,19 @@ class ProfileFilterType extends AbstractType
         $builder
             ->setMethod('GET')
             ->setAction('#')
-            ->add('includeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('includeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
-            ->add('includeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
-            ->add('includeMode', 'choice', array('required' => false, 'label' => 'Mode', 'choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
-            ->add('includeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeProfileIds', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
-            ->add('excludeServerIPs', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
-            ->add('excludeNames', 'bootstrap_collection', array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
-            ->add('excludeMode', 'choice', array('required' => false, 'label' => 'Mode', 'choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
-            ->add('excludeDateStart', 'datetime', array('required' => false, 'label'  => 'From', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeDateEnd', 'datetime', array('required' => false, 'label'  => 'To', 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('actions', 'form_actions', array('buttons' => array('filter' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('includeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('includeServerIPs', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
+            ->add('includeNames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+            ->add('includeMode', ChoiceType::class, array('required' => false, 'label' => 'Mode', 'choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
+            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
+            ->add('excludeServerIPs', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Server IP'))
+            ->add('excludeNames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Name'))
+            ->add('excludeMode', ChoiceType::class, array('required' => false, 'label' => 'Mode', 'choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
+            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()
@@ -55,7 +61,7 @@ class ProfileFilterType extends AbstractType
      * CSRF protection is useless for searching and makes it impossible
      * to send urls with filters to other persons, so better disable it.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
