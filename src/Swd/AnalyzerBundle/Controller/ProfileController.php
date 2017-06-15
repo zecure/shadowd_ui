@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swd\AnalyzerBundle\Form\Type\ProfileFilterType;
 use Swd\AnalyzerBundle\Entity\ProfileFilter;
@@ -31,34 +32,34 @@ use Swd\AnalyzerBundle\Entity\Selector;
 
 class ProfileController extends Controller
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new ProfileFilter();
-        $form = $this->createForm(new ProfileFilterType(), $filter);
+        $form = $this->createForm(ProfileFilterType::class, $filter);
 
-        if ($this->get('request')->getMethod() === 'GET') {
-            $form->handleRequest($this->get('request'));
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
         } else {
-            $form->submit($this->get('request')->query->get($form->getName()));
+            $form->submit($request->query->get($form->getName()));
         }
 
         /* Handle the other form. */
         $profileSelector = new Selector();
-        $embeddedForm = $this->createForm(new ProfileSelectorType(), $profileSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(ProfileSelectorType::class, $profileSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
+        if ($embeddedForm->isValid() && $request->get('selected'))
         {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
             {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify profiles.'));
             }
 
-            foreach ($this->get('request')->get('selected') as $id)
+            foreach ($request->get('selected') as $id)
             {
                 $profile = $em->getRepository('SwdAnalyzerBundle:Profile')->find($id);
 
@@ -119,8 +120,8 @@ class ProfileController extends Controller
         $query = $em->getRepository('SwdAnalyzerBundle:Profile')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -155,12 +156,12 @@ class ProfileController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $profile = new Profile();
-        $form = $this->createForm(new ProfileType(), $profile, array('validation_groups' => array('Default', 'add')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(ProfileType::class, $profile, array('validation_groups' => array('Default', 'add')));
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -184,7 +185,7 @@ class ProfileController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get profile from database. */
         $profile = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:Profile')->find($id);
@@ -197,8 +198,8 @@ class ProfileController extends Controller
         $oldKey = $profile->getKey();
 
         /* Handle form. */
-        $form = $this->createForm(new ProfileType(), $profile, array('required' => false, 'validation_groups' => array('Default', 'edit')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(ProfileType::class, $profile, array('required' => false, 'validation_groups' => array('Default', 'edit')));
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
         if ($form->isValid())

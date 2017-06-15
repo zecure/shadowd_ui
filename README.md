@@ -13,14 +13,9 @@ For the full documentation please refer to [shadowd.zecure.org](https://shadowd.
 A demonstration of this web interface can be found at [demo.shadowd.zecure.org](https://demo.shadowd.zecure.org/).
 
 # Installation
-The first thing you have to do is to download composer:
+Use [Composer](https://getcomposer.org/) to install the user interface.
 
-    curl -s https://getcomposer.org/installer | php
-
-Composer is an executable PHP archive which will download all dependencies and it also allows to configure the database settings.
-To start the installation just run:
-
-    php composer.phar install
+    composer install
 
 If the installation is successful you are able to add a new admin user via the terminal:
 

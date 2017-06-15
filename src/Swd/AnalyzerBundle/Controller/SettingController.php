@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,12 +21,13 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Swd\AnalyzerBundle\Form\Type\SettingType;
 use Swd\AnalyzerBundle\Entity\Setting;
 
 class SettingController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $user = $this->getUser();
 
@@ -34,12 +35,12 @@ class SettingController extends Controller
         $settings = $user->getSetting();
 
         /* Handle form. */
-        $form = $this->createForm(new SettingType(), $settings);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(SettingType::class, $settings);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
-            $this->get('request')->setLocale($settings->getLocale());
+            $request->setLocale($settings->getLocale());
             $this->get('session')->set('_locale', $settings->getLocale());
 
             if ($settings->getOldPassword())

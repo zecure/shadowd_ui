@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swd\AnalyzerBundle\Form\Type\UserFilterType;
 use Swd\AnalyzerBundle\Entity\UserFilter;
@@ -35,28 +36,28 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new UserFilter();
-        $form = $this->createForm(new UserFilterType(), $filter);
+        $form = $this->createForm(UserFilterType::class, $filter);
 
-        if ($this->get('request')->getMethod() === 'GET') {
-            $form->handleRequest($this->get('request'));
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
         } else {
-            $form->submit($this->get('request')->query->get($form->getName()));
+            $form->submit($request->query->get($form->getName()));
         }
 
         /* Handle the other form. */
         $userSelector = new Selector();
-        $embeddedForm = $this->createForm(new UserSelectorType(), $userSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(UserSelectorType::class, $userSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
+        if ($embeddedForm->isValid() && $request->get('selected'))
         {
-            foreach ($this->get('request')->get('selected') as $id)
+            foreach ($request->get('selected') as $id)
             {
                 $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
 
@@ -86,8 +87,8 @@ class UserController extends Controller
         $query = $em->getRepository('SwdAnalyzerBundle:User')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -112,15 +113,15 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $user = new User();
         $setting = new Setting();
         $setting->setUser($user);
 
-        $form = $this->createForm(new UserType(), $user, array('validation_groups' => array('Default', 'add')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(UserType::class, $user, array('validation_groups' => array('Default', 'add')));
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -145,7 +146,7 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get user from database. */
         $user = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:User')->find($id);
@@ -158,8 +159,8 @@ class UserController extends Controller
         $oldPassword = $user->getPassword();
 
         /* Handle form. */
-        $form = $this->createForm(new UserType(), $user, array('required' => false, 'validation_groups' => array('Default', 'edit')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(UserType::class, $user, array('required' => false, 'validation_groups' => array('Default', 'edit')));
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
         if ($form->isValid())

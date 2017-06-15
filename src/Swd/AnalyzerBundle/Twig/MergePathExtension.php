@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -33,12 +33,12 @@ class MergePathExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array('mergePath' => new \Twig_Function_Method($this, 'mergePath'));
+        return array('mergePath' => new \Twig_SimpleFunction('mergePath', array($this, 'mergePath')));
     }
 
     private function getUser()
     {
-        return $this->container->get('security.context')->getToken()->getUser();
+        return $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
     private function array_merge_recursive(array &$array1, array &$array2)

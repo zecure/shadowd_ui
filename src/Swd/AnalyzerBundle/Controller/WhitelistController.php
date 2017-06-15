@@ -3,7 +3,7 @@
 /*
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -22,6 +22,7 @@ namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Swd\AnalyzerBundle\Form\Type\WhitelistRuleFilterType;
@@ -37,34 +38,34 @@ use Swd\AnalyzerBundle\Form\Type\WhitelistExportType;
 
 class WhitelistController extends Controller
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new WhitelistRuleFilter();
-        $form = $this->createForm(new WhitelistRuleFilterType(), $filter);
+        $form = $this->createForm(WhitelistRuleFilterType::class, $filter);
 
-        if ($this->get('request')->getMethod() === 'GET') {
-            $form->handleRequest($this->get('request'));
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
         } else {
-            $form->submit($this->get('request')->query->get($form->getName()));
+            $form->submit($request->query->get($form->getName()));
         }
 
         /* Handle the form that is embedded in the table. */
         $ruleSelector = new Selector();
-        $embeddedForm = $this->createForm(new WhitelistRuleSelectorType(), $ruleSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(WhitelistRuleSelectorType::class, $ruleSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
+        if ($embeddedForm->isValid() && $request->get('selected'))
         {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
             {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
             }
 
-            foreach ($this->get('request')->get('selected') as $id)
+            foreach ($request->get('selected') as $id)
             {
                 $rule = $em->getRepository('SwdAnalyzerBundle:WhitelistRule')->find($id);
 
@@ -103,8 +104,8 @@ class WhitelistController extends Controller
         $query = $em->getRepository('SwdAnalyzerBundle:WhitelistRule')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -137,12 +138,12 @@ class WhitelistController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $rule = new WhitelistRule();
-        $form = $this->createForm(new WhitelistRuleType(), $rule);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(WhitelistRuleType::class, $rule);
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -168,7 +169,7 @@ class WhitelistController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get rule from database. */
         $rule = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:WhitelistRule')->find($id);
@@ -179,8 +180,8 @@ class WhitelistController extends Controller
         }
 
         /* Handle form. */
-        $form = $this->createForm(new WhitelistRuleType(), $rule);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(WhitelistRuleType::class, $rule);
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
         if ($form->isValid())
@@ -207,12 +208,12 @@ class WhitelistController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function importAction()
+    public function importAction(Request $request)
     {
         /* Handle form. */
         $import = new WhitelistImport();
-        $form = $this->createForm(new WhitelistImportType(), $import);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(WhitelistImportType::class, $import);
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
         if ($form->isValid())
@@ -268,12 +269,12 @@ class WhitelistController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function exportAction()
+    public function exportAction(Request $request)
     {
         /* Handle form. */
         $export = new WhitelistExport();
-        $form = $this->createForm(new WhitelistExportType(), $export);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(WhitelistExportType::class, $export);
+        $form->handleRequest($request);
 
         /* Start download or show form. */
         if ($form->isValid())
