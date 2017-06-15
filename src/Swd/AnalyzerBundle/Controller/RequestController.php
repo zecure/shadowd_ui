@@ -58,9 +58,9 @@ class RequestController extends Controller
 
             foreach ($request->get('selected') as $id)
             {
-                $request = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
+                $requestStored = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
 
-                if (!$request)
+                if (!$requestStored)
                 {
                     continue;
                 }
@@ -68,12 +68,12 @@ class RequestController extends Controller
                 switch ($requestSelector->getSubaction())
                 {
                     case 'delete':
-                        foreach ($request->getParameters() as $parameter)
+                        foreach ($requestStored->getParameters() as $parameter)
                         {
                             $em->remove($parameter);
                         }
 
-                        $em->remove($request);
+                        $em->remove($requestStored);
                         break;
                 }
             }

@@ -37,7 +37,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password', PasswordType::type, array('attr' => array('autocomplete' => 'off')))
+            ->add('password', PasswordType::class, array('attr' => array('autocomplete' => 'off')))
             ->add('email', null, array('required' => false))
             ->add('role', ChoiceType::class, array('choices' => array('0' => 'User', '1' => 'Admin')))
             ->add('changePassword', CheckboxType::class, array('required' => false, 'label' => 'Demand password change on login'))
