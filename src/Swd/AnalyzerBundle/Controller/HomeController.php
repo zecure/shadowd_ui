@@ -44,7 +44,7 @@ class HomeController extends Controller
 
         /* Get random tooltip. */
         try {
-            $locale = $this->getUser()->getSetting()->getLocale();
+            $locale = $this->get('session')->get('_locale');
 
             if (!preg_match('/^\w+$/i', $locale)) {
                 $locale = 'en';
