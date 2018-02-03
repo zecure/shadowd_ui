@@ -117,4 +117,13 @@ class UserRepository extends EntityRepositoryTransformer
 
         return $builder->getQuery();
     }
+
+    public function findDemoUser()
+    {
+        $builder = $this->createQueryBuilder('u')
+            ->setParameter('demoUsername', 'demo')
+            ->where('u.username = :demoUsername');
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
 }
