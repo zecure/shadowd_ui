@@ -39,22 +39,16 @@ class GeneratorController extends Controller
         $form = $this->createForm(GeneratorSettingsType::class, $settings);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $generator = $this->get('generator_manager');
             $generator->start($settings);
             $counter = $generator->save();
 
-            if ($counter === 0)
-            {
+            if ($counter === 0) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
-            }
-            elseif ($counter === 1)
-            {
+            } elseif ($counter === 1) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
-            }
-            else
-            {
+            } else {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
             }
         }

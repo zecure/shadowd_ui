@@ -48,28 +48,22 @@ class RequestController extends Controller
         $embeddedForm = $this->createForm(RequestSelectorType::class, $requestSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify requests.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
+            foreach ($request->get('selected') as $id) {
                 $requestStored = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
 
-                if (!$requestStored)
-                {
+                if (!$requestStored) {
                     continue;
                 }
 
-                switch ($requestSelector->getSubaction())
-                {
+                switch ($requestSelector->getSubaction()) {
                     case 'delete':
-                        foreach ($requestStored->getParameters() as $parameter)
-                        {
+                        foreach ($requestStored->getParameters() as $parameter) {
                             $em->remove($parameter);
                         }
 

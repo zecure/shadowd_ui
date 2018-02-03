@@ -69,7 +69,7 @@ class SettingType extends AbstractType
             ->add('oldPassword', PasswordType::class, array('required' => false, 'label' => 'Old password'))
             ->add('newPassword', RepeatedType::class, array('required' => false, 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
-                'first_options'  => array('label' => 'New password'),
+                'first_options' => array('label' => 'New password'),
                 'second_options' => array('label' => 'Repeat password'),
             ))
             ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
@@ -81,16 +81,12 @@ class SettingType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'validation_groups' =>
-                function($form)
-                {
+                function ($form) {
                     $settings = $form->getData();
 
-                    if (!$settings->getOldPassword())
-                    {
+                    if (!$settings->getOldPassword()) {
                         return array('Default');
-                    }
-                    else
-                    {
+                    } else {
                         return array('Default', 'change_password');
                     }
                 }

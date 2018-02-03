@@ -266,20 +266,16 @@ class Request
         $reasons = array();
 
         /* Check if no whitelist rule. */
-        foreach ($this->getParameters() as $parameter)
-        {
-            if ($parameter->getTotalWhitelistRules() === 0)
-            {
+        foreach ($this->getParameters() as $parameter) {
+            if ($parameter->getTotalWhitelistRules() === 0) {
                 $reasons[] = 'Unknown';
                 break;
             }
         }
 
         /* Check if broken whitelist rule. */
-        foreach ($this->getParameters() as $parameter)
-        {
-            if ($parameter->getBrokenWhitelistRules()->count() > 0)
-            {
+        foreach ($this->getParameters() as $parameter) {
+            if ($parameter->getBrokenWhitelistRules()->count() > 0) {
                 $reasons[] = 'Anomaly';
                 break;
             }
@@ -288,24 +284,17 @@ class Request
         /* Count tags. */
         $tags = array();
 
-        foreach ($this->getParameters() as $parameter)
-        {
+        foreach ($this->getParameters() as $parameter) {
             /* Do not add tags if impact is not critical. */
-            if (!$parameter->getCriticalImpact())
-            {
+            if (!$parameter->getCriticalImpact()) {
                 continue;
             }
 
-            foreach ($parameter->getMatchingBlacklistFilters() as $filter)
-            {
-                foreach ($filter->getTags() as $tag)
-                {
-                    if (isset($tags[$tag->getTag()]))
-                    {
+            foreach ($parameter->getMatchingBlacklistFilters() as $filter) {
+                foreach ($filter->getTags() as $tag) {
+                    if (isset($tags[$tag->getTag()])) {
                         $tags[$tag->getTag()]++;
-                    }
-                    else
-                    {
+                    } else {
                         $tags[$tag->getTag()] = 1;
                     }
                 }
@@ -313,24 +302,20 @@ class Request
         }
 
         /* Add most likely tags. */
-        if (!empty($tags))
-        {
+        if (!empty($tags)) {
             array_multisort($tags, SORT_DESC);
 
             $totalTags = array_sum($tags);
             $counter = 0;
 
-            foreach ($tags as $key => $value)
-            {
+            foreach ($tags as $key => $value) {
                 /* Limit the amount of tags. */
-                if ($counter++ > 2)
-                {
+                if ($counter++ > 2) {
                     break;
                 }
 
                 /* Filter out unrealistic tags. */
-                if (($value / $totalTags) < 0.5)
-                {
+                if (($value / $totalTags) < 0.5) {
                     break;
                 }
 

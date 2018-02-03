@@ -47,7 +47,7 @@ class RequestFilterType extends AbstractType
             ->add('excludeProfileIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Profile ID'))
             ->add('excludeCallers', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Caller'))
             ->add('excludeResources', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Resource'))
-            ->add('excludeClientIPs',BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
+            ->add('excludeClientIPs', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Client IP'))
             ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label' => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
             ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label' => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
             ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));

@@ -114,8 +114,7 @@ class User implements UserInterface, \Serializable
 
     public function setPassword($password, $hash = true)
     {
-        if ($password && $hash)
-        {
+        if ($password && $hash) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         }
 
@@ -158,12 +157,9 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        if ($this->role == 1)
-        {
+        if ($this->role == 1) {
             return array('ROLE_ADMIN');
-        }
-        else
-        {
+        } else {
             return array('ROLE_USER');
         }
     }
@@ -211,7 +207,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password
-        ) = unserialize($serialized);
+            ) = unserialize($serialized);
     }
 
     public function setSetting(\Swd\AnalyzerBundle\Entity\Setting $setting)

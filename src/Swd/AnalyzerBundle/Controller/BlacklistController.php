@@ -59,27 +59,22 @@ class BlacklistController extends Controller
 
         if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
-                if ($this->getParameter('demo'))
-                {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
                 $rule = $em->getRepository('SwdAnalyzerBundle:BlacklistRule')->find($id);
 
-                if (!$rule)
-                {
+                if (!$rule) {
                     continue;
                 }
 
-                switch ($ruleSelector->getSubaction())
-                {
+                switch ($ruleSelector->getSubaction()) {
                     case 'activate':
                         $rule->setStatus(1);
                         break;
@@ -98,12 +93,9 @@ class BlacklistController extends Controller
                 $rule->getProfile()->setCacheOutdated(1);
             }
 
-            if ($this->getParameter('demo'))
-            {
+            if ($this->getParameter('demo')) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
-            }
-            else
-            {
+            } else {
                 /* Save all the changes to the database. */
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were updated.'));
@@ -126,8 +118,7 @@ class BlacklistController extends Controller
         );
 
         /* Mark conflicts. */
-        foreach ($pagination as $rule)
-        {
+        foreach ($pagination as $rule) {
             $rule->setConflict($em->getRepository('SwdAnalyzerBundle:BlacklistRule')->findConflict($rule)->getSingleScalarResult());
         }
 
@@ -154,25 +145,19 @@ class BlacklistController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $rule->getProfile()->setCacheOutdated(1);
 
-            if ($this->getParameter('demo'))
-            {
+            if ($this->getParameter('demo')) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
-            }
-            else
-            {
+            } else {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($rule);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
             }
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Blacklist:show.html.twig',
                 array('form' => $form->createView())
@@ -188,8 +173,7 @@ class BlacklistController extends Controller
         /* Get rule from database. */
         $rule = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:BlacklistRule')->find($id);
 
-        if (!$rule)
-        {
+        if (!$rule) {
             throw $this->createNotFoundException('No rule found for id ' . $id);
         }
 
@@ -198,17 +182,13 @@ class BlacklistController extends Controller
         $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $rule->setDate(new \DateTime());
             $rule->getProfile()->setCacheOutdated(1);
 
-            if ($this->getParameter('demo'))
-            {
+            if ($this->getParameter('demo')) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
-            }
-            else
-            {
+            } else {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($rule);
                 $em->flush();
@@ -218,9 +198,7 @@ class BlacklistController extends Controller
 
 
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Blacklist:show.html.twig',
                 array('form' => $form->createView())
@@ -239,23 +217,18 @@ class BlacklistController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $fileContent = file_get_contents($import->getFile()->getPathName());
             $rules = json_decode($fileContent, true);
 
-            if ($this->getParameter('demo'))
-            {
+            if ($this->getParameter('demo')) {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
-            }
-            else if ($rules)
-            {
+            } else if ($rules) {
                 $import->getProfile()->setCacheOutdated(1);
 
                 $em = $this->getDoctrine()->getManager();
 
-                foreach ($rules as $rule)
-                {
+                foreach ($rules as $rule) {
                     $ruleObj = new BlacklistRule();
                     $ruleObj->setProfile($import->getProfile());
                     $ruleObj->setPath($rule['path']);
@@ -269,16 +242,12 @@ class BlacklistController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were imported.'));
-            }
-            else
-            {
+            } else {
                 $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('Invalid file.'));
             }
 
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
-        }
-        else
-        {
+        } else {
             /* Render template. */
             return $this->render(
                 'SwdAnalyzerBundle:Blacklist:import.html.twig',
@@ -300,21 +269,18 @@ class BlacklistController extends Controller
         $form->handleRequest($request);
 
         /* Start download or show form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             /* Gather rules in the export format. */
             $em = $this->getDoctrine()->getManager();
             $rules = $em->getRepository('SwdAnalyzerBundle:BlacklistRule')->findAllByExport($export)->getResult();
 
             $rulesJson = array();
 
-            foreach ($rules as $rule)
-            {
+            foreach ($rules as $rule) {
                 $ruleJson['path'] = $rule->getPath();
                 $ruleJson['caller'] = $rule->getCaller();
 
-                if ($export->getBase())
-                {
+                if ($export->getBase()) {
                     $ruleJson['caller'] = str_replace($export->getBase(), '{BASE}', $ruleJson['caller']);
                 }
 
@@ -338,9 +304,7 @@ class BlacklistController extends Controller
             $response->headers->set('Content-Disposition', $disposition);
 
             return $response;
-        }
-        else
-        {
+        } else {
             /* Render template. */
             return $this->render(
                 'SwdAnalyzerBundle:Blacklist:export.html.twig',

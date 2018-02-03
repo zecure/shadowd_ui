@@ -36,7 +36,9 @@ class WhitelistImportType extends AbstractType
     {
         $builder
             ->add('profile', EntityType::class, array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
-                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC');
+                }
             ))
             ->add('base', null, array('required' => false))
             ->add('file', FileType::class)

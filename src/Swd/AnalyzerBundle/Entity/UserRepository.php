@@ -31,95 +31,79 @@ class UserRepository extends EntityRepositoryTransformer
     {
         $builder = $this->createQueryBuilder('u');
 
-        if (!$filter->getIncludeUserIds()->isEmpty())
-        {
+        if (!$filter->getIncludeUserIds()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeUserIds() as $key => $value)
-            {
+            foreach ($filter->getIncludeUserIds() as $key => $value) {
                 $orExpr->add($builder->expr()->eq('u.id', $builder->expr()->literal($value)));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeUsernames()->isEmpty())
-        {
+        if (!$filter->getIncludeUsernames()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeUsernames() as $key => $value)
-            {
+            foreach ($filter->getIncludeUsernames() as $key => $value) {
                 $orExpr->add($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeEmails()->isEmpty())
-        {
+        if (!$filter->getIncludeEmails()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeEmails() as $key => $value)
-            {
+            foreach ($filter->getIncludeEmails() as $key => $value) {
                 $orExpr->add($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if ($filter->getIncludeDateStart())
-        {
+        if ($filter->getIncludeDateStart()) {
             $builder->andWhere('u.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
         }
 
-        if ($filter->getIncludeDateEnd())
-        {
+        if ($filter->getIncludeDateEnd()) {
             $builder->andWhere('u.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
         }
 
-        if (!$filter->getExcludeUserIds()->isEmpty())
-        {
+        if (!$filter->getExcludeUserIds()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeUserIds() as $key => $value)
-            {
+            foreach ($filter->getExcludeUserIds() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->eq('u.id', $builder->expr()->literal($value))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeUsernames()->isEmpty())
-        {
+        if (!$filter->getExcludeUsernames()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeUsernames() as $key => $value)
-            {
+            foreach ($filter->getExcludeUsernames() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('u.username', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeEmails()->isEmpty())
-        {
+        if (!$filter->getExcludeEmails()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeEmails() as $key => $value)
-            {
+            foreach ($filter->getExcludeEmails() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('u.email', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if ($filter->getExcludeDateStart())
-        {
+        if ($filter->getExcludeDateStart()) {
             $builder->andWhere('u.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
         }
 
-        if ($filter->getExcludeDateEnd())
-        {
+        if ($filter->getExcludeDateEnd()) {
             $builder->andWhere('u.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
         }
 

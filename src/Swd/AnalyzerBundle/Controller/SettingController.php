@@ -38,30 +38,21 @@ class SettingController extends Controller
         $form = $this->createForm(SettingType::class, $settings);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $request->setLocale($settings->getLocale());
             $this->get('session')->set('_locale', $settings->getLocale());
 
-            if ($settings->getOldPassword())
-            {
-                if (!$settings->getNewPassword())
-                {
+            if ($settings->getOldPassword()) {
+                if (!$settings->getNewPassword()) {
                     $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.'));
-                }
-                elseif (!password_verify($settings->getOldPassword(), $user->getPassword()))
-                {
+                } elseif (!password_verify($settings->getOldPassword(), $user->getPassword())) {
                     $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.'));
-                }
-                else
-                {
+                } else {
                     $user->setPassword($settings->getNewPassword());
                     $user->setChangePassword(false);
                     $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.'));
                 }
-            }
-            else
-            {
+            } else {
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.'));
             }
 

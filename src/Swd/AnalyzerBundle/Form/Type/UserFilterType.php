@@ -39,13 +39,13 @@ class UserFilterType extends AbstractType
             ->add('includeUserIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
             ->add('includeUsernames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
             ->add('includeEmails', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
-            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateStart', DateTimeType::class, array('required' => false, 'label' => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('includeDateEnd', DateTimeType::class, array('required' => false, 'label' => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
             ->add('excludeUserIds', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'User ID'))
             ->add('excludeUsernames', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Username'))
             ->add('excludeEmails', BootstrapCollectionType::class, array('allow_add' => true, 'allow_delete' => true, 'label' => 'Email'))
-            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label'  => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
-            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label'  => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateStart', DateTimeType::class, array('required' => false, 'label' => 'From', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
+            ->add('excludeDateEnd', DateTimeType::class, array('required' => false, 'label' => 'To', 'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day', 'hour' => 'Hour', 'minute' => 'Minute')))
             ->add('actions', FormActionsType::class, array('buttons' => array('filter' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 

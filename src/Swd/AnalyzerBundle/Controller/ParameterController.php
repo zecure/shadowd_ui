@@ -49,25 +49,20 @@ class ParameterController extends Controller
         $embeddedForm = $this->createForm(ParameterSelectorType::class, $parameterSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify parameters.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
+            foreach ($request->get('selected') as $id) {
                 $parameter = $em->getRepository('SwdAnalyzerBundle:Parameter')->find($id);
 
-                if (!$parameter)
-                {
+                if (!$parameter) {
                     continue;
                 }
 
-                switch ($parameterSelector->getSubaction())
-                {
+                switch ($parameterSelector->getSubaction()) {
                     case 'delete':
                         $em->remove($parameter);
                         break;
@@ -114,8 +109,7 @@ class ParameterController extends Controller
             ->getRepository('SwdAnalyzerBundle:Parameter')
             ->find($id);
 
-        if (!$parameter)
-        {
+        if (!$parameter) {
             throw $this->createNotFoundException('No parameter found for id ' . $id);
         }
 

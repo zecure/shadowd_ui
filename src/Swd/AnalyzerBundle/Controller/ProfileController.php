@@ -51,25 +51,20 @@ class ProfileController extends Controller
         $embeddedForm = $this->createForm(ProfileSelectorType::class, $profileSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify profiles.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
+            foreach ($request->get('selected') as $id) {
                 $profile = $em->getRepository('SwdAnalyzerBundle:Profile')->find($id);
 
-                if (!$profile)
-                {
+                if (!$profile) {
                     continue;
                 }
 
-                switch ($profileSelector->getSubaction())
-                {
+                switch ($profileSelector->getSubaction()) {
                     case 'enablewhitelist':
                         $profile->setWhitelistEnabled(1);
                         break;
@@ -132,8 +127,7 @@ class ProfileController extends Controller
         );
 
         /* Add information about existing learning cache. */
-        foreach ($pagination as $profile)
-        {
+        foreach ($pagination as $profile) {
             $profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 3)->getSingleScalarResult());
             $profile->setProductiveRequests(
                 $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult() +
@@ -164,17 +158,14 @@ class ProfileController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($profile);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Profile:show.html.twig',
                 array('form' => $form->createView())
@@ -190,8 +181,7 @@ class ProfileController extends Controller
         /* Get profile from database. */
         $profile = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:Profile')->find($id);
 
-        if (!$profile)
-        {
+        if (!$profile) {
             throw $this->createNotFoundException('No profile found for id ' . $id);
         }
 
@@ -202,12 +192,10 @@ class ProfileController extends Controller
         $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $profile->setDate(new \DateTime());
 
-            if (!$profile->getKey())
-            {
+            if (!$profile->getKey()) {
                 $profile->setKey($oldKey);
             }
 
@@ -217,9 +205,7 @@ class ProfileController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Profile:show.html.twig',
                 array('form' => $form->createView())

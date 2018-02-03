@@ -43,19 +43,16 @@ class GeneratorManager
 
     private function determineWhitelistFilter($input)
     {
-        if (!isset($this->filters['whitelist']))
-        {
+        if (!isset($this->filters['whitelist'])) {
             $this->filters['whitelist'] = $this->em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->findAllOrderedByImpact()->getResult();
         }
 
-        foreach ($this->filters['whitelist'] as $filter)
-        {
+        foreach ($this->filters['whitelist'] as $filter) {
             /* Escape the delimiter. */
             $rule = str_replace('~', '\~', $filter->getRule());
 
             /* Return the first filter that matches. */
-            if (preg_match('~' . $rule . '~is', $input))
-            {
+            if (preg_match('~' . $rule . '~is', $input)) {
                 return $filter;
             }
         }
@@ -64,7 +61,8 @@ class GeneratorManager
         throw new Exception('The whitelist filter table seems to be damaged.');
     }
 
-    private function splitPath($path) {
+    private function splitPath($path)
+    {
         return preg_split('/\\\\.(*SKIP)(*FAIL)|\|/s', $path);
     }
 
@@ -73,8 +71,7 @@ class GeneratorManager
         $pathes = $this->splitPath($path);
 
         /* A path with 2 parts is not an array. */
-        if (count($pathes) === 2)
-        {
+        if (count($pathes) === 2) {
             return $path;
         }
 
@@ -89,12 +86,9 @@ class GeneratorManager
     private function normalizeCaller($path, $caller)
     {
         /* SERVER and COOKIE input should be valid for all callers. */
-        if (preg_match('/^(SERVER|COOKIE)\|/', $path))
-        {
+        if (preg_match('/^(SERVER|COOKIE)\|/', $path)) {
             return '*';
-        }
-        else
-        {
+        } else {
             return $caller;
         }
     }
@@ -104,17 +98,13 @@ class GeneratorManager
         /* Get all parameters that were recorded in learning mode. */
         $parameters = $this->em->getRepository('SwdAnalyzerBundle:Parameter')->findAllLearningBySettings($settings)->getResult();
 
-        foreach ($parameters as $parameter)
-        {
+        foreach ($parameters as $parameter) {
             $request = $parameter->getRequest();
 
             /* Determine caller and path for statistics. */
-            if ($settings->getUnifyWhitelistCallers())
-            {
+            if ($settings->getUnifyWhitelistCallers()) {
                 $path = '*';
-            }
-            else
-            {
+            } else {
                 $path = ($settings->getUnifyWhitelistArrays() ?
                     $this->unifyArray($parameter->getPath()) :
                     $parameter->getPath()
@@ -141,18 +131,14 @@ class GeneratorManager
 
     private function generateWhitelistRules($settings)
     {
-        if (!$this->statistics['whitelist'])
-        {
+        if (!$this->statistics['whitelist']) {
             return;
         }
 
-        foreach ($this->statistics['whitelist'] as $caller => $caller_value)
-        {
-            foreach ($caller_value as $path => $stats)
-            {
+        foreach ($this->statistics['whitelist'] as $caller => $caller_value) {
+            foreach ($caller_value as $path => $stats) {
                 /* Ignore slips. */
-                if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
-                {
+                if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors()) {
                     continue;
                 }
 
@@ -169,18 +155,13 @@ class GeneratorManager
                  * If the variance is a bit higher but not really high we can calculate a max length.
                  * If the variance is too high it is not possible to set a min or max length.
                  */
-                if ($stats->getLengthVariance() < ($settings->getMaxLengthVariance() * 0.2))
-                {
+                if ($stats->getLengthVariance() < ($settings->getMaxLengthVariance() * 0.2)) {
                     $rule->setMinLength(ceil($stats->getAverageLength()));
                     $rule->setMaxLength(ceil($stats->getAverageLength()));
-                }
-                elseif ($stats->getLengthVariance() < $settings->getMaxLengthVariance())
-                {
+                } elseif ($stats->getLengthVariance() < $settings->getMaxLengthVariance()) {
                     $rule->setMinLength($stats->getMinLength());
                     $rule->setMaxLength($stats->getMaxLength());
-                }
-                else
-                {
+                } else {
                     $rule->setMinLength(-1);
                     $rule->setMaxLength(-1);
                 }
@@ -191,13 +172,10 @@ class GeneratorManager
                  */
                 $filter = $stats->getDominantWhitelistFilter($settings->getMinFilterDominance());
 
-                if ($filter === false)
-                {
+                if ($filter === false) {
                     $everything = $this->em->getRepository('SwdAnalyzerBundle:WhitelistFilter')->findHighestImpact()->getSingleResult();
                     $rule->setFilter($everything);
-                }
-                else
-                {
+                } else {
                     $rule->setFilter($filter);
                 }
 
@@ -212,17 +190,13 @@ class GeneratorManager
         /* Get all parameters that were recorded in learning mode. */
         $parameters = $this->em->getRepository('SwdAnalyzerBundle:Parameter')->findAllLearningBySettings($settings)->getResult();
 
-        foreach ($parameters as $parameter)
-        {
+        foreach ($parameters as $parameter) {
             $request = $parameter->getRequest();
 
             /* Determine caller and path for statistics. */
-            if ($settings->getUnifyBlacklistCallers())
-            {
+            if ($settings->getUnifyBlacklistCallers()) {
                 $path = '*';
-            }
-            else
-            {
+            } else {
                 $path = ($settings->getUnifyBlacklistArrays() ?
                     $this->unifyArray($parameter->getPath()) :
                     $parameter->getPath()
@@ -242,8 +216,7 @@ class GeneratorManager
 
             $filters = $parameter->getMatchingBlacklistFilters();
 
-            foreach ($filters as $filter)
-            {
+            foreach ($filters as $filter) {
                 $totalImpact += $filter->getImpact();
             }
 
@@ -258,29 +231,23 @@ class GeneratorManager
 
     private function generateBlacklistRules($settings)
     {
-        if (!$this->statistics['blacklist'])
-        {
+        if (!$this->statistics['blacklist']) {
             return;
         }
 
-        foreach ($this->statistics['blacklist'] as $caller => $caller_value)
-        {
-            foreach ($caller_value as $path => $stats)
-            {
+        foreach ($this->statistics['blacklist'] as $caller => $caller_value) {
+            foreach ($caller_value as $path => $stats) {
                 /* Ignore slips. */
-                if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
-                {
+                if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors()) {
                     continue;
                 }
 
                 /* Find parameters that always seem to have the same total impact. */
                 $threshold = $stats->getDominantBlacklistImpact($settings->getMinThresholdDominance());
 
-                if ($threshold !== false)
-                {
+                if ($threshold !== false) {
                     /* Don't add rule if the threshold is below the global threshold. */
-                    if ($threshold <= $settings->getProfile()->getBlacklistThreshold())
-                    {
+                    if ($threshold <= $settings->getProfile()->getBlacklistThreshold()) {
                         continue;
                     }
 
@@ -305,8 +272,7 @@ class GeneratorManager
         /* Get all requests that were recorded in learning mode. */
         $requests = $this->em->getRepository('SwdAnalyzerBundle:Request')->findAllLearningBySettings($settings)->getResult();
 
-        foreach ($requests as $request)
-        {
+        foreach ($requests as $request) {
             $caller = $request->getCaller();
 
             /* Get existing stat object for this caller or create a new one. */
@@ -318,8 +284,7 @@ class GeneratorManager
             /* Add the hashes to the statistic object. */
             $hashes = $request->getHashes();
 
-            foreach ($hashes as $hash)
-            {
+            foreach ($hashes as $hash) {
                 $stats->addHash($hash->getAlgorithm(), $hash->getDigest());
             }
 
@@ -332,23 +297,19 @@ class GeneratorManager
 
     private function generateIntegritytRules($settings)
     {
-        if (!$this->statistics['integrity'])
-        {
+        if (!$this->statistics['integrity']) {
             return;
         }
 
-        foreach ($this->statistics['integrity'] as $caller => $stats)
-        {
+        foreach ($this->statistics['integrity'] as $caller => $stats) {
             /* Ignore slips. */
-            if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors())
-            {
+            if ($stats->getUniqueCounter() < $settings->getMinUniqueVisitors()) {
                 continue;
             }
 
             $hashes = $stats->getHashes();
 
-            foreach ($hashes as $algorithm => $digest)
-            {
+            foreach ($hashes as $algorithm => $digest) {
                 /* Create a new rule. */
                 $rule = new IntegrityRule();
                 $rule->setProfile($settings->getProfile());
@@ -366,20 +327,17 @@ class GeneratorManager
 
     public function start($settings)
     {
-        if ($settings->getEnableWhitelist())
-        {
+        if ($settings->getEnableWhitelist()) {
             $this->generateWhitelistStatistics($settings);
             $this->generateWhitelistRules($settings);
         }
 
-        if ($settings->getEnableBlacklist())
-        {
+        if ($settings->getEnableBlacklist()) {
             $this->generateBlacklistStatistics($settings);
             $this->generateBlacklistRules($settings);
         }
 
-        if ($settings->getEnableIntegrity())
-        {
+        if ($settings->getEnableIntegrity()) {
             $this->generateIntegrityStatistics($settings);
             $this->generateIntegritytRules($settings);
         }
@@ -387,20 +345,17 @@ class GeneratorManager
 
     private function persistRules($id, $repo)
     {
-        if (!isset($this->rules[$id]))
-        {
+        if (!isset($this->rules[$id])) {
             return 0;
         }
 
         $counter = 0;
 
-        foreach ($this->rules[$id] as $rule)
-        {
+        foreach ($this->rules[$id] as $rule) {
             /* Do not continue if the same rule is already in the database. */
             $existingRules = $this->em->getRepository($repo)->findAllByRule($rule)->getResult();
 
-            if ($existingRules)
-            {
+            if ($existingRules) {
                 continue;
             }
 
@@ -419,7 +374,7 @@ class GeneratorManager
     public function save()
     {
         return $this->persistRules('whitelist', 'SwdAnalyzerBundle:WhitelistRule')
-         + $this->persistRules('blacklist', 'SwdAnalyzerBundle:BlacklistRule')
-         + $this->persistRules('integrity', 'SwdAnalyzerBundle:IntegrityRule');
+            + $this->persistRules('blacklist', 'SwdAnalyzerBundle:BlacklistRule')
+            + $this->persistRules('integrity', 'SwdAnalyzerBundle:IntegrityRule');
     }
 }

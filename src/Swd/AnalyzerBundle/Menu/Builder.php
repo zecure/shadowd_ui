@@ -33,8 +33,7 @@ class Builder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root');
 
-        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             $menu->addChild(
                 '<i class="menu-icons fa fa-home"></i>' . $this->container->get('translator')->trans('Home'),
                 array('route' => 'swd_analyzer_home', 'extras' => array('safe_label' => true)));
@@ -70,8 +69,7 @@ class Builder implements ContainerAwareInterface
                 '<i class="menu-icons fa fa-shield"></i>' . $this->container->get('translator')->trans('Integrity'),
                 array('route' => 'swd_analyzer_integrity_rules', 'extras' => array('safe_label' => true)));
 
-            if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 $administration = $menu->addChild(
                     '<i class="menu-icons fa fa-university"></i>' . $this->container->get('translator')->trans('Administration'),
                     array('extras' => array('safe_label' => true)));

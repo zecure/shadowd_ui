@@ -41,7 +41,9 @@ class WhitelistRuleType extends AbstractType
             ->add('minLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Min. length'))
             ->add('maxLength', null, array('required' => false, 'empty_data' => '-1', 'label' => 'Max. length'))
             ->add('filter', EntityType::class, array('property' => 'getDescription', 'class' => 'SwdAnalyzerBundle:WhitelistFilter',
-                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('wf')->orderBy('wf.impact', 'ASC'); }
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('wf')->orderBy('wf.impact', 'ASC');
+                }
             ))
             ->add('status', ChoiceType::class, array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))
             ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));

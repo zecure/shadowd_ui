@@ -57,25 +57,20 @@ class IntegrityController extends Controller
         $embeddedForm = $this->createForm(IntegrityRuleSelectorType::class, $ruleSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify rules.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
+            foreach ($request->get('selected') as $id) {
                 $rule = $em->getRepository('SwdAnalyzerBundle:IntegrityRule')->find($id);
 
-                if (!$rule)
-                {
+                if (!$rule) {
                     continue;
                 }
 
-                switch ($ruleSelector->getSubaction())
-                {
+                switch ($ruleSelector->getSubaction()) {
                     case 'activate':
                         $rule->setStatus(1);
                         break;
@@ -116,8 +111,7 @@ class IntegrityController extends Controller
         );
 
         /* Mark conflicts. */
-        foreach ($pagination as $rule)
-        {
+        foreach ($pagination as $rule) {
             $rule->setConflict($em->getRepository('SwdAnalyzerBundle:IntegrityRule')->findConflict($rule)->getSingleScalarResult());
         }
 
@@ -144,8 +138,7 @@ class IntegrityController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $rule->getProfile()->setCacheOutdated(1);
 
             $em = $this->getDoctrine()->getManager();
@@ -154,9 +147,7 @@ class IntegrityController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
             return $this->redirect($this->generateUrl('swd_analyzer_integrity_rules'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Integrity:show.html.twig',
                 array('form' => $form->createView())
@@ -172,8 +163,7 @@ class IntegrityController extends Controller
         /* Get rule from database. */
         $rule = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:IntegrityRule')->find($id);
 
-        if (!$rule)
-        {
+        if (!$rule) {
             throw $this->createNotFoundException('No rule found for id ' . $id);
         }
 
@@ -182,8 +172,7 @@ class IntegrityController extends Controller
         $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $rule->setDate(new \DateTime());
             $rule->getProfile()->setCacheOutdated(1);
 
@@ -193,9 +182,7 @@ class IntegrityController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
             return $this->redirect($this->generateUrl('swd_analyzer_integrity_rules'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Integrity:show.html.twig',
                 array('form' => $form->createView())
@@ -214,19 +201,16 @@ class IntegrityController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $fileContent = file_get_contents($import->getFile()->getPathName());
             $rules = json_decode($fileContent, true);
 
-            if ($rules)
-            {
+            if ($rules) {
                 $import->getProfile()->setCacheOutdated(1);
 
                 $em = $this->getDoctrine()->getManager();
 
-                foreach ($rules as $rule)
-                {
+                foreach ($rules as $rule) {
                     $ruleObj = new IntegrityRule();
                     $ruleObj->setProfile($import->getProfile());
                     $ruleObj->setCaller(str_replace('{BASE}', $import->getBase(), $rule['caller']));
@@ -240,16 +224,12 @@ class IntegrityController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were imported.'));
-            }
-            else
-            {
+            } else {
                 $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('Invalid file.'));
             }
 
             return $this->redirect($this->generateUrl('swd_analyzer_integrity_rules'));
-        }
-        else
-        {
+        } else {
             /* Render template. */
             return $this->render(
                 'SwdAnalyzerBundle:Integrity:import.html.twig',
@@ -271,20 +251,17 @@ class IntegrityController extends Controller
         $form->handleRequest($request);
 
         /* Start download or show form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             /* Gather rules in the export format. */
             $em = $this->getDoctrine()->getManager();
             $rules = $em->getRepository('SwdAnalyzerBundle:IntegrityRule')->findAllByExport($export)->getResult();
 
             $rulesJson = array();
 
-            foreach ($rules as $rule)
-            {
+            foreach ($rules as $rule) {
                 $ruleJson['caller'] = $rule->getCaller();
 
-                if ($export->getBase())
-                {
+                if ($export->getBase()) {
                     $ruleJson['caller'] = str_replace($export->getBase(), '{BASE}', $ruleJson['caller']);
                 }
 
@@ -309,9 +286,7 @@ class IntegrityController extends Controller
             $response->headers->set('Content-Disposition', $disposition);
 
             return $response;
-        }
-        else
-        {
+        } else {
             /* Render template. */
             return $this->render(
                 'SwdAnalyzerBundle:Integrity:export.html.twig',

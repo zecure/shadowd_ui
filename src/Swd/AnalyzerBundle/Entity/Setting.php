@@ -141,12 +141,9 @@ class Setting
 
     public function getSortOrderText()
     {
-        if ($this->sortOrder == 1)
-        {
+        if ($this->sortOrder == 1) {
             return 'asc';
-        }
-        else
-        {
+        } else {
             return 'desc';
         }
     }
@@ -177,8 +174,7 @@ class Setting
 
     public function isLocaleRTL()
     {
-        if (!$this->locale)
-        {
+        if (!$this->locale) {
             return false;
         }
 
