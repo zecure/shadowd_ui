@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -23,13 +23,16 @@ namespace Swd\AnalyzerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class ProfileSelectorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subaction', 'choice', array('choices' => array(
+            ->add('subaction', ChoiceType::class, array('choices' => array(
                 'enablewhitelist' => 'Enable whitelist',
                 'disablewhitelist' => 'Disable whitelist',
                 'enableblacklist' => 'Enable blacklist',
@@ -42,8 +45,8 @@ class ProfileSelectorType extends AbstractType
                 'deleteproductive' => 'Delete productive requests',
                 'delete' => 'Delete profiles'
             )))
-            ->add('actions', 'form_actions', array('buttons' => array('do' => array(
-                'type' => 'submit', 'options' => array('label' => 'Execute'))
+            ->add('actions', FormActionsType::class, array('buttons' => array('do' => array(
+                'type' => SubmitType::class, 'options' => array('label' => 'Execute'))
             )));
     }
 

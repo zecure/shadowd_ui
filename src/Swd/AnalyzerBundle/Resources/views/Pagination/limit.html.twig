@@ -5,15 +5,16 @@
       <li><a href="{{ mergePath({'limit': size}, true) }}">{{ size }}</a></li>
   {% endif %}
 {% endmacro %}
+{% import _self as list %}
 
 <div class="limit">
   <ul class="pagination">
     <li class="limit-description disabled"><span>{% trans %}Limit{% endtrans %}</span></li>
-    {{ _self.genEntry(limit, 10) }}
-    {{ _self.genEntry(limit, 25) }}
-    {{ _self.genEntry(limit, 50) }}
-    {{ _self.genEntry(limit, 100) }}
-    {{ _self.genEntry(limit, 250) }}
-    {{ _self.genEntry(limit, 1000) }}
+    {{ list.genEntry(limit, 10) }}
+    {{ list.genEntry(limit, 25) }}
+    {{ list.genEntry(limit, 50) }}
+    {{ list.genEntry(limit, 100) }}
+    {{ list.genEntry(limit, 250) }}
+    {{ list.genEntry(limit, 1000) }}
   </ul>
 </div>

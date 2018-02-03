@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -141,12 +141,9 @@ class Setting
 
     public function getSortOrderText()
     {
-        if ($this->sortOrder == 1)
-        {
+        if ($this->sortOrder == 1) {
             return 'asc';
-        }
-        else
-        {
+        } else {
             return 'desc';
         }
     }
@@ -177,8 +174,7 @@ class Setting
 
     public function isLocaleRTL()
     {
-        if (!$this->locale)
-        {
+        if (!$this->locale) {
             return false;
         }
 

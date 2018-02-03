@@ -3,7 +3,7 @@
 /*
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swd\AnalyzerBundle\Entity\Selector;
 use Swd\AnalyzerBundle\Entity\GeneratorSettings;
@@ -31,30 +32,28 @@ class GeneratorController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         /* Handle form. */
         $settings = new GeneratorSettings();
-        $form = $this->createForm(new GeneratorSettingsType(), $settings);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(GeneratorSettingsType::class, $settings);
+        $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
-            $generator = $this->get('generator_manager');
-            $generator->start($settings);
-            $counter = $generator->save();
+        if ($form->isValid()) {
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $generator = $this->get('generator_manager');
+                $generator->start($settings);
+                $counter = $generator->save();
 
-            if ($counter === 0)
-            {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
-            }
-            elseif ($counter === 1)
-            {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
-            }
-            else
-            {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
+                if ($counter === 0) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
+                } elseif ($counter === 1) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
+                }
             }
         }
 

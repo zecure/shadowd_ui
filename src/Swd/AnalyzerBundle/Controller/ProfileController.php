@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swd\AnalyzerBundle\Form\Type\ProfileFilterType;
 use Swd\AnalyzerBundle\Entity\ProfileFilter;
@@ -31,39 +32,43 @@ use Swd\AnalyzerBundle\Entity\Selector;
 
 class ProfileController extends Controller
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new ProfileFilter();
-        $form = $this->createForm(new ProfileFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(ProfileFilterType::class, $filter);
+
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
+        } else {
+            $form->submit($request->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $profileSelector = new Selector();
-        $embeddedForm = $this->createForm(new ProfileSelectorType(), $profileSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(ProfileSelectorType::class, $profileSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify profiles.'));
             }
 
-            foreach ($this->get('request')->get('selected') as $id)
-            {
-                $profile = $em->getRepository('SwdAnalyzerBundle:Profile')->find($id);
-
-                if (!$profile)
-                {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
-                switch ($profileSelector->getSubaction())
-                {
+                $profile = $em->getRepository('SwdAnalyzerBundle:Profile')->find($id);
+
+                if (!$profile) {
+                    continue;
+                }
+
+                switch ($profileSelector->getSubaction()) {
                     case 'enablewhitelist':
                         $profile->setWhitelistEnabled(1);
                         break;
@@ -104,18 +109,21 @@ class ProfileController extends Controller
                 $profile->setDate(new \DateTime());
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profiles were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profiles were updated.'));
+            }
         }
 
         /* Get results from database. */
         $query = $em->getRepository('SwdAnalyzerBundle:Profile')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -126,8 +134,7 @@ class ProfileController extends Controller
         );
 
         /* Add information about existing learning cache. */
-        foreach ($pagination as $profile)
-        {
+        foreach ($pagination as $profile) {
             $profile->setLearningRequests($em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 3)->getSingleScalarResult());
             $profile->setProductiveRequests(
                 $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult() +
@@ -150,25 +157,25 @@ class ProfileController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $profile = new Profile();
-        $form = $this->createForm(new ProfileType(), $profile, array('validation_groups' => array('Default', 'add')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(ProfileType::class, $profile, array('validation_groups' => array('Default', 'add')));
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
+        if ($form->isValid()) {
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($profile);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Profile:show.html.twig',
                 array('form' => $form->createView())
@@ -179,41 +186,39 @@ class ProfileController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get profile from database. */
         $profile = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:Profile')->find($id);
 
-        if (!$profile)
-        {
+        if (!$profile) {
             throw $this->createNotFoundException('No profile found for id ' . $id);
         }
 
         $oldKey = $profile->getKey();
 
         /* Handle form. */
-        $form = $this->createForm(new ProfileType(), $profile, array('required' => false, 'validation_groups' => array('Default', 'edit')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(ProfileType::class, $profile, array('required' => false, 'validation_groups' => array('Default', 'edit')));
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $profile->setDate(new \DateTime());
 
-            if (!$profile->getKey())
-            {
+            if (!$profile->getKey()) {
                 $profile->setKey($oldKey);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($profile);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:Profile:show.html.twig',
                 array('form' => $form->createView())

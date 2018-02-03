@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -24,6 +24,12 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class UserType extends AbstractType
 {
@@ -31,11 +37,11 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password', 'password', array('attr' => array('autocomplete' => 'off')))
+            ->add('password', PasswordType::class, array('attr' => array('autocomplete' => 'off')))
             ->add('email', null, array('required' => false))
-            ->add('role', 'choice', array('choices' => array('0' => 'User', '1' => 'Admin')))
-            ->add('changePassword', 'checkbox', array('required' => false, 'label' => 'Demand password change on login'))
-            ->add('actions', 'form_actions', array('buttons' => array('save' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('role', ChoiceType::class, array('choices' => array('0' => 'User', '1' => 'Admin')))
+            ->add('changePassword', CheckboxType::class, array('required' => false, 'label' => 'Demand password change on login'))
+            ->add('actions', FormActionsType::class, array('buttons' => array('save' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()

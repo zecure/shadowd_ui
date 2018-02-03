@@ -6,3 +6,4 @@ parameters:
     database_user:     shadowd
     database_password: ~
     secret:            ThisTokenIsNotSoSecretChangeIt
+    demo:              false

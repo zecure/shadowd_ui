@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swd\AnalyzerBundle\Form\Type\UserFilterType;
 use Swd\AnalyzerBundle\Entity\UserFilter;
@@ -35,33 +36,38 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new UserFilter();
-        $form = $this->createForm(new UserFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(UserFilterType::class, $filter);
+
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
+        } else {
+            $form->submit($request->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $userSelector = new Selector();
-        $embeddedForm = $this->createForm(new UserSelectorType(), $userSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(UserSelectorType::class, $userSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
-        {
-            foreach ($this->get('request')->get('selected') as $id)
-            {
-                $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
-
-                if (!$user)
-                {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
-                switch ($userSelector->getSubaction())
-                {
+                $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
+
+                if (!$user) {
+                    continue;
+                }
+
+                switch ($userSelector->getSubaction()) {
                     case 'delete':
                         if ($user->getSetting()) {
                             $em->remove($user->getSetting());
@@ -71,18 +77,21 @@ class UserController extends Controller
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            }
         }
 
         /* Get results from database. */
         $query = $em->getRepository('SwdAnalyzerBundle:User')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -107,29 +116,29 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         /* Handle form. */
         $user = new User();
         $setting = new Setting();
         $setting->setUser($user);
 
-        $form = $this->createForm(new UserType(), $user, array('validation_groups' => array('Default', 'add')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(UserType::class, $user, array('validation_groups' => array('Default', 'add')));
+        $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->persist($setting);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+        if ($form->isValid()) {
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->persist($setting);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:User:show.html.twig',
                 array('form' => $form->createView())
@@ -140,41 +149,39 @@ class UserController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         /* Get user from database. */
         $user = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:User')->find($id);
 
-        if (!$user)
-        {
+        if (!$user) {
             throw $this->createNotFoundException('No user found for id ' . $id);
         }
 
         $oldPassword = $user->getPassword();
 
         /* Handle form. */
-        $form = $this->createForm(new UserType(), $user, array('required' => false, 'validation_groups' => array('Default', 'edit')));
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(UserType::class, $user, array('required' => false, 'validation_groups' => array('Default', 'edit')));
+        $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $user->setDate(new \DateTime());
 
-            if (!$user->getPassword())
-            {
+            if (!$user->getPassword()) {
                 $user->setPassword($oldPassword, false);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:User:show.html.twig',
                 array('form' => $form->createView())

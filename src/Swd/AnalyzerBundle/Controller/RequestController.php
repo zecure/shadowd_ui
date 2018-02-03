@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@
 namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Swd\AnalyzerBundle\Form\Type\RequestFilterType;
 use Swd\AnalyzerBundle\Entity\RequestFilter;
 use Swd\AnalyzerBundle\Form\Type\RequestSelectorType;
@@ -28,62 +29,68 @@ use Swd\AnalyzerBundle\Entity\Selector;
 
 class RequestController extends Controller
 {
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* Handle filter form. */
         $filter = new RequestFilter();
-        $form = $this->createForm(new RequestFilterType(), $filter);
-        $form->handleRequest($this->get('request'));
+        $form = $this->createForm(RequestFilterType::class, $filter);
+
+        if ($request->getMethod() === 'GET') {
+            $form->handleRequest($request);
+        } else {
+            $form->submit($request->query->get($form->getName()));
+        }
 
         /* Handle the other form. */
         $requestSelector = new Selector();
-        $embeddedForm = $this->createForm(new RequestSelectorType(), $requestSelector);
-        $embeddedForm->handleRequest($this->get('request'));
+        $embeddedForm = $this->createForm(RequestSelectorType::class, $requestSelector);
+        $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $this->get('request')->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify requests.'));
             }
 
-            foreach ($this->get('request')->get('selected') as $id)
-            {
-                $request = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
-
-                if (!$request)
-                {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
-                switch ($requestSelector->getSubaction())
-                {
+                $requestStored = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
+
+                if (!$requestStored) {
+                    continue;
+                }
+
+                switch ($requestSelector->getSubaction()) {
                     case 'delete':
-                        foreach ($request->getParameters() as $parameter)
-                        {
+                        foreach ($requestStored->getParameters() as $parameter) {
                             $em->remove($parameter);
                         }
 
-                        $em->remove($request);
+                        $em->remove($requestStored);
                         break;
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The requests were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The requests were updated.'));
+            }
         }
 
         /* Get results from database. */
         $query = $em->getRepository('SwdAnalyzerBundle:Request')->findAllFiltered($filter);
 
         /* Pagination. */
-        $page = $this->get('request')->query->get('page', 1);
-        $limit = $this->get('request')->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
+        $page = $request->query->get('page', 1);
+        $limit = $request->query->get('limit', $this->getUser()->getSetting()->getPageLimit());
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

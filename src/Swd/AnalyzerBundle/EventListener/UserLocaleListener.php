@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -34,8 +34,8 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class UserLocaleListener
 {
     /**
-    * @var Session
-    */
+     * @var Session
+     */
     private $session;
 
     public function __construct(Session $session)
@@ -44,14 +44,13 @@ class UserLocaleListener
     }
 
     /**
-    * @param InteractiveLoginEvent $event
-    */
+     * @param InteractiveLoginEvent $event
+     */
     public function onInteractiveLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
 
-        if (null !== $user->getSetting()->getLocale())
-        {
+        if (null !== $user->getSetting()->getLocale()) {
             $this->session->set('_locale', $user->getSetting()->getLocale());
 
             /* Set locale also for this request to avoid bug when session expires. */

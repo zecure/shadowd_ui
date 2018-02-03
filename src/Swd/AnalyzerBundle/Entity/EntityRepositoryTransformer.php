@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -32,8 +32,7 @@ class EntityRepositoryTransformer extends EntityRepository
         $parts = preg_split('/\\\\.(*SKIP)(*FAIL)|\*/s', $input);
         $parts_escaped = array();
 
-        foreach ($parts as $part)
-        {
+        foreach ($parts as $part) {
             $parts_escaped[] = str_replace(array('_', '%'), array('\\_', '\\%'), $part);
         }
 

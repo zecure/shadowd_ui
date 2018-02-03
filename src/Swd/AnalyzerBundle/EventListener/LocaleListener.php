@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -40,12 +40,9 @@ class LocaleListener implements EventSubscriberInterface
             return;
         }
 
-        if ($locale = $request->attributes->get('_locale'))
-        {
+        if ($locale = $request->attributes->get('_locale')) {
             $request->getSession()->set('_locale', $locale);
-        }
-        else
-        {
+        } else {
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }

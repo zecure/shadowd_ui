@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -24,18 +24,25 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Braincrafted\Bundle\BootstrapBundle\Form\Type\FormActionsType;
 
 class BlacklistImportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('profile', 'entity', array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
-                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
+            ->add('profile', EntityType::class, array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC');
+                }
             ))
             ->add('base', null, array('required' => false))
-            ->add('file', 'file')
-            ->add('actions', 'form_actions', array('buttons' => array('import' => array('type' => 'submit'), 'reset' => array('type' => 'reset'))));
+            ->add('file', FileType::class)
+            ->add('actions', FormActionsType::class, array('buttons' => array('import' => array('type' => SubmitType::class), 'reset' => array('type' => ResetType::class))));
     }
 
     public function getName()
