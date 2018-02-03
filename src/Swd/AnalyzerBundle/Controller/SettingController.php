@@ -43,24 +43,25 @@ class SettingController extends Controller
             $this->get('session')->set('_locale', $settings->getLocale());
 
             if ($this->getParameter('demo')) {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.', array(), null, $settings->getLocale()));
             } else {
                 if ($settings->getOldPassword()) {
                     if (!$settings->getNewPassword()) {
-                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.'));
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.', array(), null, $settings->getLocale()));
                     } elseif (!password_verify($settings->getOldPassword(), $user->getPassword())) {
-                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.'));
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.', array(), null, $settings->getLocale()));
                     } else {
                         $user->setPassword($settings->getNewPassword());
                         $user->setChangePassword(false);
-                        $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.'));
+                        $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.', array(), null, $settings->getLocale()));
                     }
                 } else {
-                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.'));
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.', array(), null, $settings->getLocale()));
                 }
 
                 $this->getDoctrine()->getManager()->flush();
             }
+            return $this->redirect($this->generateUrl('swd_analyzer_settings'));
         }
 
         /* Render template. */
