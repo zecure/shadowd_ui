@@ -45,23 +45,15 @@ class MergePathExtension extends \Twig_Extension
     {
         $merged = $array1;
 
-        foreach ($array2 as $key => &$value)
-        {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key]))
-            {
+        foreach ($array2 as $key => &$value) {
+            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
                 $merged[$key] = $this->array_merge_recursive($merged[$key], $value);
-            }
-            else
-            {
-                if (is_int($key))
-                {
-                    if (!in_array($value, $merged))
-                    {
+            } else {
+                if (is_int($key)) {
+                    if (!in_array($value, $merged)) {
                         $merged[] = $value;
                     }
-                }
-                else
-                {
+                } else {
                     $merged[$key] = $value;
                 }
             }
@@ -72,10 +64,8 @@ class MergePathExtension extends \Twig_Extension
 
     function array_filter_recursive($input)
     {
-        foreach ($input as &$value)
-        {
-            if (is_array($value))
-            {
+        foreach ($input as &$value) {
+            if (is_array($value)) {
                 $value = $this->array_filter_recursive($value);
             }
         }
@@ -92,8 +82,7 @@ class MergePathExtension extends \Twig_Extension
         $routeParams = $request->query->all();
 
         /* Remove page, because it makes no sense after a new filter. */
-        if (isset($routeParams['page']))
-        {
+        if (isset($routeParams['page'])) {
             unset($routeParams['page']);
         }
 
@@ -107,8 +96,7 @@ class MergePathExtension extends \Twig_Extension
         $url = $router->generate($routeName, $result);
 
         /* Check if the filter hashtag should be appended for the js. */
-        if (!$disableFilter && $this->getUser()->getSetting()->getOpenFilter())
-        {
+        if (!$disableFilter && $this->getUser()->getSetting()->getOpenFilter()) {
             $url .= '#filters';
         }
 

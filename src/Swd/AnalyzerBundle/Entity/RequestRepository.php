@@ -32,146 +32,122 @@ class RequestRepository extends EntityRepositoryTransformer
         $builder = $this->createQueryBuilder('r')
             ->leftJoin('r.profile', 'v');
 
-        if (!$filter->getIncludeRequestIds()->isEmpty())
-        {
+        if (!$filter->getIncludeRequestIds()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeRequestIds() as $key => $value)
-            {
+            foreach ($filter->getIncludeRequestIds() as $key => $value) {
                 $orExpr->add($builder->expr()->eq('r.id', $builder->expr()->literal($value)));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeProfileIds()->isEmpty())
-        {
+        if (!$filter->getIncludeProfileIds()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeProfileIds() as $key => $value)
-            {
+            foreach ($filter->getIncludeProfileIds() as $key => $value) {
                 $orExpr->add($builder->expr()->eq('v.id', $builder->expr()->literal($value)));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeCallers()->isEmpty())
-        {
+        if (!$filter->getIncludeCallers()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeCallers() as $key => $value)
-            {
+            foreach ($filter->getIncludeCallers() as $key => $value) {
                 $orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeResources()->isEmpty())
-        {
+        if (!$filter->getIncludeResources()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeResources() as $key => $value)
-            {
+            foreach ($filter->getIncludeResources() as $key => $value) {
                 $orExpr->add($builder->expr()->like('r.resource', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$filter->getIncludeClientIPs()->isEmpty())
-        {
+        if (!$filter->getIncludeClientIPs()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($filter->getIncludeClientIPs() as $key => $value)
-            {
+            foreach ($filter->getIncludeClientIPs() as $key => $value) {
                 $orExpr->add($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if ($filter->getIncludeDateStart())
-        {
+        if ($filter->getIncludeDateStart()) {
             $builder->andWhere('r.date >= :includeDateStart')->setParameter('includeDateStart', $filter->getIncludeDateStart());
         }
 
-        if ($filter->getIncludeDateEnd())
-        {
+        if ($filter->getIncludeDateEnd()) {
             $builder->andWhere('r.date <= :includeDateEnd')->setParameter('includeDateEnd', $filter->getIncludeDateEnd());
         }
 
-        if (!$filter->getExcludeRequestIds()->isEmpty())
-        {
+        if (!$filter->getExcludeRequestIds()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeRequestIds() as $key => $value)
-            {
+            foreach ($filter->getExcludeRequestIds() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->eq('r.id', $builder->expr()->literal($value))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeProfileIds()->isEmpty())
-        {
+        if (!$filter->getExcludeProfileIds()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeProfileIds() as $key => $value)
-            {
+            foreach ($filter->getExcludeProfileIds() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->eq('v.id', $builder->expr()->literal($value))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeCallers()->isEmpty())
-        {
+        if (!$filter->getExcludeCallers()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeCallers() as $key => $value)
-            {
+            foreach ($filter->getExcludeCallers() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeResources()->isEmpty())
-        {
+        if (!$filter->getExcludeResources()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeResources() as $key => $value)
-            {
+            foreach ($filter->getExcludeResources() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('r.resource', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if (!$filter->getExcludeClientIPs()->isEmpty())
-        {
+        if (!$filter->getExcludeClientIPs()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($filter->getExcludeClientIPs() as $key => $value)
-            {
+            foreach ($filter->getExcludeClientIPs() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('r.clientIP', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 
             $builder->andWhere($andExpr);
         }
 
-        if ($filter->getExcludeDateStart())
-        {
+        if ($filter->getExcludeDateStart()) {
             $builder->andWhere('r.date < :excludeDateStart')->setParameter('excludeDateStart', $filter->getExcludeDateStart());
         }
 
-        if ($filter->getExcludeDateEnd())
-        {
+        if ($filter->getExcludeDateEnd()) {
             $builder->andWhere('r.date > :excludeDateEnd')->setParameter('excludeDateEnd', $filter->getExcludeDateEnd());
         }
-            
+
         return $builder->getQuery();
     }
 
@@ -219,24 +195,20 @@ class RequestRepository extends EntityRepositoryTransformer
             ->where('r.mode = 3')
             ->andWhere('r.profile = :profile')->setParameter('profile', $settings->getProfile());
 
-        if (!$settings->getIncludeCallers()->isEmpty())
-        {
+        if (!$settings->getIncludeCallers()->isEmpty()) {
             $orExpr = $builder->expr()->orX();
 
-            foreach ($settings->getIncludeCallers() as $key => $value)
-            {
+            foreach ($settings->getIncludeCallers() as $key => $value) {
                 $orExpr->add($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value))));
             }
 
             $builder->andWhere($orExpr);
         }
 
-        if (!$settings->getExcludeCallers()->isEmpty())
-        {
+        if (!$settings->getExcludeCallers()->isEmpty()) {
             $andExpr = $builder->expr()->andX();
 
-            foreach ($settings->getExcludeCallers() as $key => $value)
-            {
+            foreach ($settings->getExcludeCallers() as $key => $value) {
                 $andExpr->add($builder->expr()->not($builder->expr()->like('r.caller', $builder->expr()->literal($this->prepareWildcard($value)))));
             }
 

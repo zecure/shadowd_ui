@@ -32,8 +32,7 @@ class EntityRepositoryTransformer extends EntityRepository
         $parts = preg_split('/\\\\.(*SKIP)(*FAIL)|\*/s', $input);
         $parts_escaped = array();
 
-        foreach ($parts as $part)
-        {
+        foreach ($parts as $part) {
             $parts_escaped[] = str_replace(array('_', '%'), array('\\_', '\\%'), $part);
         }
 

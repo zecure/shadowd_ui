@@ -39,7 +39,9 @@ class GeneratorSettingsType extends AbstractType
     {
         $builder
             ->add('profile', EntityType::class, array('property' => 'getIdAndName', 'class' => 'SwdAnalyzerBundle:Profile',
-                'query_builder' => function(EntityRepository $er) { return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC'); }
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')->orderBy('v.id', 'ASC');
+                }
             ))
             ->add('predefined', ChoiceType::class, array('choices' => array('1' => 'Low security', '2' => 'Moderate security', '3' => 'High security', '4' => 'Custom')))
             ->add('status', ChoiceType::class, array('choices' => array('1' => 'Activated', '2' => 'Deactivated', '3' => 'Pending')))

@@ -1,135 +1,135 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 45px;
+    margin-bottom: 45px;
 }
 
 .container {
-  width: 99%;
+    width: 99%;
 }
 
 body > .container {
-  padding: 70px 15px 0;
+    padding: 70px 15px 0;
 }
 
 .container .text-muted {
-  margin: 20px 0;
+    margin: 20px 0;
 }
 
 td.icons {
-  text-align: center;
+    text-align: center;
 }
 
 .icons {
-  width: 22px;
+    width: 22px;
 }
 
 .icons i {
-  font-size: 22px;
+    font-size: 22px;
 }
 
 .filter-icons i {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .menu-icons {
-  padding-right: 8px;
-  padding-left: 8px;
+    padding-right: 8px;
+    padding-left: 8px;
 }
 
 #filters-button {
-  font-size: 100px;
-  line-height: 0;
-  outline: 0;
+    font-size: 100px;
+    line-height: 0;
+    outline: 0;
 }
 
 .icons a, .filter-icons a, #filters-button {
-  color: inherit;
-  user-select: none;
+    color: inherit;
+    user-select: none;
 }
 
 #filters-form {
-  display: none;
+    display: none;
 }
 
 .page {
-  float: right;
+    float: right;
 }
 
 .limit {
-  float: left;
+    float: left;
 }
 
 #select-all, .select-item {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .footer {
-  width: 100%;
-  height: 45px;
-  padding-top: 15px;
-  margin: 0;
-  position: absolute;
-  bottom: 0;
+    width: 100%;
+    height: 45px;
+    padding-top: 15px;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
 }
 
 .footer-copyright {
-  padding-left: 25px;
+    padding-left: 25px;
 }
 
 .whitelist-rule-information {
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 #embedded-form-control {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .slider {
-  display: block;
+    display: block;
 }
 
 .slider.slider-horizontal {
-  width: 100%;
+    width: 100%;
 }
 
 th {
-  text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 th, td {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 .filters-form-actions .form-group {
-  display: inline-block;
+    display: inline-block;
 }
 
 .include-exclude {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .generator .include-exclude, .export .include-exclude {
-  margin-top: -15px;
-  padding-bottom: 15px;
+    margin-top: -15px;
+    padding-bottom: 15px;
 }
 
 #table-home {
-  z-index: 501;
+    z-index: 501;
 }
 
 #logo {
-  position: relative;
-  bottom: -75px;
-  z-index: 500;
+    position: relative;
+    bottom: -75px;
+    z-index: 500;
 }
 
 @media (max-width: 800px) {
-  #logo {
-    display: none;
-  }
+    #logo {
+        display: none;
+    }
 }

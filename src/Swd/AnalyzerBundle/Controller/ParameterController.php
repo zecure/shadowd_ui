@@ -49,35 +49,37 @@ class ParameterController extends Controller
         $embeddedForm = $this->createForm(ParameterSelectorType::class, $parameterSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
-            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-            {
+            if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 throw $this->createAccessDeniedException($this->get('translator')->trans('Unable to modify parameters.'));
             }
 
-            foreach ($request->get('selected') as $id)
-            {
-                $parameter = $em->getRepository('SwdAnalyzerBundle:Parameter')->find($id);
-
-                if (!$parameter)
-                {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
-                switch ($parameterSelector->getSubaction())
-                {
+                $parameter = $em->getRepository('SwdAnalyzerBundle:Parameter')->find($id);
+
+                if (!$parameter) {
+                    continue;
+                }
+
+                switch ($parameterSelector->getSubaction()) {
                     case 'delete':
                         $em->remove($parameter);
                         break;
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The parameters were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The parameters were updated.'));
+            }
         }
 
         /* Get results from database. */
@@ -114,8 +116,7 @@ class ParameterController extends Controller
             ->getRepository('SwdAnalyzerBundle:Parameter')
             ->find($id);
 
-        if (!$parameter)
-        {
+        if (!$parameter) {
             throw $this->createNotFoundException('No parameter found for id ' . $id);
         }
 

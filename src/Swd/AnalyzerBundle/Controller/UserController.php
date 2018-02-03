@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -55,19 +55,19 @@ class UserController extends Controller
         $embeddedForm = $this->createForm(UserSelectorType::class, $userSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
-            foreach ($request->get('selected') as $id)
-            {
-                $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
-
-                if (!$user)
-                {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
+            foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
                     continue;
                 }
 
-                switch ($userSelector->getSubaction())
-                {
+                $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
+
+                if (!$user) {
+                    continue;
+                }
+
+                switch ($userSelector->getSubaction()) {
                     case 'delete':
                         if ($user->getSetting()) {
                             $em->remove($user->getSetting());
@@ -77,10 +77,13 @@ class UserController extends Controller
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            }
         }
 
         /* Get results from database. */
@@ -124,18 +127,18 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         /* Insert and redirect or show the form. */
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->persist($setting);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+        if ($form->isValid()) {
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->persist($setting);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:User:show.html.twig',
                 array('form' => $form->createView())
@@ -151,8 +154,7 @@ class UserController extends Controller
         /* Get user from database. */
         $user = $this->getDoctrine()->getRepository('SwdAnalyzerBundle:User')->find($id);
 
-        if (!$user)
-        {
+        if (!$user) {
             throw $this->createNotFoundException('No user found for id ' . $id);
         }
 
@@ -163,24 +165,23 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         /* Update and redirect or show the form. */
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $user->setDate(new \DateTime());
 
-            if (!$user->getPassword())
-            {
+            if (!$user->getPassword()) {
                 $user->setPassword($oldPassword, false);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
-        }
-        else
-        {
+        } else {
             return $this->render(
                 'SwdAnalyzerBundle:User:show.html.twig',
                 array('form' => $form->createView())

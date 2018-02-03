@@ -51,10 +51,8 @@ class ReportCommand extends ContainerAwareCommand
         $date = new \DateTime($input->getOption('time_frame'));
         $requests = $em->getRepository('SwdAnalyzerBundle:Request')->findByDate($date)->getResult();
 
-        if (empty($requests))
-        {
-            if ($output->isVerbose())
-            {
+        if (empty($requests)) {
+            if ($output->isVerbose()) {
                 $output->writeln('No requests found');
             }
 
@@ -64,20 +62,16 @@ class ReportCommand extends ContainerAwareCommand
         /* Send e-mails to all users that have specified an address. */
         $users = $em->getRepository('SwdAnalyzerBundle:User')->findByEmail()->getResult();
 
-        if (empty($users))
-        {
-            if ($output->isVerbose())
-            {
+        if (empty($users)) {
+            if ($output->isVerbose()) {
                 $output->writeln('No e-mail addresses found');
             }
 
             return;
         }
 
-        foreach ($users as $user)
-        {
-            if ($output->isVerbose())
-            {
+        foreach ($users as $user) {
+            if ($output->isVerbose()) {
                 $output->writeln('Send email to ' . $user->getEmail());
             }
 

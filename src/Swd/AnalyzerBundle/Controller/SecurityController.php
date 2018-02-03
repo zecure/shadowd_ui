@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -22,39 +22,20 @@ namespace Swd\AnalyzerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SecurityController extends Controller
 {
     public function loginAction(Request $request)
     {
-        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR))
-        {
-            $error = $request->attributes->get(
-                SecurityContextInterface::AUTHENTICATION_ERROR
-            );
-        }
-        elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR))
-        {
-            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
-        }
-        else
-        {
-            $error = '';
-        }
-
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
-
-        return $this->render(
-            'SwdAnalyzerBundle:Security:login.html.twig',
-            array(
-                'last_username' => $lastUsername,
-                'error' => $error
-            )
-        );
+        return $this->render('SwdAnalyzerBundle:Security:login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'demo' => $this->getParameter('demo')
+        ));
     }
 }
 
