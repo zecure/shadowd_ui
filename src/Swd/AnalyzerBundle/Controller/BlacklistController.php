@@ -192,11 +192,8 @@ class BlacklistController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($rule);
                 $em->flush();
-
                 $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
             }
-
-
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
         } else {
             return $this->render(

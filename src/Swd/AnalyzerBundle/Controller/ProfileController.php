@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -58,6 +58,10 @@ class ProfileController extends Controller
             }
 
             foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
+                    continue;
+                }
+
                 $profile = $em->getRepository('SwdAnalyzerBundle:Profile')->find($id);
 
                 if (!$profile) {
@@ -105,10 +109,13 @@ class ProfileController extends Controller
                 $profile->setDate(new \DateTime());
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profiles were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profiles were updated.'));
+            }
         }
 
         /* Get results from database. */
@@ -159,11 +166,14 @@ class ProfileController extends Controller
 
         /* Insert and redirect or show the form. */
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($profile);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
         } else {
             return $this->render(
@@ -199,11 +209,14 @@ class ProfileController extends Controller
                 $profile->setKey($oldKey);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($profile);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The profile was updated.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_profiles_list'));
         } else {
             return $this->render(

@@ -3,7 +3,7 @@
 /*
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -40,16 +40,20 @@ class GeneratorController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $generator = $this->get('generator_manager');
-            $generator->start($settings);
-            $counter = $generator->save();
-
-            if ($counter === 0) {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
-            } elseif ($counter === 1) {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
             } else {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
+                $generator = $this->get('generator_manager');
+                $generator->start($settings);
+                $counter = $generator->save();
+
+                if ($counter === 0) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
+                } elseif ($counter === 1) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', array('%number%' => $counter)));
+                }
             }
         }
 

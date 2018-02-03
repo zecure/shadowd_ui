@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -42,21 +42,25 @@ class SettingController extends Controller
             $request->setLocale($settings->getLocale());
             $this->get('session')->set('_locale', $settings->getLocale());
 
-            if ($settings->getOldPassword()) {
-                if (!$settings->getNewPassword()) {
-                    $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.'));
-                } elseif (!password_verify($settings->getOldPassword(), $user->getPassword())) {
-                    $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.'));
-                } else {
-                    $user->setPassword($settings->getNewPassword());
-                    $user->setChangePassword(false);
-                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.'));
-                }
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
             } else {
-                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.'));
-            }
+                if ($settings->getOldPassword()) {
+                    if (!$settings->getNewPassword()) {
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.'));
+                    } elseif (!password_verify($settings->getOldPassword(), $user->getPassword())) {
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.'));
+                    } else {
+                        $user->setPassword($settings->getNewPassword());
+                        $user->setChangePassword(false);
+                        $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.'));
+                    }
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.'));
+                }
 
-            $this->getDoctrine()->getManager()->flush();
+                $this->getDoctrine()->getManager()->flush();
+            }
         }
 
         /* Render template. */

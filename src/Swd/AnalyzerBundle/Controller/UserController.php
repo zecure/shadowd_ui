@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -57,6 +57,10 @@ class UserController extends Controller
 
         if ($embeddedForm->isValid() && $request->get('selected')) {
             foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
+                    continue;
+                }
+
                 $user = $em->getRepository('SwdAnalyzerBundle:User')->find($id);
 
                 if (!$user) {
@@ -73,10 +77,13 @@ class UserController extends Controller
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The users were updated.'));
+            }
         }
 
         /* Get results from database. */
@@ -121,12 +128,15 @@ class UserController extends Controller
 
         /* Insert and redirect or show the form. */
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->persist($setting);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->persist($setting);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
         } else {
             return $this->render(
@@ -162,11 +172,14 @@ class UserController extends Controller
                 $user->setPassword($oldPassword, false);
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The user was updated.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_users_list'));
         } else {
             return $this->render(

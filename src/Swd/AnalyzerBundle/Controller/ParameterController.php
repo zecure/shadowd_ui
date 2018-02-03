@@ -56,6 +56,10 @@ class ParameterController extends Controller
             }
 
             foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
+                    continue;
+                }
+
                 $parameter = $em->getRepository('SwdAnalyzerBundle:Parameter')->find($id);
 
                 if (!$parameter) {
@@ -69,10 +73,13 @@ class ParameterController extends Controller
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The parameters were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The parameters were updated.'));
+            }
         }
 
         /* Get results from database. */

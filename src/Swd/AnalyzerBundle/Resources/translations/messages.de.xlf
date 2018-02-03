@@ -918,6 +918,10 @@
                 <source>© %year% by %name%</source>
                 <target>© %year% bei %name%</target>
             </trans-unit>
+            <trans-unit id="227">
+                <source>The demo is read-only, no changes were saved.</source>
+                <target>Die Demo ist schreibgeschützt. Änderungen werden nicht übernommen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

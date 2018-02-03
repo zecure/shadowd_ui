@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -55,6 +55,10 @@ class RequestController extends Controller
             }
 
             foreach ($request->get('selected') as $id) {
+                if ($this->getParameter('demo')) {
+                    continue;
+                }
+
                 $requestStored = $em->getRepository('SwdAnalyzerBundle:Request')->find($id);
 
                 if (!$requestStored) {
@@ -72,10 +76,13 @@ class RequestController extends Controller
                 }
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The requests were updated.'));
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The requests were updated.'));
+            }
         }
 
         /* Get results from database. */
