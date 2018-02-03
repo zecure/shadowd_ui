@@ -3,7 +3,7 @@
 /*
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -57,8 +57,7 @@ class BlacklistController extends Controller
         $embeddedForm = $this->createForm(BlacklistRuleSelectorType::class, $ruleSelector);
         $embeddedForm->handleRequest($request);
 
-        if ($embeddedForm->isValid() && $request->get('selected'))
-        {
+        if ($embeddedForm->isValid() && $request->get('selected')) {
             /* Check user permissions, just in case. */
             if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
             {
@@ -67,6 +66,11 @@ class BlacklistController extends Controller
 
             foreach ($request->get('selected') as $id)
             {
+                if ($this->getParameter('demo'))
+                {
+                    continue;
+                }
+
                 $rule = $em->getRepository('SwdAnalyzerBundle:BlacklistRule')->find($id);
 
                 if (!$rule)
@@ -94,10 +98,16 @@ class BlacklistController extends Controller
                 $rule->getProfile()->setCacheOutdated(1);
             }
 
-            /* Save all the changes to the database. */
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were updated.'));
+            if ($this->getParameter('demo'))
+            {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            }
+            else
+            {
+                /* Save all the changes to the database. */
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rules were updated.'));
+            }
         }
 
         /* Get results from database. */
@@ -148,11 +158,17 @@ class BlacklistController extends Controller
         {
             $rule->getProfile()->setCacheOutdated(1);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($rule);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
+            if ($this->getParameter('demo'))
+            {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            }
+            else
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($rule);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was added.'));
+            }
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
         }
         else
@@ -187,11 +203,20 @@ class BlacklistController extends Controller
             $rule->setDate(new \DateTime());
             $rule->getProfile()->setCacheOutdated(1);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($rule);
-            $em->flush();
+            if ($this->getParameter('demo'))
+            {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            }
+            else
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($rule);
+                $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The rule was updated.'));
+            }
+
+
             return $this->redirect($this->generateUrl('swd_analyzer_blacklist_rules'));
         }
         else
@@ -219,7 +244,11 @@ class BlacklistController extends Controller
             $fileContent = file_get_contents($import->getFile()->getPathName());
             $rules = json_decode($fileContent, true);
 
-            if ($rules)
+            if ($this->getParameter('demo'))
+            {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            }
+            else if ($rules)
             {
                 $import->getProfile()->setCacheOutdated(1);
 
