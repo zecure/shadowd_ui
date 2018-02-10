@@ -1,0 +1,911 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="0">
+                <source>Y-m-d H:i</source>
+                <target>d/m/y H:i</target>
+            </trans-unit>
+            <trans-unit id="1">
+                <source>Home</source>
+                <target>בית</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>User Interface</source>
+                <target>ממשק משתמש</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Profile</source>
+                <target>פרופיל</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Learning</source>
+                <target>לומד</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Whitelist</source>
+                <target>וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Blacklist</source>
+                <target>בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Last request</source>
+                <target>בקשה אחרונה</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Disabled</source>
+                <target>לא מופעל</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Enabled</source>
+                <target>מופעל</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Did you know ... ?</source>
+                <target>הידעת ... ?</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Learn more</source>
+                <target>עוד פרטים</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Include</source>
+                <target>צרף</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Exclude</source>
+                <target>הוצא</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Toggle filters</source>
+                <target>הפעל\בטל פילטרים</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Toggle navigation</source>
+                <target>הפעל\בטל ניווט</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Warning!</source>
+                <target>אזהרה!</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>You do not have Javascript enabled and thus some functionality won't work.</source>
+                <target>Javascript אינו מופעל ולכן פונקציונליות עלולה להיות לקויה.</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Requests</source>
+                <target>בקשות</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Request ID</source>
+                <target>מזהה בקשה</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Profile ID</source>
+                <target>מזהה פרופיל</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Date</source>
+                <target>תאריך</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Caller</source>
+                <target>קורא</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Resource</source>
+                <target>משאב</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Client IP</source>
+                <target>IP לקוח</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Overview</source>
+                <target>בקרה</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source># Parameters</source>
+                <target># פרמטרים</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Show details</source>
+                <target>הראה פרטים</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Parameters</source>
+                <target>פרמטרים</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Parameter ID</source>
+                <target>מזהה פרמטר</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Path</source>
+                <target>נתיב</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Value</source>
+                <target>ערך</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Unknown</source>
+                <target>כא ידוע</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Critical</source>
+                <target>קריטי</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Broken rule</source>
+                <target>חוק שבור</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Parameter</source>
+                <target>פרמטר</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Whitelist: Broken Rules</source>
+                <target>וויטליסט: חוקים שבורים</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Rule ID</source>
+                <target>מזהה חוק</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Min. length</source>
+                <target>אורך מינ.</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Max. length</source>
+                <target>אורך מקס.</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Filter</source>
+                <target>פילטר</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>No limitation</source>
+                <target>חסר גבול</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>Too short</source>
+                <target>קצר מדי</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Adhered to</source>
+                <target>דבק ב</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>Match</source>
+                <target>התאמה</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>No match</source>
+                <target>אין התאמה</target>
+            </trans-unit>
+            <trans-unit id="46">
+                <source>Blacklist: Matching Filters</source>
+                <target>בלקליסט: גילטרים מתאימים</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>Filter ID</source>
+                <target>מזהה פילטר</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Impact</source>
+                <target>השפעה</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>Classification</source>
+                <target>סיווג</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Description</source>
+                <target>תיאור</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Blacklist Rules</source>
+                <target>חוקי בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>Status</source>
+                <target>סטטוס</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Modified</source>
+                <target>שונה</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Threshold</source>
+                <target>סף</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>Edit</source>
+                <target>ערוך</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Active</source>
+                <target>פעיל</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>Inactive</source>
+                <target>לא פעיל</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>Pending</source>
+                <target>במהלכים</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>Blacklist Rule</source>
+                <target>חוק בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>Blacklist Rules Export</source>
+                <target>יצוא חוקי בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>Last attack</source>
+                <target>תקיפה אחרונה</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source># Attacks</source>
+                <target># תקיפות</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Blacklist Rules Import</source>
+                <target>יבוא חוקי בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>The rules were updated.</source>
+                <target>החוקים עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>The rule was added.</source>
+                <target>החוק נוסף.</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Whitelist Rules</source>
+                <target>חוקי וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Conflict</source>
+                <target>קונפליקט</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Insecure</source>
+                <target>לא בטוח</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Secure</source>
+                <target>בטוח</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Add</source>
+                <target>הוסף</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Import</source>
+                <target>יבא</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Export</source>
+                <target>יצא</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Generator</source>
+                <target>גנרטות</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Whitelist Rule</source>
+                <target>חוק וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Caution!</source>
+                <target>זהירות!</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>The rule was updated.</source>
+                <target>החוק עודכן.</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>The rules were imported.</source>
+                <target>החוקים הובאו.</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Whitelist Rules Export</source>
+                <target>יצוא חוקי וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Whitelist Rules Import</source>
+                <target>יבוא חוקי וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Rules Generator</source>
+                <target>גנרטור לחוקים</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Invalid file.</source>
+                <target>קובץ לא תקין.</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Profiles</source>
+                <target>פרופילים</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>Server IP</source>
+                <target>IP שרת</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Name</source>
+                <target>שם</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Blacklist threshold</source>
+                <target>סף בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>Flooding timeframe</source>
+                <target>מסגרת זמן ההצפה</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>Flooding threshold</source>
+                <target>סף ההצפה</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source># Requests</source>
+                <target># בקשות</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>Users</source>
+                <target>משתמשים</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>User ID</source>
+                <target>מזהה משתמש</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>Username</source>
+                <target>שם משתמש</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>Email</source>
+                <target>כתובת מייל</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>Role</source>
+                <target>תפקיד</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>Admin</source>
+                <target>מנהל</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>Settings</source>
+                <target>הגרות</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>Defaults</source>
+                <target>ברירות מחדל</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Password</source>
+                <target>סיסמא</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Limit</source>
+                <target>גבול</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>Execute</source>
+                <target>בצע</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>Filter</source>
+                <target>פילטר</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Reset</source>
+                <target>אפס</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Clear</source>
+                <target>נקה</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>From</source>
+                <target>מאת</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>To</source>
+                <target>ל</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Year</source>
+                <target>שנה</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Month</source>
+                <target>חודש</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>Day</source>
+                <target>יום</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Hour</source>
+                <target>שעה</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Minute</source>
+                <target>דקה</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Save</source>
+                <target>שמור</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Base</source>
+                <target>בסיס</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Paths</source>
+                <target>נתיבים</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Callers</source>
+                <target>קוראים</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>File</source>
+                <target>קובץ</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Activated</source>
+                <target>הופעל</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Deactivated</source>
+                <target>בוטל</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Activate rules</source>
+                <target>הפעל חוקים</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>Deactivate rules</source>
+                <target>בטל חוקים</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Delete rules</source>
+                <target>מחק חוקים</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Min. unique visitors</source>
+                <target>מינ. משתמשים ייחודים</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>Min. filter dominance</source>
+                <target>מינ. דומיננטיות פילטר</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Unify arrays</source>
+                <target>אגד מערכים</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>Is threat</source>
+                <target>האם הוא איום</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>Has no whitelist rule</source>
+                <target>ללא חוק וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>Has broken whitelist rule</source>
+                <target>חוק וויטליסט שבור</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>Has critical impact</source>
+                <target>השפעה קריטית</target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>Delete parameters</source>
+                <target>מחק פרמטרים</target>
+            </trans-unit>
+            <trans-unit id="128">
+                <source>Enable integrity</source>
+                <target>הפעל שלמות</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>Disable integrity</source>
+                <target>בטל שלמות</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>Enable whitelist</source>
+                <target>הפעל וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>Disable whitelist</source>
+                <target>בטל וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>Enable blacklist</source>
+                <target>הפעל בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>Disable blacklist</source>
+                <target>בטל בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="134">
+                <source>Delete learning requests</source>
+                <target>מחק בקשות למידה</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>Delete productive requests</source>
+                <target>מחק בקשות מועילות</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>Delete profiles</source>
+                <target>מחק פרופילים</target>
+            </trans-unit>
+            <trans-unit id="137">
+                <source>Key</source>
+                <target>מפתח</target>
+            </trans-unit>
+            <trans-unit id="138">
+                <source>Delete requests</source>
+                <target>מחק בקשות</target>
+            </trans-unit>
+            <trans-unit id="139">
+                <source>Entries per page</source>
+                <target>רשומות לעמוד</target>
+            </trans-unit>
+            <trans-unit id="140">
+                <source>Descendent</source>
+                <target>צאצא</target>
+            </trans-unit>
+            <trans-unit id="141">
+                <source>Ascendent</source>
+                <target>אב</target>
+            </trans-unit>
+            <trans-unit id="142">
+                <source>Sort order</source>
+                <target>סדר מיון</target>
+            </trans-unit>
+            <trans-unit id="143">
+                <source>Theme</source>
+                <target>ערכת נושא</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>Old password</source>
+                <target>סיסמה ישנה</target>
+            </trans-unit>
+            <trans-unit id="145">
+                <source>New password</source>
+                <target>סיסמה חדשה</target>
+            </trans-unit>
+            <trans-unit id="146">
+                <source>Repeat password</source>
+                <target>סיסמה שנית</target>
+            </trans-unit>
+            <trans-unit id="147">
+                <source>Automatically open filter mask on new filter</source>
+                <target>פתח מסכת פילטר ביצירת פילטר חדש באופן אוטומטי</target>
+            </trans-unit>
+            <trans-unit id="148">
+                <source>Delete users</source>
+                <target>מחק משתמשים</target>
+            </trans-unit>
+            <trans-unit id="149">
+                <source>Demand password change on login</source>
+                <target>בקש שינוי סכסנה על כניסה הבאה למערכת</target>
+            </trans-unit>
+            <trans-unit id="150">
+                <source>Has conflict</source>
+                <target>קונפליקט</target>
+            </trans-unit>
+            <trans-unit id="151">
+                <source>Previous</source>
+                <target>קודם</target>
+            </trans-unit>
+            <trans-unit id="152">
+                <source>Next</source>
+                <target>הבא</target>
+            </trans-unit>
+            <trans-unit id="153">
+                <source>First</source>
+                <target>ראשון</target>
+            </trans-unit>
+            <trans-unit id="154">
+                <source>Last</source>
+                <target>אחרון</target>
+            </trans-unit>
+            <trans-unit id="155">
+                <source>Analysis</source>
+                <target>ניתוח</target>
+            </trans-unit>
+            <trans-unit id="156">
+                <source>Management</source>
+                <target>ניהול</target>
+            </trans-unit>
+            <trans-unit id="157">
+                <source>Administration</source>
+                <target>אדמיניסטרציה</target>
+            </trans-unit>
+            <trans-unit id="158">
+                <source>Logout</source>
+                <target>צא</target>
+            </trans-unit>
+            <trans-unit id="159">
+                <source>Integrity</source>
+                <target>שלימות</target>
+            </trans-unit>
+            <trans-unit id="160">
+                <source>Unify callers</source>
+                <target>אחד קוראים</target>
+            </trans-unit>
+            <trans-unit id="161">
+                <source>Predefined</source>
+                <target>נקבע מראש</target>
+            </trans-unit>
+            <trans-unit id="162">
+                <source>Generate whitelist rules</source>
+                <target>צור חוקי וויטליסט</target>
+            </trans-unit>
+            <trans-unit id="163">
+                <source>Generate blacklist rules</source>
+                <target>צור חוקי בלקליסט</target>
+            </trans-unit>
+            <trans-unit id="164">
+                <source>Min. threshold dominance</source>
+                <target>מינ. דומיננטיות סף</target>
+            </trans-unit>
+            <trans-unit id="165">
+                <source>Statistics</source>
+                <target>סטיסטיקות</target>
+            </trans-unit>
+            <trans-unit id="166">
+                <source>You are still using the default password. Please change it immediately.</source>
+                <target>הסיסמה הדיפולטית עדיין בשימוש. אנא שנו אותו מיד.</target>
+            </trans-unit>
+            <trans-unit id="167">
+                <source>The parameters were updated.</source>
+                <target>הפרמטר עודכן.</target>
+            </trans-unit>
+            <trans-unit id="168">
+                <source>Unable to modify rules.</source>
+                <target>אין באפשרות לשנות חוקים.</target>
+            </trans-unit>
+            <trans-unit id="169">
+                <source>Unable to modify parameters.</source>
+                <target>אין באפשרות לשנות פרמטרים.</target>
+            </trans-unit>
+            <trans-unit id="170">
+                <source>Unable to modify profiles.</source>
+                <target>אין באפשרות לשנות פרופילים.</target>
+            </trans-unit>
+            <trans-unit id="171">
+                <source>The profiles were updated.</source>
+                <target>הפרופילים עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="172">
+                <source>The profile was added.</source>
+                <target>הפרופיל נוסף.</target>
+            </trans-unit>
+            <trans-unit id="173">
+                <source>The profile was updated.</source>
+                <target>הפרופיל עודכן.</target>
+            </trans-unit>
+            <trans-unit id="174">
+                <source>Unable to modify requests.</source>
+                <target>אין באפשרות לשנות בקשות.</target>
+            </trans-unit>
+            <trans-unit id="175">
+                <source>The requests were updated.</source>
+                <target>הבקשות עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="176">
+                <source>The new password can not be empty.</source>
+                <target>הסיסמה החדשה לא יוכולה להיות ריקה.</target>
+            </trans-unit>
+            <trans-unit id="177">
+                <source>The old password is not correct.</source>
+                <target>הסיסמה הישנה שגויה.</target>
+            </trans-unit>
+            <trans-unit id="178">
+                <source>The settings and password were updated.</source>
+                <target>ההגדרות וסיסמה עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="179">
+                <source>The settings were updated.</source>
+                <target>ההגדרות עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="180">
+                <source>The users were updated.</source>
+                <target>המשתמשים עודכנו.</target>
+            </trans-unit>
+            <trans-unit id="181">
+                <source>The user was added.</source>
+                <target>המשתמש נוסף.</target>
+            </trans-unit>
+            <trans-unit id="182">
+                <source>The user was updated.</source>
+                <target>המשתמש עודכן.</target>
+            </trans-unit>
+            <trans-unit id="183">
+                <source>Locale</source>
+                <target>שפה</target>
+            </trans-unit>
+            <trans-unit id="184">
+                <source>There are no tooltips :(</source>
+                <target>אין טולטיפים :(</target>
+            </trans-unit>
+            <trans-unit id="185">
+                <source>User</source>
+                <target>משתמש</target>
+            </trans-unit>
+            <trans-unit id="186">
+                <source>Low security</source>
+                <target>אבטחה נמוכה</target>
+            </trans-unit>
+            <trans-unit id="187">
+                <source>Moderate security</source>
+                <target>אבטחה בינונית</target>
+            </trans-unit>
+            <trans-unit id="188">
+                <source>High security</source>
+                <target>אבטחה גבוהה</target>
+            </trans-unit>
+            <trans-unit id="189">
+                <source>Custom</source>
+                <target>מותאם</target>
+            </trans-unit>
+            <trans-unit id="190">
+                <source>Generate</source>
+                <target>צור</target>
+            </trans-unit>
+            <trans-unit id="191">
+                <source>Numeric</source>
+                <target>מספרי</target>
+            </trans-unit>
+            <trans-unit id="192">
+                <source>Numeric (extended)</source>
+                <target>מספרי (מורחב)</target>
+            </trans-unit>
+            <trans-unit id="193">
+                <source>Hexadecimal</source>
+                <target>הקסדצימלי</target>
+            </trans-unit>
+            <trans-unit id="194">
+                <source>Alphanumeric</source>
+                <target>אלפנומרי</target>
+            </trans-unit>
+            <trans-unit id="195">
+                <source>Base64</source>
+                <target>Base64</target>
+            </trans-unit>
+            <trans-unit id="196">
+                <source>Special Characters</source>
+                <target>תווים מיוחדים</target>
+            </trans-unit>
+            <trans-unit id="197">
+                <source>Everything</source>
+                <target>הכל</target>
+            </trans-unit>
+            <trans-unit id="198">
+                <source>Sec.</source> <!-- Abbreviation of seconds -->
+                <target>ש'</target>
+            </trans-unit>
+            <trans-unit id="199">
+                <source>Max. length variance</source>
+                <target>מקס. שונות מרחק</target>
+            </trans-unit>
+            <trans-unit id="200">
+                <source>No new rules were added.</source>
+                <target>לא נוספו חוקים חדשים.</target>
+            </trans-unit>
+            <trans-unit id="201">
+                <source>One new rule was added.</source>
+                <target>חוק אחד חדש נוסף.</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>%number% new rules were added.</source>
+                <target>%number% חוקים חדשים נוספו.</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>Integrity Rules Export</source>
+                <target>יצוא חוקי שלמות</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Integrity Rules Import</source>
+                <target>יבוא חוקי שלמות</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>Integrity Rules</source>
+                <target>חוקי שלמות</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>Algorithm</source>
+                <target>אלגוריתם</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>Algorithms</source>
+                <target>אלגוריטמים</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>Digest</source>
+                <target>האש</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>Digests</source>
+                <target>האשים</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>Integrity Rule</source>
+                <target>חוק שלמות</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>Anomaly</source>
+                <target>אנומליה</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>Too short</source>
+                <target>קצר מדי</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>Too long</source>
+                <target>ארוך מדי</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>Integrity: Broken Rules</source>
+                <target>שלמות: חוקים שבורים</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>Global threshold</source>
+                <target>סף גלובלי</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>Timeframe</source>
+                <target>מסגרת זמן</target>
+            </trans-unit>
+            <trans-unit id="217">
+                <source>Flooding</source>
+                <target>הצפה</target>
+            </trans-unit>
+            <trans-unit id="218">
+                <source>Protections</source>
+                <target>הגנות</target>
+            </trans-unit>
+            <trans-unit id="219">
+                <source>Mode</source>
+                <target>מצב</target>
+            </trans-unit>
+            <trans-unit id="220">
+                <source>Passive</source>
+                <target>פאסיבי</target>
+            </trans-unit>
+            <trans-unit id="221">
+                <source>Enable flooding</source>
+                <target>הפעל הצפה</target>
+            </trans-unit>
+            <trans-unit id="222">
+                <source>Disable flooding</source>
+                <target>בטל הצפה</target>
+            </trans-unit>
+            <trans-unit id="223">
+                <source>Has no integrity rule</source>
+                <target>ללא חוק שלמות</target>
+            </trans-unit>
+            <trans-unit id="224">
+                <source>Has broken integrity rule</source>
+                <target>חוק שלמות שבור</target>
+            </trans-unit>
+            <trans-unit id="225">
+                <source>Generate integrity rules</source>
+                <target>צור חוקי שלמות</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
