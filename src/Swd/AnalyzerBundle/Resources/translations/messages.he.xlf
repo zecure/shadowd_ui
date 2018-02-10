@@ -906,6 +906,22 @@
                 <source>Generate integrity rules</source>
                 <target>צור חוקי שלמות</target>
             </trans-unit>
+            <trans-unit id="226">
+                <source>Delete</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="227">
+                <source>Shadow Daemon -- Web Application Firewall</source>
+                <target>Shadow Daemon -- Web Application Firewall</target>
+            </trans-unit>
+            <trans-unit id="228">
+                <source>© %year% by %name%</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="229">
+                <source>The demo is read-only, no changes were saved.</source>
+                <target></target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
