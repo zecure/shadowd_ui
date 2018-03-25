@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -20,10 +20,9 @@
 
 namespace Swd\AnalyzerBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
@@ -35,9 +34,9 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('serverIP', null, array('label' => 'Server IP'))
             ->add('name')
             ->add('key', PasswordType::class, array('attr' => array('autocomplete' => 'off')))
+            ->add('serverIP', TextType::class, array('label' => 'Server IP'))
             ->add('mode', ChoiceType::class, array('choices' => array('1' => 'Active', '2' => 'Passive', '3' => 'Learning')))
             ->add('whitelistEnabled', ChoiceType::class, array('label' => 'Whitelist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))
             ->add('blacklistEnabled', ChoiceType::class, array('label' => 'Blacklist', 'choices' => array('1' => 'Enabled', '0' => 'Disabled')))

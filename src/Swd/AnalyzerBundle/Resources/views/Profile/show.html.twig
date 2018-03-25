@@ -11,9 +11,12 @@
 <div>
   {{ form_start(form) }}
     {{ form_errors(form) }}
-    {{ form_row(form.serverIP) }}
     {{ form_row(form.name) }}
     {{ form_row(form.key) }}
+    {{ form_row(form.serverIP) }}
+    <div class="alert alert-info" role="alert">
+        {% trans %}<b>Important:</b> If you are using <i>shadowdctl</i> keep the default value <b>*</b> (allow all) because <i>shadowd</i> is started in a virtual network and does not receive the real addresses of its clients by default.{% endtrans %}
+    </div>
     {{ form_row(form.mode) }}
   <h2>{% trans %}Protections{% endtrans %}</h2>
     {{ form_row(form.whitelistEnabled) }}
