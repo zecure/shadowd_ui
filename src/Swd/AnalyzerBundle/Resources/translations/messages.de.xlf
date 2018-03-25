@@ -922,6 +922,10 @@
                 <source>The demo is read-only, no changes were saved.</source>
                 <target>Die Demo ist schreibgeschützt. Änderungen werden nicht übernommen.</target>
             </trans-unit>
+            <trans-unit id="230">
+                <source>&#x3C;b&#x3E;Important:&#x3C;/b&#x3E; If you are using &#x3C;i&#x3E;shadowdctl&#x3C;/i&#x3E; keep the default value &#x3C;b&#x3E;*&#x3C;/b&#x3E; (allow all) because &#x3C;i&#x3E;shadowd&#x3C;/i&#x3E; is started in a virtual network and does not receive the real addresses of its clients by default.</source>
+                <target>&#x3C;b&#x3E;Wichtig:&#x3C;/b&#x3E; Wenn du &#x3C;i&#x3E;shadowdctl&#x3C;/i&#x3E; benutzt solltest du die Standardeinstellung &#x3C;b&#x3E;*&#x3C;/b&#x3E; (alles erlauben) beibehalten, da &#x3C;i&#x3E;shadowd&#x3C;/i&#x3E; in einem virtuellen Netzwerk gestartet wird und standardm&#xE4;&#xDF;ig keinen Zugriff auf die echten Adressen der Klienten hat.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
