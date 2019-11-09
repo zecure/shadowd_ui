@@ -20,6 +20,7 @@
 
 namespace Swd\AnalyzerBundle\Controller;
 
+use Swd\AnalyzerBundle\Entity\RequestRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Swd\AnalyzerBundle\Form\Type\ParameterFilterType;
 use Swd\AnalyzerBundle\Entity\ParameterFilter;
@@ -56,14 +57,18 @@ class HomeController extends Controller
             $tooltip = $this->get('translator')->trans('There are no tooltips :(');
         }
 
+        /** @var RequestRepository $requestRepository */
+        $requestRepository = $em->getRepository('SwdAnalyzerBundle:Request');
+
         /* Get profile data. */
         $profiles = $em->getRepository('SwdAnalyzerBundle:Profile')->findAll();
 
         foreach ($profiles as $profile) {
             $profile->setProductiveRequests(
-                $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
-                $em->getRepository('SwdAnalyzerBundle:Request')->countByProfileAndMode($profile, 2)->getSingleScalarResult()
+                $requestRepository->countByProfileAndMode($profile, 1)->getSingleScalarResult() +
+                $requestRepository->countByProfileAndMode($profile, 2)->getSingleScalarResult()
             );
+            $profile->setLastRequest($requestRepository->findLastByProfile($profile));
         }
 
         /* Render template. */

@@ -221,6 +221,11 @@ class Profile
      */
     private $productiveRequests;
 
+    /**
+     * @var Request|null
+     */
+    private $lastRequest;
+
 
     public function __construct()
     {
@@ -497,5 +502,15 @@ class Profile
     public function getProductiveRequests()
     {
         return $this->productiveRequests;
+    }
+
+    public function setLastRequest($lastRequest)
+    {
+        $this->lastRequest = $lastRequest;
+    }
+
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
     }
 }
