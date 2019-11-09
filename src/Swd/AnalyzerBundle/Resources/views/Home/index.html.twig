@@ -53,7 +53,7 @@
           {% endif %}
         </td>
         <td>{{ profile.getProductiveRequests }}</td>
-        {% set lastRequest = profile.getRequests|last %}
+        {% set lastRequest = profile.getLastRequest() %}
         <td>
           {% if lastRequest %}
             <a href="{{ path('swd_analyzer_requests_list', {'request_filter': {'includeProfileIds': [profile.getId]}, 'sort': 'r.id', 'direction': 'desc'}) }}">
