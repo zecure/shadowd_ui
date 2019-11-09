@@ -189,6 +189,16 @@ class RequestRepository extends EntityRepositoryTransformer
         return $builder->getQuery();
     }
 
+    public function findLastByProfile(Profile $profile)
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->setMaxResults(1)
+            ->orderBy('r.date', 'desc')
+            ->where('r.profile = :profile')->setParameter(':profile', $profile);
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findAllLearningBySettings(\Swd\AnalyzerBundle\Entity\GeneratorSettings $settings)
     {
         $builder = $this->createQueryBuilder('r')
