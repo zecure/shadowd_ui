@@ -1,5 +1,6 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zecure_shadowd_ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=zecure_shadowd_ui)
 ![Logo](http://shadowd.zecure.org/img/logo_small.png)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zecure_shadowd_ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=zecure_shadowd_ui)
 
 **Shadow Daemon** is a collection of tools to **detect**, **record** and **prevent** **attacks** on *web applications*.
 Technically speaking, Shadow Daemon is a **web application firewall** that intercepts requests and filters out malicious parameters.
