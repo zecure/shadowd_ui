@@ -39,6 +39,9 @@ RUN mv misc/docker/docker-entrypoint.sh / && \
     ln -s /etc/lighttpd/conf-available/10-fastcgi.conf /etc/lighttpd/conf-enabled && \
     ln -s /etc/lighttpd/conf-available/15-fastcgi-php.conf /etc/lighttpd/conf-enabled && \
     mkdir /var/run/lighttpd && \
-    chown www-data:www-data /var/run/lighttpd
+    chown www-data:www-data /var/run/lighttpd && \
+    sed -i \
+        "s/error_reporting = .*?/error_reporting = E_ALL \& ~E_DEPRECATED \& ~E_STRICT \& ~E_WARNING/g" \
+        /etc/php/7.4/cli/php.ini
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/lighttpd", "-f", "/etc/lighttpd/lighttpd.conf", "-D"]
