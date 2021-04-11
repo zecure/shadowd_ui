@@ -40,7 +40,7 @@ RUN mv misc/docker/docker-entrypoint.sh / && \
     mkdir /var/run/lighttpd && \
     chown www-data:www-data /var/run/lighttpd && \
     sed -i \
-        "s/error_reporting = .*?/error_reporting = E_ALL \& ~E_DEPRECATED \& ~E_STRICT \& ~E_WARNING/g" \
+        "s/error_reporting = .*/error_reporting = E_ALL \& ~E_DEPRECATED \& ~E_STRICT \& ~E_WARNING/g" \
         /etc/php/7.4/cli/php.ini
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/lighttpd", "-f", "/etc/lighttpd/lighttpd.conf", "-D"]
