@@ -1,6 +1,6 @@
 FROM ubuntu:focal AS builder
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install  -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         git \
         php-cli \
         php-pgsql \
@@ -33,9 +33,8 @@ RUN apt-get update && \
 COPY --from=builder /shadowd_ui /var/shadowd_ui
 WORKDIR /var/shadowd_ui
 RUN mv misc/docker/docker-entrypoint.sh / && \
-    mv misc/docker/lighttpd.conf /etc/lighttpd/ && \
+    mv misc/docker/lighttpd.conf /etc/lighttpd && \
     mv misc/docker/parameters.yml.dist app/config/parameters.yml && \
-    rm -rf misc && \
     ln -s /etc/lighttpd/conf-available/10-fastcgi.conf /etc/lighttpd/conf-enabled && \
     ln -s /etc/lighttpd/conf-available/15-fastcgi-php.conf /etc/lighttpd/conf-enabled && \
     mkdir /var/run/lighttpd && \
