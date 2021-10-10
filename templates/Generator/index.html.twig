@@ -1,0 +1,53 @@
+{% extends 'SwdAnalyzerBundle::layout.html.twig' %}
+
+
+{% block title %}{% trans %}Rules Generator{% endtrans %}{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('/js/generator.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1>{% trans %}Rules Generator{% endtrans %}</h1>
+</div>
+
+<div class="generator">
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.profile) }}
+    {{ form_row(form.status) }}
+    {{ form_row(form.predefined) }}
+    {{ form_row(form.minUniqueVisitors) }}
+  <h2>{% trans %}Whitelist{% endtrans %}</h2>
+    {{ form_row(form.enableWhitelist) }}
+    {{ form_row(form.minFilterDominance) }}
+    {{ form_row(form.maxLengthVariance) }}
+    {{ form_row(form.unifyWhitelistArrays) }}
+    {{ form_row(form.unifyWhitelistCallers) }}
+  <h2>{% trans %}Blacklist{% endtrans %}</h2>
+    {{ form_row(form.enableBlacklist) }}
+    {{ form_row(form.minThresholdDominance) }}
+    {{ form_row(form.unifyBlacklistArrays) }}
+    {{ form_row(form.unifyBlacklistCallers) }}
+  <h2>{% trans %}Integrity{% endtrans %}</h2>
+    {{ form_row(form.enableIntegrity) }}
+  <div class="row include-exclude">
+    <div class="col-md-6">
+      <h2>{% trans %}Include{% endtrans %}</h2>
+    {{ form_row(form.includeCallers) }}
+    {{ form_row(form.includePaths) }}
+    </div>
+    <div class="col-md-6">
+      <h2>{% trans %}Exclude{% endtrans %}</h2>
+    {{ form_row(form.excludeCallers) }}
+    {{ form_row(form.excludePaths) }}
+    </div>
+  </div>
+    {{ form_row(form.actions) }}
+  {{ form_end(form) }}
+</div>
+{% endblock %}

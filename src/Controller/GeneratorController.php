@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Shadow Daemon -- Web Application Firewall
+ *
+ *   Copyright (C) 2014-2021 Hendrik Buchwald <hb@zecure.org>
+ *
+ * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, version 2.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Entity\GeneratorSettings;
+use App\Form\Type\GeneratorSettingsType;
+
+class GeneratorController extends AbstractController
+{
+    /**
+     * @Route("/generator", name="swd_analyzer_generator")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function indexAction(Request $request)
+    {
+        /* Handle form. */
+        $settings = new GeneratorSettings();
+        $form = $this->createForm(GeneratorSettingsType::class, $settings);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.'));
+            } else {
+                $generator = $this->get('generator_manager');
+                $generator->start($settings);
+                $counter = $generator->save();
+
+                if ($counter === 0) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('No new rules were added.'));
+                } elseif ($counter === 1) {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('One new rule was added.'));
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('%number% new rules were added.', ['%number%' => $counter]));
+                }
+            }
+        }
+
+        /* Render template. */
+        return $this->render(
+            'Generator:index.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
+    }
+}

@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Shadow Daemon -- Web Application Firewall
+ *
+ *   Copyright (C) 2014-2021 Hendrik Buchwald <hb@zecure.org>
+ *
+ * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, version 2.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Type\SettingType;
+
+class SettingController extends AbstractController
+{
+    /**
+     * @Route("/settings", name="swd_analyzer_settings")
+     */
+    public function indexAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        /* Get rule from database. */
+        $settings = $user->getSetting();
+
+        /* Handle form. */
+        $form = $this->createForm(SettingType::class, $settings);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $request->setLocale($settings->getLocale());
+            $this->get('session')->set('_locale', $settings->getLocale());
+
+            if ($this->getParameter('demo')) {
+                $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The demo is read-only, no changes were saved.', [], null, $settings->getLocale()));
+            } else {
+                if ($settings->getOldPassword()) {
+                    if (!$settings->getNewPassword()) {
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The new password can not be empty.', [], null, $settings->getLocale()));
+                    } elseif (!password_verify($settings->getOldPassword(), $user->getPassword())) {
+                        $this->get('session')->getFlashBag()->add('alert', $this->get('translator')->trans('The old password is not correct.', [], null, $settings->getLocale()));
+                    } else {
+                        $user->setPassword($settings->getNewPassword());
+                        $user->setChangePassword(false);
+                        $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings and password were updated.', [], null, $settings->getLocale()));
+                    }
+                } else {
+                    $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('The settings were updated.', [], null, $settings->getLocale()));
+                }
+
+                $this->getDoctrine()->getManager()->flush();
+            }
+            return $this->redirect($this->generateUrl('swd_analyzer_settings'));
+        }
+
+        /* Render template. */
+        return $this->render(
+        'Setting:index.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
+    }
+}

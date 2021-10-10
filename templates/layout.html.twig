@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shadow Daemon - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+      <!-- Bootstrap -->
+      {% if not app.user or not app.user.getSetting.getTheme %}
+      <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+      {% else %}
+
+        <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
+        <!--
+        FIXME
+      <link href="{{ asset('/css/themes/' ~ app.user.getSetting.getTheme ~ '.css') }}" rel="stylesheet" media="screen" />
+      -->
+      {% endif %}
+      <!-- Font Awesome -->
+      <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet" />
+      <!-- SwdAnalyzer -->
+      <link href="{{ asset('/css/main.css') }}" rel="stylesheet" />
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'menu.html.twig' %}
+    <div class="container">
+      <noscript>
+        <div class="alert alert-warning" role="alert">
+          <h4>{% trans %}Warning!{% endtrans %}</h4>
+          {% trans %}You do not have Javascript enabled and thus some functionality won't work.{% endtrans %}
+        </div>
+      </noscript>
+      {% block body %}{% endblock %}
+    </div>
+    <div class="footer">
+      <div class="container">
+        <span class="footer-title"><a href="https://shadowd.zecure.org/">{% trans %}Shadow Daemon -- Web Application Firewall{% endtrans %}</a></span>
+        <span class="footer-copyright">{% trans with {'%year%': '2014-2021', '%name%': 'Hendrik Buchwald'} %}© %year% by %name%{% endtrans %}</span>
+      </div>
+    </div>
+    {% block javascripts %}
+      <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+      <script src="{{ asset('/js/jquery-3.6.0.min.js') }}"></script>
+      <!-- Bootstrap -->
+      <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+      <!-- SwdAnalyzer -->
+      <script src="{{ asset('/js/main.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>

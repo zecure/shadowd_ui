@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block title %}{% trans %}Home{% endtrans %}{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+  <h1><b>Shadow Daemon</b> {% trans %}User Interface{% endtrans %}</h1>
+</div>
+<div class="col-md-7" id="table-home">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{% trans %}Profile{% endtrans %}</th>
+        <th>{% trans %}Mode{% endtrans %}</th>
+        <th>{% trans %}Whitelist{% endtrans %}</th>
+        <th>{% trans %}Blacklist{% endtrans %}</th>
+        <th>{% trans %}Integrity{% endtrans %}</th>
+        <th>{% trans %}Flooding{% endtrans %}</th>
+        <th>{% trans %}# Attacks{% endtrans %}</th>
+        <th>{% trans %}Last request{% endtrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for profile in profiles %}
+      <tr>
+        <td>{{ profile.getName }}</td>
+        <td>
+          {% if profile.getMode == 1 %} <span class="badge bg-success">{{ 'Active'|trans }}</span>
+          {% elseif profile.getMode == 2 %} <span class="badge bg-danger">{{ 'Passive'|trans }}</span>
+          {% elseif profile.getMode == 3 %} <span class="badge bg-danger">{{ 'Learning'|trans }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getWhitelistEnabled == 0 %} <span class="badge bg-danger">{{ 'Disabled'|trans }}</span>
+          {% elseif profile.getWhitelistEnabled == 1 %} <span class="badge bg-success">{{ 'Enabled'|trans }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getBlacklistEnabled == 0 %} <span class="badge bg-danger">{{ 'Disabled'|trans }}</span>
+          {% elseif profile.getBlacklistEnabled == 1 %} <span class="badge bg-success">{{ 'Enabled'|trans }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getIntegrityEnabled == 0 %} <span class="badge bg-danger">{{ 'Disabled'|trans }}</span>
+          {% elseif profile.getIntegrityEnabled == 1 %} <span class="badge bg-success">{{ 'Enabled'|trans }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if profile.getFloodingEnabled == 0 %} <span class="badge bg-danger">{{ 'Disabled'|trans }}</span>
+          {% elseif profile.getFloodingEnabled == 1 %} <span class="badge bg-success">{{ 'Enabled'|trans }}</span>
+          {% endif %}
+        </td>
+        <td>{{ profile.getProductiveRequests }}</td>
+        {% set lastRequest = profile.getLastRequest() %}
+        <td>
+          {% if lastRequest %}
+            <a href="{{ path('swd_analyzer_requests_list', {'request_filter': {'includeProfileIds': [profile.getId]}, 'sort': 'r.id', 'direction': 'desc'}) }}">
+              {{ lastRequest.getDate|date('Y-m-d H:i'|trans) }}
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="col-md-1"></div>
+<div id="logo">
+  <img src="{{ asset('/images/logo.png') }}" />
+</div>
+<div class="card bg-light mb-3">
+  <div class="card-body">
+    <h4 class="card-title">{% trans %}Did you know ... ?{% endtrans %}</h4>
+    <p class="card-text">{{ tooltip }}</p>
+    <p><a class="btn btn-primary btn-lg" role="button" href="https://shadowd.zecure.org/">{% trans %}Learn more{% endtrans %} &raquo;</a></p>
+  </div>
+</div>
+{% endblock %}

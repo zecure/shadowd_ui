@@ -1,9 +1,0 @@
-parameters:
-    database_driver:   pdo_pgsql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     shadowd
-    database_user:     shadowd
-    database_password: ~
-    secret:            ThisTokenIsNotSoSecretChangeIt
-    demo:              false
