@@ -21,6 +21,6 @@ Use [Composer](https://getcomposer.org/) to install the user interface.
 
 If the installation is successful you are able to add a new admin user via the terminal:
 
-    php app/console swd:register --env=prod --admin --name=arg (--email=arg)
+    php app/console swd:register --name=arg (--email=arg) (--admin)
 
 Make sure that *app/cache* and *app/logs* are writeable by the web server user.
