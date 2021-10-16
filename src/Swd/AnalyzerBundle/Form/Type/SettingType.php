@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2021 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -63,6 +63,7 @@ class SettingType extends AbstractType
             ->add('locale', ChoiceType::class, array('choices' => array(
                 'de' => 'Deutsch',
                 'en' => 'English',
+                'fr' => 'Français',
                 'nl' => 'Nederlands',
                 'zh_CN' => '中文（简体）',
             )))
