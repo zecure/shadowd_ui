@@ -36,24 +36,24 @@ class RegisterCommand extends ContainerAwareCommand
     {
         $this
             ->setName('swd:register')
-            ->setDescription('Register a new account.')
+            ->setDescription('Register a new account')
             ->addOption(
                 'name',
                 'N',
                 InputOption::VALUE_REQUIRED,
-                'Set the login name.'
+                'Set the login name'
             )
             ->addOption(
                 'email',
                 'E',
                 InputOption::VALUE_OPTIONAL,
-                'Set the e-mail address.'
+                'Set the e-mail address'
             )
             ->addOption(
                 'admin',
                 'A',
                 InputOption::VALUE_NONE,
-                'If set the user will be an admin.'
+                'If set the user will be an admin'
             );
     }
 
