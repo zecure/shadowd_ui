@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2017 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2021 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -34,12 +34,12 @@ class CleanCommand extends ContainerAwareCommand
     {
         $this
             ->setName('swd:clean')
-            ->setDescription('Delete old requests from the database.')
+            ->setDescription('Delete old requests from the database')
             ->addOption(
                 'time_frame',
                 't',
                 InputOption::VALUE_OPTIONAL,
-                'Set the time frame.',
+                'Set the time frame',
                 '-1 month'
             );
     }
