@@ -63,6 +63,7 @@ class SettingType extends AbstractType
             ->add('locale', ChoiceType::class, array('choices' => array(
                 'de' => 'Deutsch',
                 'en' => 'English',
+                'fr' => 'Français',
                 'nl' => 'Nederlands',
                 'zh_CN' => '中文（简体）',
             )))
