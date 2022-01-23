@@ -6,6 +6,14 @@ parameters:
     database_user:     PLACEHOLDER_DB_USER
     database_password: PLACEHOLDER_DB_PASSWORD
     demo:              PLACEHOLDER_DEMO
+    mailer_transport:  PLACEHOLDER_MAILER_TRANSPORT
+    mailer_host:       PLACEHOLDER_MAILER_HOST
+    mailer_port:       PLACEHOLDER_MAILER_PORT
+    mailer_encryption: PLACEHOLDER_MAILER_ENCRYPTION
+    mailer_auth_mode:  PLACEHOLDER_MAILER_AUTH_MODE
+    mailer_user:       PLACEHOLDER_MAILER_USER
+    mailer_password:   PLACEHOLDER_MAILER_PASSWORD
+    mailer_from:       PLACEHOLDER_MAILER_FROM
 
     locale:            en
     secret:            PLACEHOLDER_SECRET_TOKEN

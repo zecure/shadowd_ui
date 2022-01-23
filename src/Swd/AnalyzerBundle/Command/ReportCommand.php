@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2021 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2022 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -21,12 +21,9 @@
 namespace Swd\AnalyzerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Swd\AnalyzerBundle\Entity\Request;
-use Swd\AnalyzerBundle\Entity\User;
 
 class ReportCommand extends ContainerAwareCommand
 {
@@ -75,9 +72,9 @@ class ReportCommand extends ContainerAwareCommand
                 $output->writeln('Send email to ' . $user->getEmail());
             }
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Shadow Daemon Report')
-                ->setFrom('noreply@zecure.org')
+            $from = $this->getContainer()->getParameter('mailer_from');
+            $message = (new \Swift_Message('Shadow Daemon Report'))
+                ->setFrom($from)
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->getContainer()->get('templating')->render(

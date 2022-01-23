@@ -7,3 +7,11 @@ parameters:
     database_password: ~
     secret:            ThisTokenIsNotSoSecretChangeIt
     demo:              false
+    mailer_transport:  sendmail
+    mailer_host:       ~
+    mailer_port:       ~
+    mailer_encryption: ~
+    mailer_auth_mode:  ~
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_from:       noreply@zecure.org
