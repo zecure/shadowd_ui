@@ -24,7 +24,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Mime\Email;
 
 class ReportCommand extends ContainerAwareCommand
 {
@@ -73,9 +72,9 @@ class ReportCommand extends ContainerAwareCommand
                 $output->writeln('Send email to ' . $user->getEmail());
             }
 
-            $message = (new Email())
-                ->setSubject('Shadow Daemon Report')
-                ->setFrom('noreply@zecure.org')
+            $from = $this->getContainer()->getParameter('mailer_from');
+            $message = (new \Swift_Message('Shadow Daemon Report'))
+                ->setFrom($from)
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->getContainer()->get('templating')->render(
