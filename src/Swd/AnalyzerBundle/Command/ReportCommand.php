@@ -21,12 +21,10 @@
 namespace Swd\AnalyzerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Swd\AnalyzerBundle\Entity\Request;
-use Swd\AnalyzerBundle\Entity\User;
+use Symfony\Component\Mime\Email;
 
 class ReportCommand extends ContainerAwareCommand
 {
@@ -75,7 +73,7 @@ class ReportCommand extends ContainerAwareCommand
                 $output->writeln('Send email to ' . $user->getEmail());
             }
 
-            $message = \Swift_Message::newInstance()
+            $message = (new Email())
                 ->setSubject('Shadow Daemon Report')
                 ->setFrom('noreply@zecure.org')
                 ->setTo($user->getEmail())
