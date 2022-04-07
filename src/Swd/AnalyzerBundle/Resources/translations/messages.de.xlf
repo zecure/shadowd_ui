@@ -896,11 +896,11 @@
             </trans-unit>
             <trans-unit id="223">
                 <source>Has no integrity rule</source>
-                <target>Hat keine Integritätsegeln</target>
+                <target>Hat keine Integritätsregeln</target>
             </trans-unit>
             <trans-unit id="224">
                 <source>Has broken integrity rule</source>
-                <target>Hat Integritätsegeln gebrochen</target>
+                <target>Hat Integritätsregeln gebrochen</target>
             </trans-unit>
             <trans-unit id="225">
                 <source>Generate integrity rules</source>
