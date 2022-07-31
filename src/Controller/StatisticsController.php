@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StatisticsController extends AbstractController
 {
     #[Route('/statistics')]
-    public function number(): Response
+    public function index(): Response
     {
         return $this->render('statistics.html.twig');
     }
