@@ -1,8 +1,0 @@
-Als u naar resultaten wilt verwijzen moet u de aanvragen of parameter id's oplopend sorteren. Hierdoor zullen de resultaten aan het eind van de lijst toegevoegd worden en dezelfde elementen zullen op één pagina staan.
-Als u op het tandwiel klikt kunt u filters toevoegen en verwijderen, hierdoor ziet u alleen de resultaten die u wilt zien.
-U kunt direct op de meeste table entries klikken om een nieuwe filter toe te voegen. Dit bespaart erg veel tijd! De oude en nieuwe filters worden samengevoegd en lege filters worden van de url verwijdert.
-U kunt een asterisk als wildcards gebruiken voor de meeste tekst gebaseerde filters.
-Shadow Daemon is erg flexibel en werkt met de meeste web applicaties. In veel gevallen is er geen verandering in de source code nodig, de connector plugin kan direct geladen worden bij het uitvoeren van een script.
-U kunt de standaard waarden aanpassen zoals het aantal aanmeldingen per pagina of de sortering orde in de instellingen. Andere gebruikers zullen deze veranderingen niet zien.
-De blacklist filters zijn erg gevoelig en hebben een hoge kans op valse positieven. Dit is de reden dat de impact van alle overeenkomende filters samengevoegd worden. Alleen als de samengevoegde waarde groter is dan een grenswaarde word het geclassificeerd als een aanval. De drempelwaarde kan verschillen per profiel.
-Regels en filters worden alleen gecheckt als er een aanvraag arriveert. Dus als u een regel toevoegt of aanpast nadat de aanvraag is opgeslagen in de database zal het niet worden gemarkeerd als een bedreiging.
