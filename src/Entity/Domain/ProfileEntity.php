@@ -109,18 +109,6 @@ class ProfileEntity
         return $this;
     }
 
-    public function getPatternRecognitionThreshold(): ?int
-    {
-        return $this->patternRecognitionThreshold;
-    }
-
-    public function setPatternRecognitionThreshold(int $patternRecognitionThreshold): self
-    {
-        $this->patternRecognitionThreshold = $patternRecognitionThreshold;
-
-        return $this;
-    }
-
     public function getFloodProtectionTime(): ?int
     {
         return $this->floodProtectionTime;
@@ -210,7 +198,7 @@ class ProfileEntity
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
