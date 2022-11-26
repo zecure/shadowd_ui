@@ -1,8 +1,0 @@
-Si vous voulez référencer les résultats, vous devez les trier en ordre croissant par l'id de la demande ou du paramètre. De cette façon, les nouveaux résultats sont ajoutés en bas de la liste et il y a toujours les mêmes éléments sur une page.
-Si vous cliquez sur l'icône en forme d'engrenage, vous pouvez définir et supprimer des filtres pour n'afficher que ce que vous voulez vraiment voir.
-Vous pouvez cliquer directement sur la plupart des entrées du tableau pour ajouter un nouveau filtre. Cela permet de gagner beaucoup de temps ! Les anciens et les nouveaux filtres sont fusionnés et les filtres vides sont supprimés de l'url.
-Vous pouvez utiliser des astérisques comme caractères de remplacement pour la plupart des filtres textuels.
-Shadow Daemon est très flexible et fonctionne pour la plupart des applications web. Dans de nombreux cas, aucune modification du code source n'est nécessaire, le plugin du connecteur peut être directement chargé lors de l'exécution d'un script.
-Vous pouvez modifier les valeurs par défaut comme le nombre d'entrées par page ou l'ordre de tri dans les paramètres. Les autres utilisateurs ne sont pas affectés.
-Les filtres des listes noires sont très sensibles et ont un taux élevé de faux positifs. C'est la raison pour laquelle les impacts de tous les filtres correspondants sont additionnés. Ce n'est que si la somme est supérieure à un seuil qu'elle est classée comme une attaque. Ce seuil peut varier d'un profil à l'autre.
-Les règles et les filtres ne sont vérifiés que lorsqu'une demande arrive. Ainsi, si vous ajoutez ou modifiez une règle après que la demande a été enregistrée dans la base de données, elle ne sera pas considérée comme une menace.
